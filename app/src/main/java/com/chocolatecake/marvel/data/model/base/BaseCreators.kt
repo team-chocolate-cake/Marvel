@@ -1,13 +1,12 @@
-package com.chocolatecake.marvel.data.model.comics
-
+package com.chocolatecake.marvel.data.model.base
 
 import com.google.gson.annotations.SerializedName
 
-data class ItemCreators(
+data class BaseCreators(
     @SerializedName("name")
     val name: String? = null,
     @SerializedName("resourceURI")
     val resourceURI: String? = null,
     @SerializedName("role")
-    val role: String? = null
+    val role: String? = null,
 )

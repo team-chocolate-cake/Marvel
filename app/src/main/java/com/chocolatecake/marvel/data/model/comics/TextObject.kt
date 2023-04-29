@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.data.model.comics
 
-
 import com.google.gson.annotations.SerializedName
 
 data class TextObject(
@@ -9,5 +8,5 @@ data class TextObject(
     @SerializedName("text")
     val text: String? = null,
     @SerializedName("type")
-    val type: String? = null
+    val type: String? = null,
 )

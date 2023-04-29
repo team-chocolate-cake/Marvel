@@ -1,65 +1,65 @@
 package com.chocolatecake.marvel.data.model.comics
 
-
+import com.chocolatecake.marvel.data.model.base.*
 import com.google.gson.annotations.SerializedName
 
 data class ComicsResult(
     @SerializedName("characters")
-    val characters: Characters? = Characters(),
+    val characters: BaseContent<BaseItem>?,
     @SerializedName("collectedIssues")
-    val collectedIssues: List<CollectedIssue>? = listOf(),
+    val collectedIssues: List<BaseItem>? = listOf(),
     @SerializedName("collections")
     val collections: List<Any>? = listOf(),
     @SerializedName("creators")
-    val creators: Creators? = Creators(),
+    val creators: BaseContent<BaseCreators>,
     @SerializedName("dates")
     val dates: List<Date>? = listOf(),
     @SerializedName("description")
-    val description: String? = "",
+    val description: String? = null,
     @SerializedName("diamondCode")
-    val diamondCode: String? = "",
+    val diamondCode: String? = null,
     @SerializedName("digitalId")
-    val digitalId: Int? = 0,
+    val digitalId: Int? = null,
     @SerializedName("ean")
-    val ean: String? = "",
+    val ean: String? = null,
     @SerializedName("events")
-    val events: Events? = Events(),
+    val events: BaseContent<BaseItem>,
     @SerializedName("format")
-    val format: String? = "",
+    val format: String? = null,
     @SerializedName("id")
-    val id: Int? = 0,
+    val id: Int? = null,
     @SerializedName("images")
-    val images: List<Image>? = listOf(),
+    val images: List<BaseImage>? = listOf(),
     @SerializedName("isbn")
-    val isbn: String? = "",
+    val isbn: String? = null,
     @SerializedName("issn")
-    val issn: String? = "",
+    val issn: String? = null,
     @SerializedName("issueNumber")
-    val issueNumber: Int? = 0,
+    val issueNumber: Int? = null,
     @SerializedName("modified")
-    val modified: String? = "",
+    val modified: String? = null,
     @SerializedName("pageCount")
-    val pageCount: Int? = 0,
+    val pageCount: Int? = null,
     @SerializedName("prices")
     val prices: List<Price>? = listOf(),
     @SerializedName("resourceURI")
-    val resourceURI: String? = "",
+    val resourceURI: String? = null,
     @SerializedName("series")
-    val series: Series? = Series(),
+    val series: BaseItem? = null,
     @SerializedName("stories")
-    val stories: Stories? = Stories(),
+    val stories: BaseContent<BaseStories>,
     @SerializedName("textObjects")
     val textObjects: List<TextObject>? = listOf(),
     @SerializedName("thumbnail")
-    val thumbnail: Thumbnail? = Thumbnail(),
+    val thumbnail: BaseImage?,
     @SerializedName("title")
-    val title: String? = "",
+    val title: String? = null,
     @SerializedName("upc")
-    val upc: String? = "",
+    val upc: String? = null,
     @SerializedName("urls")
-    val urls: List<Url>? = listOf(),
+    val urls: List<BaseUrl>? = listOf(),
     @SerializedName("variantDescription")
-    val variantDescription: String? = "",
+    val variantDescription: String? = null,
     @SerializedName("variants")
-    val variants: List<Variant>? = listOf()
+    val variants: List<BaseItem>? = listOf(),
 )

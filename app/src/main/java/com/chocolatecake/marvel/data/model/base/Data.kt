@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.data.model.base
 
-
 import com.google.gson.annotations.SerializedName
 
 data class Data<T>(
@@ -13,5 +12,5 @@ data class Data<T>(
     @SerializedName("results")
     val results: List<T?>? = null,
     @SerializedName("total")
-    val total: Int? = null
+    val total: Int? = null,
 )

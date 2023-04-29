@@ -1,11 +1,10 @@
-package com.chocolatecake.marvel.data.model.comics
-
+package com.chocolatecake.marvel.data.model.base
 
 import com.google.gson.annotations.SerializedName
 
-data class Thumbnail(
+data class BaseImage(
     @SerializedName("extension")
     val extension: String? = null,
     @SerializedName("path")
-    val path: String? = null
+    val path: String? = null,
 )
