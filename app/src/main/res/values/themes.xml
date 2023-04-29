@@ -1,8 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Marvel" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Marvel" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:colorForeground">@color/on_background_38</item>
+        <item name="android:windowBackground">@android:color/black</item>
+
+        <!-- Splash Screen-->
+        <item name="android:windowSplashscreenContent" tools:targetApi="s">@drawable/splash_logo</item>
     </style>
 
     <style name="Theme.Marvel" parent="Base.Theme.Marvel" />
