@@ -1,19 +1,25 @@
     package com.chocolatecake.marvel.ui.base
 
-    import android.view.View
+
+    import android.view.LayoutInflater
+    import android.view.ViewGroup
+    import androidx.databinding.DataBindingUtil
     import androidx.databinding.ViewDataBinding
     import androidx.recyclerview.widget.RecyclerView
     import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
     abstract class BaseAdapter<T>(
         private var items:List<T>,
-        private var baseInteractionListener:BaseInteractionListener
+        private var listener: BaseInteractionListener
         ):RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 
-        override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-            val currentItem=items[position]
-
+          abstract val layoutId:Int
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+            return ItemViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context),layoutId,parent,false))
         }
+
+       abstract override fun onBindViewHolder(holder: BaseViewHolder, position: Int)
+
 
         fun setItems(newItem:List<T>){
             items=newItem
@@ -23,10 +29,8 @@
 
         override fun getItemCount()=items.size
 
-
-        class ItemViewHolder(var binding:ViewDataBinding):BaseViewHolder(binding)
-        abstract class BaseViewHolder(itemView: ViewDataBinding) :ViewHolder(itemView.root){
+        class ItemViewHolder(binding:ViewDataBinding):BaseViewHolder(binding)
+        abstract class BaseViewHolder(itemView: ViewDataBinding) :ViewHolder(itemView.root)
 
         }
-    }
     interface BaseInteractionListener
