@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MarvelRequest {
+class MarvelApi {
 
     private val BASE_URL="https://gateway.marvel.com/v1/public/"
     private val retrofit = Retrofit.Builder()

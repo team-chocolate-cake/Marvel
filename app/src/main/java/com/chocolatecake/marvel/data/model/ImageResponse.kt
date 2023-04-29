@@ -1,8 +1,8 @@
-package com.chocolatecake.marvel.data.model.base
+package com.chocolatecake.marvel.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class BaseImage(
+data class ImageResponse(
     @SerializedName("extension")
     val extension: String? = null,
     @SerializedName("path")

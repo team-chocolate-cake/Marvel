@@ -1,15 +1,16 @@
 package com.chocolatecake.marvel.data.model.creators
 
+import com.chocolatecake.marvel.data.model.*
 import com.chocolatecake.marvel.data.model.base.*
 import com.google.gson.annotations.SerializedName
 
 data class CreatorsResult(
     @SerializedName("comics")
-    val comics: BaseContent<BaseItem>?,
+    val comics: ContentResponse<ItemResponse>?,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("events")
-    val events: BaseContent<BaseItem>?,
+    val events: ContentResponse<ItemResponse>?,
     @SerializedName("id")
     val id: Int? = null,
     @SerializedName("modified")
@@ -19,11 +20,11 @@ data class CreatorsResult(
     @SerializedName("resourceURI")
     val resourceURI: String? = null,
     @SerializedName("series")
-    val series: BaseContent<BaseItem>?,
+    val series: ContentResponse<ItemResponse>?,
     @SerializedName("stories")
-    val stories: BaseContent<BaseStories>?,
+    val stories: ContentResponse<StoriesResponse>?,
     @SerializedName("thumbnail")
-    val thumbnail: BaseImage?,
+    val thumbnail: ImageResponse?,
     @SerializedName("urls")
-    val urls: List<BaseUrl>? = listOf(),
+    val urls: List<UrlResponse>? = listOf(),
 )

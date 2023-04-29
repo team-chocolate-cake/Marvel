@@ -1,8 +1,8 @@
-package com.chocolatecake.marvel.data.model.base
+package com.chocolatecake.marvel.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class BaseContent<T>(
+data class ContentResponse<T>(
     @SerializedName("available")
     val available: Int? = null,
     @SerializedName("collectionURI")

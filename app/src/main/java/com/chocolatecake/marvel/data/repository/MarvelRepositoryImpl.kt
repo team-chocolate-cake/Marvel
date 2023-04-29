@@ -2,6 +2,8 @@ package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.comics.ComicsResult
+import com.chocolatecake.marvel.data.model.series.SeriesResult
+import com.chocolatecake.marvel.data.model.stories.StoriesResult
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.State
 import io.reactivex.rxjava3.core.Single
@@ -18,6 +20,40 @@ class MarvelRepositoryImpl(private val apiService: MarvelService) : MarvelReposi
 
     override fun getComicsCharacters(comicId: Int): Single<State<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicsCharacters(comicId))
+    }
+
+
+    override fun getSeries(): Single<State<BaseResponse<SeriesResult>?>> {
+        return wrapperToState(apiService.getSeries())
+    }
+
+    override fun getSeriesById(seriesId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+        return wrapperToState(apiService.getSeriesById(seriesId))
+    }
+
+    override fun getSeriesCharacters(seriesId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+        return wrapperToState(apiService.getSeriesCharacters(seriesId))
+    }
+
+    override fun getSeriesComics(seriesId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+        return wrapperToState(apiService.getSeriesComics(seriesId))
+    }
+
+
+    override fun getStories(): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStories())
+    }
+
+    override fun getStoriesById(storiesId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStoriesById(storiesId))
+    }
+
+    override fun getStoriesCharacters(storiesId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStoriesCharacters(storiesId))
+    }
+
+    override fun getStoriesComics(storiesId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStoriesComics(storiesId))
     }
 
 

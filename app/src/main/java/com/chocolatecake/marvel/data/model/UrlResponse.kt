@@ -1,8 +1,8 @@
-package com.chocolatecake.marvel.data.model.base
+package com.chocolatecake.marvel.data.model
 
 import com.google.gson.annotations.SerializedName
 
-data class BaseUrl(
+data class UrlResponse(
     @SerializedName("type")
     val type: String? = null,
     @SerializedName("url")
