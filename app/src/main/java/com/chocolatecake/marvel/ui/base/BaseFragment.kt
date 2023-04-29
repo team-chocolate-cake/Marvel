@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.util.baseclasses
+package com.chocolatecake.marvel.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater
