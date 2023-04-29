@@ -44,16 +44,16 @@ class MarvelRepositoryImpl(private val apiService: MarvelService) : MarvelReposi
         return wrapperToState(apiService.getStories())
     }
 
-    override fun getStoriesById(storiesId: Int): Single<State<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getStoriesById(storiesId))
+    override fun getStoriesById(storyId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStoriesById(storyId))
     }
 
-    override fun getStoriesCharacters(storiesId: Int): Single<State<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getStoriesCharacters(storiesId))
+    override fun getStoriesCharacters(storyId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStoriesCharacters(storyId))
     }
 
-    override fun getStoriesComics(storiesId: Int): Single<State<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getStoriesComics(storiesId))
+    override fun getStoriesComics(storyId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+        return wrapperToState(apiService.getStoriesComics(storyId))
     }
 
 

@@ -20,7 +20,7 @@ interface MarvelRepository {
 
 
     fun getStories(): Single<State<BaseResponse<StoriesResult>?>>
-    fun getStoriesById(storiesId: Int,): Single<State<BaseResponse<StoriesResult>?>>
-    fun getStoriesCharacters(storiesId: Int,): Single<State<BaseResponse<StoriesResult>?>>
-    fun getStoriesComics(storiesId: Int,): Single<State<BaseResponse<StoriesResult>?>>
+    fun getStoriesById(storyId: Int,): Single<State<BaseResponse<StoriesResult>?>>
+    fun getStoriesCharacters(storyId: Int,): Single<State<BaseResponse<StoriesResult>?>>
+    fun getStoriesComics(storyId: Int,): Single<State<BaseResponse<StoriesResult>?>>
 }

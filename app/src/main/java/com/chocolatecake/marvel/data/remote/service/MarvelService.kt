@@ -47,18 +47,18 @@ interface MarvelService {
     @GET("stories")
     fun getStories(): Single<Response<BaseResponse<StoriesResult>>>
 
-    @GET("stories/{storiesId}")
+    @GET("stories/{storyId}")
     fun getStoriesById(
-        @Path("storiesId") storiesId: Int,
+        @Path("storyId") storyId: Int,
     ): Single<Response<BaseResponse<StoriesResult>>>
 
-    @GET("stories/{storiesId}/characters")
+    @GET("stories/{storyId}/characters")
     fun getStoriesCharacters(
-        @Path("storiesId") storiesId: Int,
+        @Path("storyId") storyId: Int,
     ): Single<Response<BaseResponse<StoriesResult>>>
 
-    @GET("stories/{storiesId}/comics")
+    @GET("stories/{storyId}/comics")
     fun getStoriesComics(
-        @Path("storiesId") storiesId: Int,
+        @Path("storyId") storyId: Int,
     ): Single<Response<BaseResponse<StoriesResult>>>
 }
