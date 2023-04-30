@@ -4,12 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
     </data>
-
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -39,7 +37,8 @@
                 android:layout_gravity="bottom"
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
-                android:maxLines="2"/>
+                android:maxLines="2" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>
