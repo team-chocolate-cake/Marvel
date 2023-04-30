@@ -11,4 +11,5 @@ fun Disposable.add(compositeDisposable: CompositeDisposable){
 
 fun <T> RecyclerView.setRecyclerItems(items:List<T>?) {
     (adapter as BaseAdapter<T>).setItems(items ?: emptyList())
+
 }
