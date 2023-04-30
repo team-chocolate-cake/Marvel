@@ -10,12 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
 abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragment() {
+
     private var _binding: VDB? = null
     protected val binding: VDB
         get() = _binding as VDB
 
-    protected lateinit var viewModel:VM
+    protected lateinit var viewModel: VM
+
     abstract val viewModelClass: Class<VM>
+
     abstract val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VDB
     abstract val layoutIdFragment: Int
 
@@ -31,12 +34,5 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
         }
         return binding.root
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setUp()
-    }
-
-    abstract fun setUp()
 
 }
