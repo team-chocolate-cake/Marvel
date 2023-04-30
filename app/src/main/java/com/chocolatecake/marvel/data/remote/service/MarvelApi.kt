@@ -5,8 +5,6 @@ import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MarvelApi {
-
-    private val BASE_URL="https://gateway.marvel.com/v1/public/"
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
@@ -14,4 +12,8 @@ class MarvelApi {
         .build()
 
     val apiService: MarvelService = retrofit.create(MarvelService::class.java)
+
+    companion object{
+        private const val BASE_URL="https://gateway.marvel.com/v1/public/"
+    }
 }

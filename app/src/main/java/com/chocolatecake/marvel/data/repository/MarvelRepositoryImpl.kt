@@ -1,15 +1,20 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
-import com.chocolatecake.marvel.data.model.comics.ComicsResult
-import com.chocolatecake.marvel.data.model.series.SeriesResult
-import com.chocolatecake.marvel.data.model.stories.StoriesResult
+import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.model.StoriesResult
+import com.chocolatecake.marvel.data.remote.service.MarvelApi
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.State
+import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 
-class MarvelRepositoryImpl(private val apiService: MarvelService) : MarvelRepository{
+class MarvelRepositoryImpl : MarvelRepository{
+
+    private val apiService by lazy { MarvelApi().apiService }
+
     override fun getComics(): Single<State<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComics())
     }
@@ -69,6 +74,6 @@ class MarvelRepositoryImpl(private val apiService: MarvelService) : MarvelReposi
             }catch (e: Exception){
                 State.Failure(e.message.toString())
             }
-        }
+        }.observeOnMainThread()
     }
 }

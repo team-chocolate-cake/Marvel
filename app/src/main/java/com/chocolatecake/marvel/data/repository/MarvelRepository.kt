@@ -1,9 +1,9 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
-import com.chocolatecake.marvel.data.model.comics.ComicsResult
-import com.chocolatecake.marvel.data.model.series.SeriesResult
-import com.chocolatecake.marvel.data.model.stories.StoriesResult
+import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.model.StoriesResult
 import com.chocolatecake.marvel.data.util.State
 import io.reactivex.rxjava3.core.Single
 

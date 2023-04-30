@@ -1,16 +1,16 @@
 package com.chocolatecake.marvel.data.remote.service
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
-import com.chocolatecake.marvel.data.model.comics.ComicsResult
-import com.chocolatecake.marvel.data.model.creators.CreatorsResult
-import com.chocolatecake.marvel.data.model.series.SeriesResult
-import com.chocolatecake.marvel.data.model.stories.StoriesResult
+import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.model.StoriesResult
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface MarvelService {
+
     @GET("comics")
     fun getComics(): Single<Response<BaseResponse<ComicsResult>>>
 
