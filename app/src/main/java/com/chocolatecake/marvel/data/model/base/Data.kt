@@ -10,7 +10,7 @@ data class Data<T>(
     @SerializedName("offset")
     val offset: Int? = null,
     @SerializedName("results")
-    val results: List<T?>? = null,
+    val results: List<T?>? = listOf(),
     @SerializedName("total")
     val total: Int? = null,
 )

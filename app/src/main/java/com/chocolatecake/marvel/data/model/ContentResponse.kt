@@ -8,7 +8,7 @@ data class ContentResponse<T>(
     @SerializedName("collectionURI")
     val collectionURI: String? = null,
     @SerializedName("items")
-    val items: List<T?>? = null,
+    val items: List<T?>? = listOf(),
     @SerializedName("returned")
     val returned: Int? = null,
 )
