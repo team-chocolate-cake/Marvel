@@ -12,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/spacing_small"
         android:backgroundTint="@color/black">
 
         <LinearLayout
@@ -21,23 +21,24 @@
             android:orientation="vertical">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image_view_thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/height_card"
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/text_view_title"
                 style="@style/TextAppearance.MaterialComponents.Body1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/spacing_tiny"
                 android:ellipsize="end"
-                android:maxLines="2" />
+                android:maxLines="2"
+                tools:text="@tools:sample/lorem/random"/>
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
