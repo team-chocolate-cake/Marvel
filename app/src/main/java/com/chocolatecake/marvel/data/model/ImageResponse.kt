@@ -7,4 +7,8 @@ data class ImageResponse(
     val extension: String? = null,
     @SerializedName("path")
     val path: String? = null,
-)
+){
+    fun toUrl():String{
+        return "$path.$extension"
+    }
+}
