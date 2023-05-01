@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import android.view.View
 import androidx.core.view.isVisible
-import com.chocolatecake.marvel.data.util.State
+import com.chocolatecake.marvel.data.util.Status
 
 @BindingAdapter(value =["app:items"])
 fun <T> RecyclerView.setRecyclerItems(items:List<T>?) {
@@ -13,16 +13,16 @@ fun <T> RecyclerView.setRecyclerItems(items:List<T>?) {
 }
 
 @BindingAdapter(value = ["app:showWhenSuccess"])
-fun <T> View.showWhenSuccess(state: State<T>?) {
-    this.isVisible = (state is State.Success)
+fun <T> View.showWhenSuccess(status: Status<T>?) {
+    this.isVisible = (status is Status.Success)
 }
 
 @BindingAdapter(value = ["app:showWhenFailure"])
-fun <T> View.showWhenFailure(state: State<T>?) {
-    this.isVisible = (state is State.Failure)
+fun <T> View.showWhenFailure(status: Status<T>?) {
+    this.isVisible = (status is Status.Failure)
 }
 
 @BindingAdapter(value = ["app:showWhenLoading"])
-fun <T> View.showWhenLoading(state: State<T>?) {
-    this.isVisible = (state is State.Loading)
+fun <T> View.showWhenLoading(status: Status<T>?) {
+    this.isVisible = (status is Status.Loading)
 }

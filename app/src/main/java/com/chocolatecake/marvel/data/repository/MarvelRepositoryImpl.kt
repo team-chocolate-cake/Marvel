@@ -6,7 +6,7 @@ import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.remote.service.MarvelApi
-import com.chocolatecake.marvel.data.util.State
+import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
@@ -17,34 +17,34 @@ class MarvelRepositoryImpl : MarvelRepository {
     override fun getComics(
         title: String?,
         limit: Int?
-    ): Single<State<BaseResponse<ComicsResult>?>> {
+    ): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComics(title, limit))
     }
 
-    override fun getComicById(comicId: Int): Single<State<BaseResponse<ComicsResult>?>> {
+    override fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicById(comicId))
     }
 
-    override fun getCharactersForComic(comicId: Int): Single<State<BaseResponse<ProfileResult>?>> {
+    override fun getCharactersForComic(comicId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
         return wrapperToState(apiService.getCharactersForComic(comicId))
     }
 
     override fun getCharacters(
         name: String?,
         limit: Int?
-    ): Single<State<BaseResponse<ProfileResult>?>> {
+    ): Single<Status<BaseResponse<ProfileResult>?>> {
         return wrapperToState(apiService.getCharacters(name, limit))
     }
 
-    override fun getCharacterById(characterId: Int): Single<State<BaseResponse<ProfileResult>?>> {
+    override fun getCharacterById(characterId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
         return wrapperToState(apiService.getCharacterById(characterId))
     }
 
-    override fun getComicsForCharacter(characterId: Int): Single<State<BaseResponse<ComicsResult>?>> {
+    override fun getComicsForCharacter(characterId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicsForCharacter(characterId))
     }
 
-    override fun getCharacterSeries(characterId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+    override fun getCharacterSeries(characterId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
         return wrapperToState(apiService.getSeriesForCharacter(characterId))
     }
 
@@ -52,68 +52,68 @@ class MarvelRepositoryImpl : MarvelRepository {
         firstName: String?,
         middleName: String?,
         lastName: String?
-    ): Single<State<BaseResponse<ProfileResult>?>> {
+    ): Single<Status<BaseResponse<ProfileResult>?>> {
         return wrapperToState(apiService.getCreators(firstName, middleName, lastName))
     }
 
-    override fun getCreatorById(creatorId: Int): Single<State<BaseResponse<ComicsResult>?>> {
+    override fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getCreatorById(creatorId))
     }
 
-    override fun getComicsForCreator(creatorId: Int): Single<State<BaseResponse<ComicsResult>?>> {
+    override fun getComicsForCreator(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicsForCreator(creatorId))
     }
 
-    override fun getSeriesForCreator(creatorId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+    override fun getSeriesForCreator(creatorId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
         return wrapperToState(apiService.getSeriesForCreator(creatorId))
     }
 
     override fun getSeries(
         title: String?,
         limit: Int?
-    ): Single<State<BaseResponse<SeriesResult>?>> {
+    ): Single<Status<BaseResponse<SeriesResult>?>> {
         return wrapperToState(apiService.getSeries(title, limit))
     }
 
-    override fun getSeriesById(seriesId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+    override fun getSeriesById(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
         return wrapperToState(apiService.getSeriesById(seriesId))
     }
 
-    override fun getCharactersForSeries(seriesId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+    override fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
         return wrapperToState(apiService.getCharactersForSeries(seriesId))
     }
 
-    override fun getComicsForSeries(seriesId: Int): Single<State<BaseResponse<SeriesResult>?>> {
+    override fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
 
-    override fun getStories(): Single<State<BaseResponse<StoriesResult>?>> {
+    override fun getStories(): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getStories())
     }
 
-    override fun getStoryById(storyId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+    override fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getStoryById(storyId))
     }
 
-    override fun getCharactersForStory(storyId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+    override fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getCharactersForStory(storyId))
     }
 
-    override fun getComicsForStory(storyId: Int): Single<State<BaseResponse<StoriesResult>?>> {
+    override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getComicsForStory(storyId))
     }
 
     private fun <T> wrapperToState(response: Single<Response<BaseResponse<T>>>)
-            : Single<State<BaseResponse<T>?>> {
+            : Single<Status<BaseResponse<T>?>> {
         return response.map {
             try {
                 if (it.isSuccessful) {
-                    State.Success(it.body())
+                    Status.Success(it.body())
                 } else {
-                    State.Failure(it.message())
+                    Status.Failure(it.message())
                 }
             } catch (e: Exception) {
-                State.Failure(e.message.toString())
+                Status.Failure(e.message.toString())
             }
         }.observeOnMainThread()
     }
