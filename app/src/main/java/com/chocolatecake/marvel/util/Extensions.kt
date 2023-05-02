@@ -1,8 +1,9 @@
 package com.chocolatecake.marvel.util
 
-import androidx.recyclerview.widget.RecyclerView
-import com.chocolatecake.marvel.ui.base.BaseAdapter
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 
-fun <T> RecyclerView.setRecyclerItems(items:List<T>?) {
-    (adapter as BaseAdapter<T>).setItems(items ?: emptyList())
+fun <T : Any> Single<T>.observeOnMainThread(): Single<T> {
+    return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
 }
