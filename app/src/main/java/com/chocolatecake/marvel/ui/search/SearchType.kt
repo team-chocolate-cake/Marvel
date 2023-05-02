@@ -3,7 +3,6 @@ package com.chocolatecake.marvel.ui.search
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.todoapp.core.data.model.response.PersonalTask
 
 sealed class SearchType(val type: SearchItemType) {
 
@@ -18,6 +17,16 @@ sealed class SearchType(val type: SearchItemType) {
         SearchType(SearchItemType.TYPE_SERIES)
 }
 
+
 enum class SearchItemType {
-  TYPE_COMICS, TYPE_CHARACTER, TYPE_SERIES
+  TYPE_COMICS, TYPE_CHARACTER, TYPE_SERIES;
+    companion object {
+        fun createStatus(status: Int): SearchItemType {
+            return when (status) {
+                0 -> TYPE_CHARACTER
+                1 -> TYPE_SERIES
+                else -> TYPE_COMICS
+            }
+        }
+    }
 }
