@@ -81,9 +81,10 @@
         android:clipToPadding="false"
         android:paddingVertical="12dp"
         android:scrollbars="none"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_filters"
-        tools:listitem="" />
+        tools:listitem="@layout/item_marvel" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
