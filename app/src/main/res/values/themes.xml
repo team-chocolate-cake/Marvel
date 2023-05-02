@@ -7,8 +7,10 @@
         <item name="android:colorForeground">@color/on_background_38</item>
         <item name="android:windowBackground">@android:color/black</item>
 
+        <item name="android:statusBarColor">?android:windowBackground</item>
         <!-- Splash Screen-->
-        <item name="android:windowSplashscreenContent" tools:targetApi="s">@drawable/splash_logo</item>
+        <item name="android:windowSplashscreenContent" tools:targetApi="s">@drawable/splash_logo
+        </item>
     </style>
 
     <style name="Theme.Marvel" parent="Base.Theme.Marvel" />
