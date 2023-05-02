@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.comic.ComicsViewModel" />
@@ -15,10 +16,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
-            android:padding="@dimen/spacing_custom"
-            android:clipToPadding="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="@dimen/spacing_custom"
             app:items="@{viewModel.comics.toData()}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:showWhenSuccess="@{viewModel.comics}"
