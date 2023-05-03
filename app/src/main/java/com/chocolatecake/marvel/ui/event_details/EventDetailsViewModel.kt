@@ -15,7 +15,7 @@ class EventDetailsViewModel :BaseViewModel() {
 
     }
 
-    private fun getComicByEventId(){
+    private fun getComicsByEventId(){
 
     }
 
