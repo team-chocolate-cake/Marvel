@@ -13,11 +13,17 @@ class EventDetailsViewModel : BaseViewModel() {
 
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
-    val characters  = MutableLiveData<Status<BaseResponse<ProfileResult>>>()
+    val characters = MutableLiveData<List<ProfileResult?>?>()
+
+    init {
+        getCharactersByEventId()
+    }
+
     private fun getCharactersByEventId() {
         repository.getCharactersByEventId(293).subscribe(
             {
-                Log.d("Mimo", it.toString())
+                characters.postValue(it.toData()?.data?.results)
+                Log.d("Mimo", it.toData()?.data?.results.toString())
             }, {
                 Log.d("Mimo", it.toString())
             }
