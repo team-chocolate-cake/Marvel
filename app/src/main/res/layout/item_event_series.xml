@@ -9,12 +9,13 @@
             type="com.chocolatecake.marvel.data.model.SeriesResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.event_details.adapters.SeriesListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="@{()-> listener.onClickSeries(item.id)}"
         android:layout_margin="@dimen/spacing_small"
         android:backgroundTint="@color/black">
 

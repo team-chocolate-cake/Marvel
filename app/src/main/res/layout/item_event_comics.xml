@@ -9,13 +9,14 @@
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.event_details.adapters.ComicsListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
+        android:onClick="@{()-> listener.onClickComics(item.id)}"
         android:backgroundTint="@color/black">
 
         <androidx.constraintlayout.widget.ConstraintLayout
