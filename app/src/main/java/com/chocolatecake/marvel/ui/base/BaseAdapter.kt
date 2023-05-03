@@ -48,7 +48,6 @@ abstract class BaseAdapter<T>(
     fun getItems() = items
     override fun getItemCount() = items.size
 
-
     class ItemViewHolder(val binding: ViewDataBinding) : BaseViewHolder(binding)
 
     abstract class BaseViewHolder(itemView: ViewDataBinding) : ViewHolder(itemView.root)

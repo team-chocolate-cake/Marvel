@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
             android:layout_marginTop="16sp"
+            android:onClick=""
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,8 +39,6 @@
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
             android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@id/view"
             tools:layout_editor_absoluteX="0dp">
@@ -54,7 +53,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/seriesChip"
-                    style="@style/TextStyle.LabelMedium.ChipStyle.Todo"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -63,7 +62,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/comicsChip"
-                    style="@style/TextStyle.LabelMedium.ChipStyle.InProgress"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -72,7 +71,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/characterChip"
-                    style="@style/TextStyle.LabelMedium.ChipStyle.Done"
+                    style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"

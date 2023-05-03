@@ -36,26 +36,4 @@
         <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
     </style>
 
-    <style name="TextStyle.LabelMedium.ChipStyle" parent="Widget.MaterialComponents.Chip.Filter">
-        <item name="android:textColor">@color/primary</item>
-        <item name="android:fontFamily">@font/roboto</item>
-        <item name="checkedIconVisible">false</item>
-        <item name="chipStartPadding">16dp</item>
-        <item name="chipEndPadding">16dp</item>
-        <item name="chipMinHeight">40dp</item>
-        <item name="chipStrokeWidth">1dp</item>
-    </style>
-
-    <style name="TextStyle.LabelMedium.ChipStyle.Todo">
-        <item name="chipBackgroundColor">@color/chip_color</item>
-    </style>
-
-    <style name="TextStyle.LabelMedium.ChipStyle.InProgress">
-        <item name="chipBackgroundColor">@color/chip_color</item>
-    </style>
-
-    <style name="TextStyle.LabelMedium.ChipStyle.Done">
-        <item name="chipBackgroundColor">@color/chip_color</item>
-    </style>
-
 </resources>

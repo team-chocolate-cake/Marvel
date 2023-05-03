@@ -10,6 +10,4 @@ class SearchAdapter(
     override val layoutId: Int
         get() = R.layout.item_marvel
 }
-interface SearchInteractionListener : BaseAdapter.BaseInteractionListener {
-    fun onClick(searchType:SearchType)
-}
+interface SearchInteractionListener : BaseAdapter.BaseInteractionListener {}

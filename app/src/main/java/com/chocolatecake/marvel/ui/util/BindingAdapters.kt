@@ -12,6 +12,7 @@ fun <T> RecyclerView.setRecyclerItems(items:List<T>?) {
     (adapter as BaseAdapter<T>).setItems(items ?: emptyList())
 }
 
+
 @BindingAdapter(value = ["app:showWhenSuccess"])
 fun <T> View.showWhenSuccess(status: Status<T>?) {
     this.isVisible = (status is Status.Success)
