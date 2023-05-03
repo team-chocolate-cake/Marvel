@@ -2,11 +2,15 @@ package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
 import com.chocolatecake.marvel.data.util.Status
 import io.reactivex.rxjava3.core.Single
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Path
 
 interface MarvelRepository {
     fun getComics(
@@ -42,12 +46,18 @@ interface MarvelRepository {
 
     fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>>
     fun getComicsForCreator(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>>
-    fun getSeriesForCreator(
-        creatorId: Int,
-    ): Single<Status<BaseResponse<SeriesResult>?>>
+    fun getSeriesForCreator(creatorId: Int): Single<Status<BaseResponse<SeriesResult>?>>
 
     fun getStories(): Single<Status<BaseResponse<StoriesResult>?>>
     fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>>
     fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>>
     fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>>
+
+    fun getCharactersByEventId(eventId: Int): Single<Status<BaseResponse<ProfileResult>?>>
+
+    fun getSeriesByEventId(eventId: Int): Single<Status<BaseResponse<SeriesResult>?>>
+
+    fun getComicsByEventId(eventId: Int): Single<Status<BaseResponse<ComicsResult>?>>
+
+    fun getSpecificEventByEventId(eventId: Int): Single<Status<BaseResponse<EventResult>?>>
 }
