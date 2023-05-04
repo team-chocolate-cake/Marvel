@@ -22,6 +22,7 @@ class EventAdapter(
     override val layoutId: Int
         get() = 0
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
             VIEW_TYPE_HEADER -> {
