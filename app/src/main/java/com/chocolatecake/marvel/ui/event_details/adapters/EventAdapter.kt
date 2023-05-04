@@ -4,8 +4,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.FragmentActivity
-import com.chocolatecake.marvel.MainActivity
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.CharacterViewBinding
 import com.chocolatecake.marvel.databinding.ComicsViewBinding
@@ -17,16 +15,16 @@ import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem
 import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItemType
 
 class EventAdapter(
-    private val list: List<EventDetailsItem>,
+    private val list: MutableList<EventDetailsItem>,
     private val eventDetailsListener: EventDetailsListener,
 ) :
-    BaseAdapter<EventDetailsItem>(list, eventDetailsListener) {
+    BaseAdapter<EventDetailsItem?>(list, eventDetailsListener) {
     override val layoutId: Int
         get() = R.layout.fragment_event_details
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            EventDetailsItemType.HEADER.ordinal -> {
+            VIEW_TYPE_HEADER -> {
                 HeaderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.header_view, parent, false
@@ -34,7 +32,7 @@ class EventAdapter(
                 )
             }
 
-            EventDetailsItemType.CHARACTER.ordinal -> {
+            VIEW_TYPE_CHARACTER -> {
                 CharacterViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.character_view, parent, false
@@ -42,7 +40,7 @@ class EventAdapter(
                 )
             }
 
-            EventDetailsItemType.SERIES.ordinal -> {
+            VIEW_TYPE_SERIES -> {
                 SeriesViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.series_view, parent, false
@@ -50,7 +48,7 @@ class EventAdapter(
                 )
             }
 
-            EventDetailsItemType.COMICS.ordinal -> {
+            VIEW_TYPE_COMIC -> {
                 ComicsViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.comics_view, parent, false
@@ -66,17 +64,9 @@ class EventAdapter(
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> bindHeader(holder, position)
-            is CharacterViewHolder -> {
-                bindCharacters(holder, position)
-            }
-
-            is SeriesViewHolder -> {
-                bindSeries(holder, position)
-            }
-
-            is ComicsViewHolder -> {
-                bindComics(holder, position)
-            }
+            is CharacterViewHolder -> bindCharacters(holder, position)
+            is SeriesViewHolder -> bindSeries(holder, position)
+            is ComicsViewHolder -> bindComics(holder, position)
         }
     }
 
@@ -86,37 +76,41 @@ class EventAdapter(
     }
 
     private fun bindCharacters(holder: CharacterViewHolder, position: Int) {
-        val viewModel = list[position] as EventDetailsItem.Character
-        val adapter = viewModel.viewModel.characters.value?.toData()
-            ?.let { CharactersAdapter(it, eventDetailsListener) }
-        Log.d("Tag",viewModel.viewModel.characters.value?.toData().toString())
+        val character = list[position] as EventDetailsItem.Character
+        val adapter = CharactersAdapter(character.profileResult, eventDetailsListener)
         holder.binding.recyclerView.adapter = adapter
-        holder.binding.viewModel = viewModel.viewModel
-
     }
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
-        val viewModel = list[position] as EventDetailsItem.Series
-        val adapter =
-            viewModel.viewModel.series.value?.toData()
-                ?.let { SeriesAdapter(it, eventDetailsListener) }
+        val series = list[position] as EventDetailsItem.Series
+        val adapter = SeriesAdapter(series.seriesResult, eventDetailsListener)
         holder.binding.recyclerView2.adapter = adapter
-        holder.binding.viewModel = viewModel.viewModel
     }
 
     private fun bindComics(holder: ComicsViewHolder, position: Int) {
-        val viewModel = list[position] as EventDetailsItem.Comics
-        val adapter =
-            viewModel.viewModel.comics.value?.toData()
-                ?.let { ComicsAdapter(it, eventDetailsListener) }
+        val comics = list[position] as EventDetailsItem.Comics
+        val adapter = ComicsAdapter(comics.comicsResult, eventDetailsListener)
         holder.binding.recyclerView.adapter = adapter
-        holder.binding.viewModel = viewModel.viewModel
     }
 
-    override fun getItemViewType(position: Int) = list[position].type.ordinal
+    override fun getItemViewType(position: Int): Int {
+        return when (list[position].type) {
+            EventDetailsItemType.HEADER -> VIEW_TYPE_HEADER
+            EventDetailsItemType.CHARACTER -> VIEW_TYPE_CHARACTER
+            EventDetailsItemType.SERIES -> VIEW_TYPE_SERIES
+            EventDetailsItemType.COMICS -> VIEW_TYPE_COMIC
+        }
+    }
 
     class HeaderViewHolder(val binding: HeaderViewBinding) : BaseViewHolder(binding)
     class CharacterViewHolder(val binding: CharacterViewBinding) : BaseViewHolder(binding)
     class SeriesViewHolder(val binding: SeriesViewBinding) : BaseViewHolder(binding)
     class ComicsViewHolder(val binding: ComicsViewBinding) : BaseViewHolder(binding)
+
+    companion object {
+        private const val VIEW_TYPE_HEADER = 0
+        private const val VIEW_TYPE_CHARACTER = 1
+        private const val VIEW_TYPE_SERIES = 2
+        private const val VIEW_TYPE_COMIC = 3
+    }
 }

@@ -21,38 +21,20 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     val comics = MutableLiveData<Status<List<ComicsResult>>>()
     val event = MutableLiveData<Status<EventResult>>()
 
-    val itemList = MutableLiveData<MutableList<EventDetailsItem>>()
+    val itemList: MutableList<EventDetailsItem> = mutableListOf()
 
     init {
-        initItems()
-        getCharactersByEventId()
         getEventDetails()
+        getCharactersByEventId()
         getComicsByEventId()
         getSeriesByEventId()
     }
-
-    private fun initItems() {
-      /*  with(itemList.value) {
-            this?.add(EventDetailsItem.Header(event.value?.toData()))
-            Log.d("Mimoo", this.toString())
-            this?.add(EventDetailsItem.Character(this@EventDetailsViewModel))
-            this?.add(EventDetailsItem.Series(this@EventDetailsViewModel))
-            this?.add(EventDetailsItem.Comics(this@EventDetailsViewModel))
-        }*/
-        val myItemsList = mutableListOf(
-            EventDetailsItem.Header(event.value?.toData()),
-            EventDetailsItem.Character(this@EventDetailsViewModel),
-            EventDetailsItem.Series(this@EventDetailsViewModel),
-            EventDetailsItem.Comics(this@EventDetailsViewModel)
-        )
-        itemList.postValue(myItemsList)
-    }
-
 
     private fun getEventDetails() {
         repository.getSpecificEventByEventId(293).subscribe(
             { responseStatus ->
                 responseStatus.toData()?.data?.results?.first()?.let {
+                    itemList.add(EventDetailsItem.Header(it))
                     event.postValue(Status.Success(it))
                     Log.d("Mimo", it.toString())
                 }
@@ -64,8 +46,9 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
     private fun getCharactersByEventId() {
         repository.getCharactersByEventId(293).subscribe(
-            {
+            { it ->
                 it.toData()?.data?.results?.let {
+                    itemList.add(EventDetailsItem.Character(it))
                     characters.postValue(Status.Success(it.filterNotNull()))
                     Log.d("Mimo", it.toString())
                 }
@@ -77,8 +60,9 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
     private fun getSeriesByEventId() {
         repository.getSeriesByEventId(293).subscribe(
-            {
+            { it ->
                 it.toData()?.data?.results?.let {
+                    itemList.add(EventDetailsItem.Series(it))
                     series.postValue(Status.Success(it.filterNotNull()))
                     Log.d("Mimo", it.toString())
                 }
@@ -90,8 +74,9 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
     private fun getComicsByEventId() {
         repository.getComicsByEventId(293).subscribe(
-            {
+            { it ->
                 it.toData()?.data?.results?.let {
+                    itemList.add(EventDetailsItem.Comics(it))
                     comics.postValue(Status.Success(it.filterNotNull()))
                     Log.d("Mimo", it.toString())
                 }
@@ -109,8 +94,8 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
         Log.d("Mimo", seriesId.toString())
     }
 
-    override fun onClickComics(seriesId: Int?) {
-        Log.d("Mimo", seriesId.toString())
+    override fun onClickComics(comicsId: Int?) {
+        Log.d("Mimo", comicsId.toString())
     }
 
 }

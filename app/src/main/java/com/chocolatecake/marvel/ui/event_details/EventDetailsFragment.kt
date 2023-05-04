@@ -15,13 +15,17 @@ class EventDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       viewModel.itemList.observe(viewLifecycleOwner) {
-            Log.d("fragment",it.toString())
-            val adapter = EventAdapter(it, viewModel)
-            binding.recyclerView.adapter = adapter
-     }
-    }
+        // viewModel.itemList.observe(viewLifecycleOwner) {
+        //     Log.d("fragment",it.toString())
+        val adapter = EventAdapter(viewModel.itemList, viewModel)
+        Log.d("data", viewModel.itemList.toString())
+        binding.recyclerView.adapter = adapter
+        //  }
 
+        viewModel.event.observe(viewLifecycleOwner){
+            Log.d("data", viewModel.itemList.toString())
+        }
+    }
 
     override val viewModel: EventDetailsViewModel by viewModels()
 
