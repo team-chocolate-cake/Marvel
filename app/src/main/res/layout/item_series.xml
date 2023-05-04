@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.ComicsResult" />
+            type="com.chocolatecake.marvel.ui.search.SearchType.SeriesItem" />
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
@@ -28,6 +28,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_card"
                 android:layout_gravity="top"
+                app:imageUrl="@{item.SeriesItem}"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />

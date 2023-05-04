@@ -19,14 +19,20 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
-class SearchFragment(
-    override val viewModelClass: Class<SearchViewModel>,
-    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSeacrhBinding,
-    override val layoutIdFragment: Int
-) : BaseFragment<FragmentSeacrhBinding,SearchViewModel>() {
+class SearchFragment() : BaseFragment<FragmentSeacrhBinding,SearchViewModel>() {
     private var searchQuery=SearchQuery()
+    protected val compositeDisposable = CompositeDisposable()
+    lateinit var adapter:SearchAdapter
+
+    override val viewModelClass: Class<SearchViewModel>
+        get() =SearchViewModel::class.java
+    override val inflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSeacrhBinding
+        get() = FragmentSeacrhBinding::inflate
+    override val layoutIdFragment: Int
+        get() = R.layout.fragment_seacrh
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,17 +50,25 @@ class SearchFragment(
             }
     }
 
-    @SuppressLint("CheckResult")
     private fun addSearchCallBacks(){
         Observable.create{ emitter ->
             binding.editTextSearch.addTextChangedListener { text ->
-            searchQuery = searchQuery.copy(text.toString(),getSelectedChips())
              emitter.onNext(searchQuery)
             }
         }.debounce(500,TimeUnit.MILLISECONDS).subscribe{
-
-        }
+            searchQuery = searchQuery.copy(it.toString(),getSelectedChips())
+            applySearch()
+        }.add()
     }
+
+    private fun Disposable.add(){
+        compositeDisposable.add(this)
+    }
+
+    private fun applySearch() {
+       viewModel.series
+    }
+
     private fun getSelectedChips(): List<SearchItemType> {
         val statusList = mutableListOf<SearchItemType>()
         binding.chipGroup.forEachIndexed { index, view ->
@@ -68,10 +82,20 @@ class SearchFragment(
     private fun onNext(){
 
     }
-    private fun onError(){}
+    private fun onError(){
+
+    }
+
     private fun setupChip() {
+        var items = mutableListOf<SearchType>()
+
         binding.characterChip.setOnClickListener {
             Log.e("banan","characterChip")
+            viewModel.character.observe(viewLifecycleOwner){
+             val listCharacter=it.toData()
+            items.add(SearchType.CharacterItem())
+                adapter= SearchAdapter(,viewModel)
+            }
         }
         binding.comicsChip.setOnClickListener {
             Log.e("banan","comicsChip")

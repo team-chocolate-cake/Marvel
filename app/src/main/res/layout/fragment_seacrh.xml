@@ -12,74 +12,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.search.SearchFragment">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="82dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/edit_text_search"
-            style="@style/TextStyle.BodyMedium.SearchBoxStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16sp"
-            android:layout_marginTop="16sp"
-            android:onClick=""
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <HorizontalScrollView
-            android:id="@+id/layout_filters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:scrollbars="none"
-            app:layout_constraintTop_toBottomOf="@id/view"
-            tools:layout_editor_absoluteX="0dp">
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:selectionRequired="true"
-                app:singleLine="true"
-                app:singleSelection="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/seriesChip"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/series"
-                    tools:text="series" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/comicsChip"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/comics"
-                    tools:text="comics" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/characterChip"
-                    style="@style/Widget.MaterialComponents.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="@string/character"
-                    tools:text="character" />
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -89,11 +21,10 @@
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_filters"
             app:layout_constraintVertical_bias="0.0"
             app:spanCount="2"
             tools:layout_editor_absoluteX="-63dp"
-            tools:listitem="@layout/item_marvel" />
+            tools:listitem="@layout/item_comic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
