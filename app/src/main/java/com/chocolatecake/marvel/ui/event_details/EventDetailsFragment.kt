@@ -8,6 +8,7 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
+import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem
 
 class EventDetailsFragment :
     BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
@@ -15,16 +16,10 @@ class EventDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // viewModel.itemList.observe(viewLifecycleOwner) {
-        //     Log.d("fragment",it.toString())
         val adapter = EventAdapter(viewModel.itemList, viewModel)
         Log.d("data", viewModel.itemList.toString())
-        binding.recyclerView.adapter = adapter
-        //  }
+        binding.recyclerViewEventDetails.adapter = adapter
 
-        viewModel.event.observe(viewLifecycleOwner){
-            Log.d("data", viewModel.itemList.toString())
-        }
     }
 
     override val viewModel: EventDetailsViewModel by viewModels()

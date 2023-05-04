@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.chocolatecake.marvel.ui.event_details.EventDetailsViewModel" />
+            name="item"
+            type="com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem.Series" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,13 +31,12 @@
             android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:spanCount="3"
-            app:items="@{viewModel.series.toData()}"
+            app:items="@{item.seriesResult}"
             android:orientation="horizontal"
             tools:listitem="@layout/item_event_series"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/series" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

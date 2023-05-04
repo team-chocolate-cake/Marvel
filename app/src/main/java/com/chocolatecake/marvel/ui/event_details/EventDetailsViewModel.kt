@@ -16,10 +16,10 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
+    val event = MutableLiveData<Status<EventResult>>()
     val characters = MutableLiveData<Status<List<ProfileResult?>>>()
     val series = MutableLiveData<Status<List<SeriesResult>>>()
     val comics = MutableLiveData<Status<List<ComicsResult>>>()
-    val event = MutableLiveData<Status<EventResult>>()
 
     val itemList: MutableList<EventDetailsItem> = mutableListOf()
 
@@ -78,7 +78,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
                 it.toData()?.data?.results?.let {
                     itemList.add(EventDetailsItem.Comics(it))
                     comics.postValue(Status.Success(it.filterNotNull()))
-                    Log.d("Mimo", it.toString())
+                    Log.d("aaaaa", it.toString())
                 }
             }, {
                 Log.d("Mimo", it.toString())

@@ -20,7 +20,7 @@ class EventAdapter(
 ) :
     BaseAdapter<EventDetailsItem?>(list, eventDetailsListener) {
     override val layoutId: Int
-        get() = R.layout.fragment_event_details
+        get() = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -79,18 +79,21 @@ class EventAdapter(
         val character = list[position] as EventDetailsItem.Character
         val adapter = CharactersAdapter(character.profileResult, eventDetailsListener)
         holder.binding.recyclerView.adapter = adapter
+        holder.binding.item = character
     }
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = list[position] as EventDetailsItem.Series
         val adapter = SeriesAdapter(series.seriesResult, eventDetailsListener)
         holder.binding.recyclerView2.adapter = adapter
+        holder.binding.item = series
     }
 
     private fun bindComics(holder: ComicsViewHolder, position: Int) {
         val comics = list[position] as EventDetailsItem.Comics
         val adapter = ComicsAdapter(comics.comicsResult, eventDetailsListener)
-        holder.binding.recyclerView.adapter = adapter
+        holder.binding.recyclerViewComics.adapter = adapter
+        holder.binding.item = comics
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -99,6 +102,7 @@ class EventAdapter(
             EventDetailsItemType.CHARACTER -> VIEW_TYPE_CHARACTER
             EventDetailsItemType.SERIES -> VIEW_TYPE_SERIES
             EventDetailsItemType.COMICS -> VIEW_TYPE_COMIC
+            else -> throw Exception("Mimo")
         }
     }
 

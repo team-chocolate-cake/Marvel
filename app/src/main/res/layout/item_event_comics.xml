@@ -7,6 +7,7 @@
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
+
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.event_details.EventDetailsListener" />
@@ -22,15 +23,16 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_thumbnail"
-                android:layout_width="180dp"
-                android:layout_height="0dp"
+                android:layout_width="220dp"
+                android:layout_height="150dp"
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{item.thumbnail}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
