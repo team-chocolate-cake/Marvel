@@ -13,9 +13,7 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 
 class SearchViewModel: BaseViewModel(),SearchInteractionListener{
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
-    private val _searchQuery = MutableLiveData<String>()
-    val searchQuery:LiveData<String>
-        get()=_searchQuery
+     val searchQuery = MutableLiveData<String>()
     private val _searchItemId= MutableLiveData<Int?>()
     val searchItemId:LiveData<Int?>
         get() = _searchItemId
@@ -28,22 +26,23 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
     private val _character=MutableLiveData<Status<List<ProfileResult>>>()
     val character:MutableLiveData<Status<List<ProfileResult>>>
         get()=_character
+    val itemsList= mutableListOf<SearchItems>()
     init {
         getAllSeries()
         getAllComics()
         getAllCharacters()
     }
+
     private  fun getAllSeries(){
-      repository.getSeries(_searchQuery.value,).subscribe(::onSeriesSuccess).add()
+      repository.getSeries(searchQuery.value).subscribe(::onSeriesSuccess).add()
     }
     private fun onSeriesSuccess(seriesResult :Status<BaseResponse<SeriesResult>?>){
         seriesResult.toData()?.data?.results?.let {
             _series.postValue(Status.Success(it.filterNotNull()))
         }
-
     }
     private  fun getAllCharacters(){
-        repository.getCharacters(_searchQuery.value,).subscribe(::onCharactersSuccess).add()
+        repository.getCharacters(searchQuery.value,).subscribe(::onCharactersSuccess).add()
 
     }
     private fun onCharactersSuccess(characterResult :Status<BaseResponse<ProfileResult>?>){
@@ -52,8 +51,8 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
         }
 
     }
-   private  fun getAllComics(){
-        repository.getComics(_searchQuery.value,).subscribe(::onComicsSuccess).add()
+   private fun getAllComics(){
+        repository.getComics(searchQuery.value,).subscribe(::onComicsSuccess).add()
     }
     private fun onComicsSuccess(comicResult :Status<BaseResponse<ComicsResult>?>){
         comicResult.toData()?.data?.results?.let {
@@ -61,15 +60,8 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
         }
 
     }
-
     override fun onclick(id: Int?) {
         _searchItemId.postValue(id)
     }
-
-
-
-
-
-
 
 }

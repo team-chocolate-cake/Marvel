@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.ui.search.SearchType.ComicItem" />
+            type="com.chocolatecake.marvel.data.model.ComicsResult" />
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
@@ -30,7 +30,8 @@
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+                app:imageUrl="@{item.thumbnail}"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"/>
 
             <TextView
                 android:id="@+id/text_view_title"
@@ -41,6 +42,7 @@
                 android:layout_marginTop="@dimen/spacing_tiny"
                 android:ellipsize="end"
                 android:maxLines="2"
+                android:text="@{item.title}"
                 tools:text="@tools:sample/lorem/random"/>
 
         </LinearLayout>
