@@ -26,7 +26,7 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutIdFragment, container, false)
         _binding?.apply {
-            lifecycleOwner = viewLifecycleOwner
+           lifecycleOwner = viewLifecycleOwner
             setVariable(BR.viewModel,viewModel)
         }
         return binding.root

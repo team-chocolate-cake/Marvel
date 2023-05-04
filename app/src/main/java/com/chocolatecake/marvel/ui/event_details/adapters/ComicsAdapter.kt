@@ -4,13 +4,10 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.ui.base.BaseAdapter
+import com.chocolatecake.marvel.ui.event_details.EventDetailsListener
 
-class ComicsAdapter(list: List<ComicsResult>, listener: ComicsListener) :
-    BaseAdapter<ComicsResult>(list, listener) {
+class ComicsAdapter(list: List<ComicsResult?>, listener: EventDetailsListener) :
+    BaseAdapter<ComicsResult?>(list, listener) {
     override val layoutId: Int
-        get() = R.layout.character_view
-}
-
-interface ComicsListener : BaseAdapter.BaseInteractionListener {
-    fun onClickComics(comicsId: Int?)
+        get() = R.layout.item_event_comics
 }

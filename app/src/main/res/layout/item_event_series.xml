@@ -9,7 +9,7 @@
             type="com.chocolatecake.marvel.data.model.SeriesResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.event_details.adapters.SeriesListener" />
+            type="com.chocolatecake.marvel.ui.event_details.EventDetailsListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -30,6 +30,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{item.thumbnail}"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
