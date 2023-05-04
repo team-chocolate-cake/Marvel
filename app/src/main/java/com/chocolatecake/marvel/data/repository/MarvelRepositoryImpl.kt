@@ -16,9 +16,10 @@ class MarvelRepositoryImpl : MarvelRepository {
 
     override fun getComics(
         title: String?,
-        limit: Int?
+        limit: Int?,
+        offset: Int?
     ): Single<Status<BaseResponse<ComicsResult>?>> {
-        return wrapperToState(apiService.getComics(title, limit))
+        return wrapperToState(apiService.getComics(title, limit, offset))
     }
 
     override fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>> {

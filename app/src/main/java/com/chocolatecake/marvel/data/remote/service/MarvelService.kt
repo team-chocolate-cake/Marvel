@@ -16,7 +16,8 @@ interface MarvelService {
     @GET("comics")
     fun getComics(
         @Query("title") title: String? = null,
-        @Query("limit") limit: Int? = null
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
     ): Single<Response<BaseResponse<ComicsResult>>>
 
     @GET("comics/{comicId}")
