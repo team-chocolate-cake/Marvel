@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel
+package com.chocolatecake.marvel.ui.character_details
 
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
