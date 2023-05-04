@@ -7,6 +7,10 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.character_details.CharacterDetailsViewModel" />
+
+        <variable
+            name="itemCharacter"
+            type="com.chocolatecake.marvel.data.model.ProfileResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,21 +31,25 @@
                 android:paddingHorizontal="8dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/image_view_thumbnail"
                     android:layout_width="match_parent"
                     android:layout_height="400dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/character"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                    app:imageUrl="@{viewModel.character.toData().thumbnail}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic"
+                    />
 
                 <TextView
                     android:id="@+id/text_view_character_full_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="32sp"
-                    tools:text="@tools:sample/full_names" />
+                    tools:text="@tools:sample/full_names"
+                    text="@{viewModel.character.toData().name}" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -51,7 +59,9 @@
                     android:maxLines="6"
                     android:textSize="24sp"
                     app:layout_constraintTop_toBottomOf="@+id/text_view_character_full_name"
-                    tools:text="@tools:sample/lorem/random" />
+                    tools:text="@tools:sample/lorem/random"
+                    android:text="@{viewModel.character.toData().description}"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -62,7 +72,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Comics"
-                        android:textSize="32sp" />
+                        android:textSize="24sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_comics_list"
@@ -75,5 +85,38 @@
                 </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/black"-->
+<!--            app:showWhenLoading="@{viewModel.character}"-->
+<!--            >-->
+<!--            <ProgressBar-->
+<!--                android:id="@+id/progressBar"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:indeterminateTint="@color/primary"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:showWhenLoading="@{viewModel.character}" />-->
+
+<!--            <com.airbnb.lottie.LottieAnimationView-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:clickable="true"-->
+<!--                android:focusable="true"-->
+<!--                android:onClick="@{()-> viewModel.loadCharacter()}"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:lottie_autoPlay="true"-->
+<!--                app:lottie_loop="true"-->
+<!--                app:lottie_rawRes="@raw/error"-->
+<!--                app:showWhenFailure="@{viewModel.comics}" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
