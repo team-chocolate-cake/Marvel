@@ -9,7 +9,7 @@
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -29,6 +29,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
+                android:onClick="@{() -> listener.onClickComic(item.id)}"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

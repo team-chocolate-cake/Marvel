@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
@@ -31,8 +32,9 @@ interface MarvelRepository {
     ): Single<Status<BaseResponse<SeriesResult>?>>
 
     fun getSeriesById(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
-    fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
-    fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
+    fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<ProfileResult>?>>
+    fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<ComicsResult>?>>
+    fun getEventsForSeries(seriesId: Int) : Single<Status<BaseResponse<EventResult>?>>
 
     fun getCreators(
         firstName: String? = null,

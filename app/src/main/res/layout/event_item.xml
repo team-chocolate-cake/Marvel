@@ -6,10 +6,10 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.SeriesResult" />
+            type="com.chocolatecake.marvel.data.model.EventResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -28,6 +28,7 @@
                 android:layout_width="180dp"
                 android:layout_height="0dp"
                 android:layout_gravity="top"
+                android:onClick="@{() -> listener.onClickEvent(item.id)}"
                 android:scaleType="centerCrop"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"

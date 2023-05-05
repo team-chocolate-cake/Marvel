@@ -9,7 +9,7 @@
             type="com.chocolatecake.marvel.data.model.ProfileResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -33,6 +33,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                android:onClick="@{() -> listener.onClickCharacter(item.id)}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 

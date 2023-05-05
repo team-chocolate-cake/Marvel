@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.data.remote.service
 
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
@@ -86,12 +87,17 @@ interface MarvelService {
     @GET("series/{seriesId}/characters")
     fun getCharactersForSeries(
         @Path("seriesId") seriesId: Int,
-    ): Single<Response<BaseResponse<SeriesResult>>>
+    ): Single<Response<BaseResponse<ProfileResult>>>
 
     @GET("series/{seriesId}/comics")
     fun getComicsForSeries(
         @Path("seriesId") seriesId: Int,
-    ): Single<Response<BaseResponse<SeriesResult>>>
+    ): Single<Response<BaseResponse<ComicsResult>>>
+
+    @GET("series/{seriesId}/events")
+    fun getEventsForSeries(
+        @Path("seriesId") seriesId: Int,
+    ): Single<Response<BaseResponse<EventResult>>>
 
 
     @GET("stories")
