@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.ui.home.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
@@ -20,14 +21,22 @@ class HomeViewModel : BaseViewModel(), HomeListener {
     private val _series = MutableLiveData<Status<List<SeriesResult>>>()
     val series: LiveData<Status<List<SeriesResult>>> get() = _series
 
+    private val _comic = MutableLiveData<Status<List<ComicsResult>>>()
+    val comic: LiveData<Status<List<ComicsResult>>> get() = _comic
     private val _eventId = MutableLiveData<Int?>()
     val eventId: LiveData<Int?> get() = _eventId
 
     private val _seriesId = MutableLiveData<Int?>()
     val seriesId: LiveData<Int?> get() = _seriesId
 
+    private val _comicId = MutableLiveData<Int?>()
+    val comicId : LiveData<Int?> get()= _comicId
+
     private val _navigateToSeries = MutableLiveData(false)
     val navigateToSeries: LiveData<Boolean> get() = _navigateToSeries
+
+    private val _navigateToComic = MutableLiveData(false)
+    val navigateToComic : LiveData<Boolean> get() = _navigateToComic
 
     init {
         loadData()
@@ -36,6 +45,7 @@ class HomeViewModel : BaseViewModel(), HomeListener {
     fun loadData() {
         getCurrentEvent()
         getCurrentSeries()
+        getCurrentComic()
     }
 
     private fun getCurrentEvent() {
@@ -55,16 +65,27 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         marvelRepository.getSeries(limit = 8, offset = (0..50).random())
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
-
+    private fun getCurrentComic(){
+        _comic.postValue(Status.Loading)
+        marvelRepository.getComics(limit = 8, offset=(0..50).random())
+            .subscribe(::onComicsSuccess, ::onFailure).add()
+    }
     private fun onSeriesSuccess(status: Status<BaseResponse<SeriesResult>?>) {
         status.toData()?.data?.results?.let {
             _series.postValue(Status.Success(it.filterNotNull()))
         }
     }
 
+    private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>){
+        status.toData()?.data?.results?.let{
+            _comic.postValue(Status.Success(it.filterNotNull()))
+        }
+    }
+
     private fun onFailure(throwable: Throwable) {
         _events.postValue(Status.Failure(throwable.message.toString()))
         _series.postValue(Status.Failure(throwable.message.toString()))
+        _comic.postValue(Status.Failure(throwable.message.toString()))
     }
 
     override fun onClickBanner(eventId: Int?) {
@@ -73,6 +94,14 @@ class HomeViewModel : BaseViewModel(), HomeListener {
 
     override fun onClickSeries(seriesId: Int?) {
         _seriesId.postValue(seriesId)
+    }
+
+    override fun onClickComic(comicId: Int?) {
+        _comicId.postValue(comicId)
+    }
+
+    override fun onClickMoreComics() {
+        _navigateToComic.postValue(true)
     }
 
     override fun onClickMoreSeries() {
