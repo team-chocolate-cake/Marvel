@@ -37,7 +37,7 @@ abstract class BaseAdapter<T>(
         }
     }
 
-    fun setItems(newItems: List<T>) {
+    open fun setItems(newItems: List<T>) {
         val diffUtil = DiffUtil.calculateDiff(DiffUtils(items, newItems))
         items = newItems
         diffUtil.dispatchUpdatesTo(this)
