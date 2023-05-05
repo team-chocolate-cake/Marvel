@@ -1,5 +1,6 @@
 package com.chocolatecake.marvel.ui.character_details
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -17,8 +18,11 @@ class CharacterDetailsViewModel : BaseViewModel() {
     val comics: LiveData<Status<List<ComicsResult>>> get() = _comics
     val character: LiveData<Status<ProfileResult>> get() = _character
 
+    val itemList = mutableListOf<CharacterDetailsItem>()
+
     init {
         loadCharacter()
+        loadComics()
     }
 
     fun loadCharacter() {
@@ -37,12 +41,14 @@ class CharacterDetailsViewModel : BaseViewModel() {
 
     private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>) {
         status.toData()?.data?.results?.let {
+            itemList.add(CharacterDetailsItem.Comics(it))
             _comics.postValue(Status.Success(it.filterNotNull()))
         }
     }
 
     private fun onCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
         status.toData()?.data?.results?.first().let {
+            itemList.add(CharacterDetailsItem.Header(it))
             _character.postValue(Status.Success(it!!))
         }
     }

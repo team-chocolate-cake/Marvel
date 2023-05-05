@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chocolatecake.marvel.BR
 
 abstract class BaseAdapter<T>(
-    private var items: List<T>,
+    private var items: List<T?>,
     private var listener: BaseInteractionListener
 ) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 
