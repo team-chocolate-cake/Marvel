@@ -61,6 +61,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 adapter.setItem(HomeItem.SeriesItem(it))
             }
         }
+        viewModel.comic.observe(viewLifecycleOwner){status ->
+            status.toData()?.forEach{
+                adapter.setItem(HomeItem.ComicItem(it))
+            }
+        }
     }
 
     private fun handelNavigation() {
@@ -76,10 +81,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
             }
         }
+        viewModel.comicId.observe(viewLifecycleOwner){
+            if(it != null){
+                //ToDo:Navigate To Comic Details With It
+                Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            }
+        }
         viewModel.navigateToSeries.observe(viewLifecycleOwner){
             if (it) {
                 //ToDo:Navigate To Series
                 Toast.makeText(requireContext(), "Navigate To Series", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.navigateToComic.observe(viewLifecycleOwner){
+            if (it) {
+                //ToDo:Navigate To Comics
+                Toast.makeText(requireContext(), "Navigate To Comics", Toast.LENGTH_SHORT).show()
             }
         }
     }
