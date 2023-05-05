@@ -56,6 +56,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 adapter.setItem(HomeItem.EventsItem(it))
             }
         }
+        viewModel.series.observe(viewLifecycleOwner) { status ->
+            status.toData()?.let {
+                adapter.setItem(HomeItem.SeriesItem(it))
+            }
+        }
     }
 
     private fun handelNavigation() {
@@ -63,6 +68,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
             if (it != null) {
                 //ToDo:Navigate To Event Details With It
                 Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.seriesId.observe(viewLifecycleOwner) {
+            if (it != null) {
+                //ToDo:Navigate To Series Details With It
+                Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+            }
+        }
+        viewModel.navigateToSeries.observe(viewLifecycleOwner){
+            if (it) {
+                //ToDo:Navigate To Series
+                Toast.makeText(requireContext(), "Navigate To Series", Toast.LENGTH_SHORT).show()
             }
         }
     }
