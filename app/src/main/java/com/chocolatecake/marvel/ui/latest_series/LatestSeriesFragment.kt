@@ -7,7 +7,7 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentLatestSeriesBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 
-class LatestSeriesFragment(): BaseFragment<FragmentLatestSeriesBinding, LatestSeriesViewModel>() {
+class LatestSeriesFragment() : BaseFragment<FragmentLatestSeriesBinding, LatestSeriesViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

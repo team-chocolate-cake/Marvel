@@ -17,27 +17,28 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesInteractionListener {
     val latestSeriesList: LiveData<Status<List<SeriesResult>>>
         get() = _latestSeriesList
 
-    private var _id= MutableLiveData<Int>()
+    private var _id = MutableLiveData<Int>()
     val id: LiveData<Int>
-        get()= _id
+        get() = _id
 
     init {
         getLatestSeriesList()
     }
 
-    private fun getLatestSeriesList(){
-        repository.getSeries(limit=100).subscribe({
-         it.toData()?.data?.results?.let {result ->
-             _latestSeriesList.postValue(Status.Success(result.filterNotNull().sortedByDescending { it.startYear }))
-//             Log.d("AMNA",result.requireNoNulls().toString())
-         }
+    private fun getLatestSeriesList() {
+        repository.getSeries(limit = 100).subscribe({
+            it.toData()?.data?.results?.let { result ->
+                _latestSeriesList.postValue(
+                    Status.Success(
+                        result.filterNotNull().sortedByDescending { it.startYear })
+                )
+            }
         }, {
             _latestSeriesList.postValue(Status.Failure(it.message.toString()))
         }).add()
     }
 
-    override fun onClickSeries(seriesId: Int){
-//        Log.i("AMNA",seriesId.toString())
+    override fun onClickSeries(seriesId: Int) {
         _id.postValue(seriesId)
     }
 }
