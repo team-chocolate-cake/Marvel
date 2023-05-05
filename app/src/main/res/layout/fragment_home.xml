@@ -6,24 +6,51 @@
     <data>
         <variable
             name="viewModel"
-            type="com.chocolatecake.marvel.ui.home.HomeViewModel" />
+            type="com.chocolatecake.marvel.ui.home.view_model.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.HomeFragment">
+        tools:context=".ui.home.view.HomeFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:layout_marginHorizontal="@dimen/spacing_custom"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/spacing_custom"
+            android:layout_marginTop="@dimen/spacing_medium"
+            android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="4"
-            tools:listitem="@layout/item_events_banner" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:showWhenSuccess="@{viewModel.events}" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showWhenLoading="@{viewModel.events}" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="@{()-> viewModel.loadData()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/error"
+            app:showWhenFailure="@{viewModel.events}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
