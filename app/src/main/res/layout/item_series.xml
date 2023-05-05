@@ -28,8 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_card"
                 android:layout_gravity="top"
-                app:imageUrl="@{item.thumbnail}"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{item.thumbnail}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 

@@ -1,5 +1,6 @@
 package com.chocolatecake.marvel.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -14,6 +15,7 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 class SearchViewModel: BaseViewModel(),SearchInteractionListener{
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
      val searchQuery = MutableLiveData<String>()
+
     private val _searchItemId= MutableLiveData<Int?>()
     val searchItemId:LiveData<Int?>
         get() = _searchItemId
@@ -39,6 +41,7 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
     private fun onSeriesSuccess(seriesResult :Status<BaseResponse<SeriesResult>?>){
         seriesResult.toData()?.data?.results?.let {
             _series.postValue(Status.Success(it.filterNotNull()))
+            Log.e("Tag",it.toString())
         }
     }
     private  fun getAllCharacters(){
@@ -55,9 +58,7 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
         ).add()
     }
 
-   fun onSearchForSeries(){}
-    fun onSearchForComics(){}
-    fun onSearchForCharacters(){}
+
 
     private fun onComicsSuccess(comicResult :Status<BaseResponse<ComicsResult>?>){
         comicResult.toData()?.data?.results?.let {
@@ -69,7 +70,8 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
         _comics.postValue(Status.Failure(throwable.message.toString()))
         _character.postValue(Status.Failure(throwable.message.toString()))
     }
-   override fun onclickSeries(seriesId: Int?) {
+
+    override fun onclickSeries(seriesId: Int?) {
         _searchItemId.postValue(seriesId)
     }
    override fun onclickComics(comicsId: Int?) {

@@ -15,8 +15,6 @@ abstract class BaseAdapter<T>(
     private var listener: BaseInteractionListener
 ) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 
-    interface BaseInteractionListener
-
     abstract val layoutId: Int
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return ItemViewHolder(
@@ -48,6 +46,8 @@ abstract class BaseAdapter<T>(
     fun getItems() = items
     override fun getItemCount() = items.size
 
+    interface BaseInteractionListener
+
     class ItemViewHolder(val binding: ViewDataBinding) : BaseViewHolder(binding)
 
     abstract class BaseViewHolder(itemView: ViewDataBinding) : ViewHolder(itemView.root)
@@ -58,6 +58,7 @@ abstract class BaseAdapter<T>(
         override fun getNewListSize() = newList.size
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             oldList[oldItemPosition] == newList[newItemPosition]
+
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = true
 
     }
