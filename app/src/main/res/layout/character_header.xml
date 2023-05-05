@@ -12,11 +12,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="@dimen/spacing_tiny"
         android:orientation="vertical"
-        android:paddingHorizontal="8dp"
+        android:paddingHorizontal="@dimen/spacing_small"
         tools:ignore="MissingConstraints"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="@dimen/spacing_medium"
         >
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -32,23 +32,23 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:id="@+id/text_view_character_full_name"
             text="@{item.name}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="@dimen/text_giant"
             tools:text="@tools:sample/full_names" />
 
         <TextView
             app:layout_constraintTop_toBottomOf="@+id/text_view_character_full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:ellipsize="end"
             android:maxLines="6"
             android:text="@{item.description}"
-            android:textSize="16sp"
+            android:textSize="@dimen/spacing_medium"
             tools:text="@tools:sample/lorem/random" />
 
     </LinearLayout>
