@@ -11,7 +11,6 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.home.model.HomeItem
 import com.chocolatecake.marvel.ui.home.view.HomeListener
 import com.chocolatecake.marvel.ui.home.view.HomeViewPagerLayoutManager
-import com.chocolatecake.marvel.ui.home.view.adapter.BannerAdapter
 
 class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val listener: HomeListener) :
     BaseAdapter<HomeItem>(itemsHome, listener) {
