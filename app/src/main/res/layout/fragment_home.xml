@@ -20,7 +20,6 @@
             android:layout_height="0dp"
             android:clipToPadding="false"
             android:paddingHorizontal="@dimen/spacing_custom"
-            android:layout_marginTop="@dimen/spacing_medium"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
