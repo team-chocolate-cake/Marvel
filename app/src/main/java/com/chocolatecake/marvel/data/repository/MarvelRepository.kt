@@ -11,7 +11,8 @@ import io.reactivex.rxjava3.core.Single
 interface MarvelRepository {
     fun getComics(
         title: String? = null,
-        limit: Int? = null
+        limit: Int? = null,
+        offset: Int? = null
     ): Single<Status<BaseResponse<ComicsResult>?>>
 
     fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>>
