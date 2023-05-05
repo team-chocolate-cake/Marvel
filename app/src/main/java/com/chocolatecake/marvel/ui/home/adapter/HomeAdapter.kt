@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.ItemBannerListBinding
+import com.chocolatecake.marvel.databinding.ItemSeriesListBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.home.model.HomeItem
 import com.chocolatecake.marvel.ui.home.view.HomeListener
@@ -39,6 +40,16 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                     )
                 )
             }
+            VIEW_TYPE_SERIES -> {
+                SeriesViewHolder(
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.item_series_list,
+                        parent,
+                        false
+                    )
+                )
+            }
 
             else -> throw Exception("UNKNOWN VIEW TYPE")
         }
@@ -50,6 +61,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
         }
         when (itemsHome[position]) {
             is HomeItem.EventsItem -> bindHeader(holder as HeaderViewHolder, position)
+            is HomeItem.SeriesItem -> bindSeries(holder as SeriesViewHolder, position)
             else -> throw Exception("UNKNOWN VIEW TYPE")
         }
     }
@@ -63,6 +75,13 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
         snapHelper.attachToRecyclerView(holder.binding.recyclerViewBanner)
         holder.binding.recyclerViewBanner.layoutManager =
             HomeViewPagerLayoutManager(holder.binding.root.context)
+    }
+
+    private fun bindSeries(holder: SeriesViewHolder, position: Int) {
+        val series = itemsHome[position] as HomeItem.SeriesItem
+        val adapter = SeriesAdapter(series.seriesResult, listener)
+        holder.binding.recyclerViewSeries.adapter = adapter
+        holder.binding.listener = listener
     }
 
     override fun setItems(newItems: List<HomeItem>) {
@@ -79,9 +98,11 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
 
 
     class HeaderViewHolder(val binding: ItemBannerListBinding) : BaseViewHolder(binding)
+    class SeriesViewHolder(val binding: ItemSeriesListBinding) : BaseViewHolder(binding)
 
     companion object {
         private const val VIEW_TYPE_HEADER = 0
+        private const val VIEW_TYPE_SERIES = 1
     }
 
 }
