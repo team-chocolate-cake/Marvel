@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
+
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener" />
@@ -16,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
-        android:backgroundTint="@color/black">
+        android:backgroundTint="@color/black"
+        android:onClick="@{() -> listener.onClickComic(item.id)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,7 +32,7 @@
                 android:layout_height="0dp"
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
-                android:onClick="@{() -> listener.onClickComic(item.id)}"
+                app:imageUrl="@{item.thumbnail}"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

@@ -16,7 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
-        android:backgroundTint="@color/black">
+        android:backgroundTint="@color/black"
+        android:onClick="@{() -> listener.onClickEvent(item.id)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -28,8 +29,8 @@
                 android:layout_width="180dp"
                 android:layout_height="0dp"
                 android:layout_gravity="top"
-                android:onClick="@{() -> listener.onClickEvent(item.id)}"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{item.thumbnail}"
                 app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

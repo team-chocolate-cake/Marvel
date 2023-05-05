@@ -15,9 +15,7 @@ import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener
 class SeriesAdapter(
     private var itemsSeriesDetails: MutableList<SeriesDetailsItem>,
     private val listener: SeriesDetailsListener
-) :
-
-    BaseAdapter<SeriesDetailsItem>(itemsSeriesDetails, listener) {
+) : BaseAdapter<SeriesDetailsItem>(itemsSeriesDetails, listener) {
 
     override val layoutId: Int
         get() = 1

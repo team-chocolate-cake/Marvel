@@ -11,6 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsFragment"
-        tools:layout="@layout/header_view"/>
+        tools:layout="@layout/fragment_series_details"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
