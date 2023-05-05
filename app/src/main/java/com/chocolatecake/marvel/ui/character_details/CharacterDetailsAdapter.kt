@@ -28,7 +28,6 @@ class CharacterDetailsAdapter(
                     )
                 )
             }
-
             R.layout.character_comics -> {
                 CharacterComicsViewHolder(
                     DataBindingUtil.inflate(
