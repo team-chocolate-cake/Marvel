@@ -1,10 +1,10 @@
 package com.chocolatecake.marvel.ui.character_details
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.chocolatecake.marvel.R
+import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.databinding.CharacterComicsBinding
 import com.chocolatecake.marvel.databinding.CharacterHeaderBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
@@ -57,7 +57,7 @@ class CharacterDetailsAdapter(
 
     private fun bindCharacterComics(holder: CharacterComicsViewHolder, position: Int) {
         val comics = list[position] as CharacterDetailsItem.Comics
-        val adapter = CharacterComicsAdapter(comics.result, listener)
+        val adapter = CharacterComicsAdapter(comics.result as List<ComicsResult>, listener)
         holder.binding.recyclerViewComicsList.adapter = adapter
         holder.binding.item = comics
     }

@@ -5,7 +5,7 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 
 class CharacterComicsAdapter(
-    list: List<ComicsResult?>, listener: BaseAdapter.BaseInteractionListener,
+    list: List<ComicsResult>, listener: BaseAdapter.BaseInteractionListener,
 
 ) : BaseAdapter<ComicsResult>(list, listener) {
     override val layoutId: Int
