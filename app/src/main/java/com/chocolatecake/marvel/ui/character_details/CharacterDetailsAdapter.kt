@@ -17,10 +17,8 @@ class CharacterDetailsAdapter(
         get() = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        Log.i("Created", "the list is ${list}")
         return when (viewType) {
             R.layout.character_header -> {
-                Log.i("Created", "header")
                 CharacterHeaderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -32,7 +30,6 @@ class CharacterDetailsAdapter(
             }
 
             R.layout.character_comics -> {
-                Log.i("Created", "Comics")
                 CharacterComicsViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -48,7 +45,6 @@ class CharacterDetailsAdapter(
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        Log.i("Created", "The holder is ${holder::class.simpleName}")
         when (holder) {
             is CharacterHeaderViewHolder -> bindCharacterHeader(holder, position)
             is CharacterComicsViewHolder -> bindCharacterComics(holder, position)

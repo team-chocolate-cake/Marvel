@@ -11,7 +11,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 
-class CharacterDetailsViewModel : BaseViewModel() {
+class CharacterDetailsViewModel : BaseViewModel(), CharacterDetailsListener {
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     private val _character = MutableLiveData<Status<ProfileResult>>()
@@ -25,14 +25,14 @@ class CharacterDetailsViewModel : BaseViewModel() {
         loadComics()
     }
 
-    fun loadCharacter() {
+    private fun loadCharacter() {
         _character.postValue(Status.Loading)
         repository.getCharacterById(1017100)
             .subscribe(::onCharacterSuccess, ::onCharacterFailure)
             .add()
     }
 
-    fun loadComics() {
+    private fun loadComics() {
         _comics.postValue(Status.Loading)
         repository.getComicsForCharacter(1017100)
             .subscribe(::onComicsSuccess, ::onCharacterFailure)
@@ -56,6 +56,10 @@ class CharacterDetailsViewModel : BaseViewModel() {
     private fun onCharacterFailure(throwable: Throwable) {
         _character.postValue(Status.Failure(throwable.message.toString()))
         _comics.postValue(Status.Failure(throwable.message.toString()))
+    }
+
+    override fun onClickComic(comicId: Int) {
+        Log.i("Clicked",comicId.toString())
     }
 
 

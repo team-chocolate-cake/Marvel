@@ -17,10 +17,7 @@ class CharacterDetailsFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter =
-            CharacterDetailsAdapter(viewModel.itemList, object : CharacterDetailsListener {
-                override fun onClickComic(comicId: Int) {
-                }
-            })
+            CharacterDetailsAdapter(viewModel.itemList,viewModel)
         binding.recyclerViewCharacterDetails.adapter = adapter
     }
 }
