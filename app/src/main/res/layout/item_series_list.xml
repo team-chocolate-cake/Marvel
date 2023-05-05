@@ -66,20 +66,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recycler_view_series" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/text_view_more_comics"-->
-<!--            style="@style/TextAppearance.Material3.BodyMedium"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="@dimen/spacing_small"-->
-<!--            android:fontFamily="@font/roboto"-->
-<!--            android:text="@string/more"-->
-<!--            android:onClick="@{() -> listener.onClickMoreComics()}"-->
-<!--            android:textColor="@color/on_background_60"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/title_comics" />-->
-
+        <TextView
+            android:id="@+id/text_view_more_comics"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing_small"
+            android:fontFamily="@font/roboto"
+            android:text="@string/more"
+            android:onClick="@{() -> listener.onClickMoreComics()}"
+            android:textColor="@color/on_background_60"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/title_comics" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
