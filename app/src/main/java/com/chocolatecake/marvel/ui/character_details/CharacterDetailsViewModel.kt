@@ -21,10 +21,13 @@ class CharacterDetailsViewModel : BaseViewModel(), CharacterDetailsListener {
     val itemList = mutableListOf<CharacterDetailsItem>()
 
     init {
+        loadDetails()
+    }
+
+    fun loadDetails(){
         loadCharacter()
         loadComics()
     }
-
     private fun loadCharacter() {
         _character.postValue(Status.Loading)
         repository.getCharacterById(1017100)
