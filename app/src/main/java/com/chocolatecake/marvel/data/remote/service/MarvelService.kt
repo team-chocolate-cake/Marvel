@@ -75,6 +75,7 @@ interface MarvelService {
     @GET("series")
     fun getSeries(
         @Query("title") title: String? = null,
+        @Query("offset") offset: Int? = null,
         @Query("limit") limit: Int? = null
     ): Single<Response<BaseResponse<SeriesResult>>>
 

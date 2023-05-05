@@ -52,7 +52,8 @@ class HomeViewModel : BaseViewModel(), HomeListener {
 
     private fun getCurrentSeries() {
         _series.postValue(Status.Loading)
-        marvelRepository.getSeries(limit = 8).subscribe(::onSeriesSuccess, ::onFailure).add()
+        marvelRepository.getSeries(limit = 8, offset = (0..50).random())
+            .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
     private fun onSeriesSuccess(status: Status<BaseResponse<SeriesResult>?>) {

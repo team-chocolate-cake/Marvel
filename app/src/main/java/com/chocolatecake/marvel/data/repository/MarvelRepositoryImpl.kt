@@ -70,9 +70,10 @@ class MarvelRepositoryImpl : MarvelRepository {
 
     override fun getSeries(
         title: String?,
+        offset: Int?,
         limit: Int?
     ): Single<Status<BaseResponse<SeriesResult>?>> {
-        return wrapperToState(apiService.getSeries(title, limit))
+        return wrapperToState(apiService.getSeries(title, offset, limit))
     }
 
     override fun getSeriesById(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {

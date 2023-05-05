@@ -27,6 +27,7 @@ interface MarvelRepository {
 
     fun getSeries(
         title: String? = null,
+        offset: Int? = null,
         limit: Int? = null
     ): Single<Status<BaseResponse<SeriesResult>?>>
 
