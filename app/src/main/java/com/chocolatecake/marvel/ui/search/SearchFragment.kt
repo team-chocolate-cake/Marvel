@@ -33,8 +33,8 @@ class SearchFragment() : BaseFragment<FragmentSeacrhBinding,SearchViewModel>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = SearchAdapter(viewModel.itemsList,)
-//              binding.chipGroup.setOnCheckedChangeListener { group, checkedIds ->
+//        val adapter = SearchAdapter(viewModel.itemsList,)
+//             .setOnCheckedChangeListener { group, checkedIds ->
 //                val selectedChip = view.findViewById<Chip>(checkedIds)
 //                if (selectedChip != null) {
 //                    val message = when(selectedChip.id) {
@@ -59,9 +59,6 @@ class SearchFragment() : BaseFragment<FragmentSeacrhBinding,SearchViewModel>() {
 //        }.add()
 //    }
 
-    private fun Disposable.add(){
-        compositeDisposable.add(this)
-    }
 
     private fun applySearch() {
        viewModel.series

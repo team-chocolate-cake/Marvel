@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.chocolatecake.marvel.ui.search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.search.SearchFragment">
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -25,6 +28,30 @@
             app:spanCount="2"
             tools:layout_editor_absoluteX="-63dp"
             tools:listitem="@layout/item_comic" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/error"
+            app:showWhenFailure="@{viewModel.comics}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
