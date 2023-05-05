@@ -5,7 +5,9 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 interface HomeListener: BaseAdapter.BaseInteractionListener {
     fun onClickBanner(eventId: Int?)
     fun onClickSeries(seriesId: Int?)
+    fun onClickComic(comicId: Int?)
 
+    fun onClickMoreComics()
     fun onClickMoreSeries()
 
 }
