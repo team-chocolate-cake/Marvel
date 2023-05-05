@@ -15,7 +15,9 @@
         android:layout_marginTop="4dp"
         android:orientation="vertical"
         android:paddingHorizontal="8dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:layout_marginBottom="16dp"
+        >
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_thumbnail"
@@ -30,11 +32,12 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
+            android:layout_marginTop="16dp"
             android:id="@+id/text_view_character_full_name"
             text="@{item.name}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="32sp"
+            android:textSize="24sp"
             tools:text="@tools:sample/full_names" />
 
         <TextView
@@ -45,9 +48,8 @@
             android:ellipsize="end"
             android:maxLines="6"
             android:text="@{item.description}"
-            android:textSize="24sp"
+            android:textSize="16sp"
             tools:text="@tools:sample/lorem/random" />
-
 
     </LinearLayout>
 </layout>

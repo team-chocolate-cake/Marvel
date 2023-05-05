@@ -24,15 +24,23 @@ class CharacterDetailsViewModel : BaseViewModel(), CharacterDetailsListener {
         loadDetails()
     }
 
-    fun loadDetails(){
+    fun loadDetails() {
         loadCharacter()
         loadComics()
     }
+
     private fun loadCharacter() {
         _character.postValue(Status.Loading)
         repository.getCharacterById(1017100)
             .subscribe(::onCharacterSuccess, ::onCharacterFailure)
             .add()
+    }
+
+    private fun onCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
+        status.toData()?.data?.results?.first().let {
+            itemList.add(CharacterDetailsItem.Header(it))
+            _character.postValue(Status.Success(it!!))
+        }
     }
 
     private fun loadComics() {
@@ -49,21 +57,13 @@ class CharacterDetailsViewModel : BaseViewModel(), CharacterDetailsListener {
         }
     }
 
-    private fun onCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
-        status.toData()?.data?.results?.first().let {
-            itemList.add(CharacterDetailsItem.Header(it))
-            _character.postValue(Status.Success(it!!))
-        }
-    }
-
     private fun onCharacterFailure(throwable: Throwable) {
         _character.postValue(Status.Failure(throwable.message.toString()))
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
     override fun onClickComic(comicId: Int) {
-        Log.i("Clicked",comicId.toString())
+        Log.i("Clicked", comicId.toString())
     }
-
 
 }

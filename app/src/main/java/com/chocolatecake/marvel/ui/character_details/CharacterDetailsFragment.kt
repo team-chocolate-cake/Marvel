@@ -1,7 +1,6 @@
 package com.chocolatecake.marvel.ui.character_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import com.chocolatecake.marvel.R
@@ -16,8 +15,8 @@ class CharacterDetailsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter =
-            CharacterDetailsAdapter(viewModel.itemList,viewModel)
+
+        val adapter = CharacterDetailsAdapter(viewModel.itemList, viewModel)
         binding.recyclerViewCharacterDetails.adapter = adapter
     }
 }

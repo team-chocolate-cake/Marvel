@@ -14,7 +14,7 @@ class CharacterDetailsAdapter(
     private val listener: CharacterDetailsListener,
 ) : BaseAdapter<CharacterDetailsItem>(list, listener) {
     override val layoutId: Int
-        get() = 0
+        get() = R.layout.character_details
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -39,7 +39,6 @@ class CharacterDetailsAdapter(
                     )
                 )
             }
-
             else -> throw IllegalStateException("Unknown view type $viewType")
         }
     }
@@ -49,7 +48,6 @@ class CharacterDetailsAdapter(
             is CharacterHeaderViewHolder -> bindCharacterHeader(holder, position)
             is CharacterComicsViewHolder -> bindCharacterComics(holder, position)
         }
-
     }
 
     private fun bindCharacterHeader(holder: CharacterHeaderViewHolder, position: Int) {
@@ -69,15 +67,12 @@ class CharacterDetailsAdapter(
             is CharacterDetailsItem.Header -> R.layout.character_header
             is CharacterDetailsItem.Comics -> R.layout.character_comics
         }
-
     }
 
-    inner class CharacterHeaderViewHolder(val binding: CharacterHeaderBinding) :
+    class CharacterHeaderViewHolder(val binding: CharacterHeaderBinding) :
         BaseViewHolder(binding)
 
-    inner class CharacterComicsViewHolder(val binding: CharacterComicsBinding) :
+    class CharacterComicsViewHolder(val binding: CharacterComicsBinding) :
         BaseViewHolder(binding)
 }
-
-
 
