@@ -4,7 +4,7 @@ import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.StoriesResult
+import com.chocolatecake.marvel.data.model.EventResult
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import retrofit2.http.GET
@@ -94,21 +94,24 @@ interface MarvelService {
     ): Single<Response<BaseResponse<SeriesResult>>>
 
 
-    @GET("stories")
-    fun getStories(): Single<Response<BaseResponse<StoriesResult>>>
+    @GET("events")
+    fun getEvents(
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
+    ): Single<Response<BaseResponse<EventResult>>>
 
-    @GET("stories/{storyId}")
-    fun getStoryById(
-        @Path("storyId") storyId: Int,
-    ): Single<Response<BaseResponse<StoriesResult>>>
+    @GET("events/{eventId}")
+    fun getEventById(
+        @Path("eventId") storyId: Int,
+    ): Single<Response<BaseResponse<EventResult>>>
 
-    @GET("stories/{storyId}/characters")
-    fun getCharactersForStory(
-        @Path("storyId") storyId: Int,
-    ): Single<Response<BaseResponse<StoriesResult>>>
+    @GET("events/{eventId}/characters")
+    fun getCharactersForEvent(
+        @Path("eventId") storyId: Int,
+    ): Single<Response<BaseResponse<EventResult>>>
 
-    @GET("stories/{storyId}/comics")
-    fun getComicsForStory(
-        @Path("storyId") storyId: Int,
-    ): Single<Response<BaseResponse<StoriesResult>>>
+    @GET("events/{eventId}/comics")
+    fun getComicsForEvent(
+        @Path("eventId") storyId: Int,
+    ): Single<Response<BaseResponse<EventResult>>>
 }

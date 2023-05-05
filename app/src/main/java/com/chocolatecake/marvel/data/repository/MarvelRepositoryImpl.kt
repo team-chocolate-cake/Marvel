@@ -3,7 +3,7 @@ package com.chocolatecake.marvel.data.repository
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.StoriesResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.remote.service.MarvelApi
 import com.chocolatecake.marvel.data.util.Status
@@ -87,20 +87,23 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
 
-    override fun getStories(): Single<Status<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getStories())
+    override fun getEvents(
+        limit: Int?,
+        offset: Int?
+    ): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getEvents(limit, offset))
     }
 
-    override fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getStoryById(storyId))
+    override fun getEventById(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getEventById(eventId))
     }
 
-    override fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getCharactersForStory(storyId))
+    override fun getCharactersForEvent(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getCharactersForEvent(eventId))
     }
 
-    override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
-        return wrapperToState(apiService.getComicsForStory(storyId))
+    override fun getComicsForEvent(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getComicsForEvent(eventId))
     }
 
     private fun <T> wrapperToState(response: Single<Response<BaseResponse<T>>>)
