@@ -21,7 +21,9 @@ class SearchFragment() : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() 
 
         val currentList = mutableListOf<SearchItems>()
         Log.d("current",currentList.toString())
-        val adapter = SearchAdapter(mutableListOf(SearchItems.SeriesItem(emptyList())), viewModel)
+        val adapter = SearchAdapter(
+            mutableListOf(SearchItems.SeriesItem(emptyList()))
+            , viewModel)
         binding.recyclerView.adapter = adapter
 
 //        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
