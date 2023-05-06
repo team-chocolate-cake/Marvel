@@ -1,10 +1,10 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.E2ventResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.StoryResult
+import com.chocolatecake.marvel.data.model.StoriesResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.remote.service.MarvelApi
 import com.chocolatecake.marvel.data.util.Status
@@ -23,9 +23,10 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getComics(title, limit, offset))
     }
 
-    override fun getEventByComicId(comicId: Int): Single<Status<BaseResponse<E2ventResult>?>> {
-        TODO("Not yet implemented")
+    override fun getEventByComicId(comicId: Int): Single<Status<BaseResponse<List<EventResult>>?>> {
+        return wrapperToState(apiService.getEventByComicId(comicId))
     }
+
 
     override fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicById(comicId))
@@ -93,19 +94,19 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
 
-    override fun getStories(): Single<Status<BaseResponse<StoryResult>?>> {
+    override fun getStories(): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getStories())
     }
 
-    override fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoryResult>?>> {
+    override fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getStoryById(storyId))
     }
 
-    override fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoryResult>?>> {
+    override fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getCharactersForStory(storyId))
     }
 
-    override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoryResult>?>> {
+    override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getComicsForStory(storyId))
     }
 
