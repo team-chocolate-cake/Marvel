@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.ui.event_details
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
@@ -16,10 +17,18 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
-    val event = MutableLiveData<Status<EventResult>>()
-    val characters = MutableLiveData<Status<List<ProfileResult?>>>()
-    val series = MutableLiveData<Status<List<SeriesResult>>>()
-    val comics = MutableLiveData<Status<List<ComicsResult>>>()
+    private val _event = MutableLiveData<Status<EventResult>>()
+    val event: LiveData<Status<EventResult>> get() = _event
+
+    private val _characters = MutableLiveData<Status<List<ProfileResult?>>>()
+    val characters: MutableLiveData<Status<List<ProfileResult?>>> get() = _characters
+
+    private val _series = MutableLiveData<Status<List<SeriesResult>>>()
+    val series: MutableLiveData<Status<List<SeriesResult>>> get() = _series
+
+    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
+    val comics: MutableLiveData<Status<List<ComicsResult>>> get() = _comics
+
 
     val _characterId = MutableLiveData<Int?>()
     val _seriesId = MutableLiveData<Int?>()
@@ -39,7 +48,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             { responseStatus ->
                 responseStatus.toData()?.data?.results?.first()?.let {
                     itemList.add(EventDetailsItem.Header(it))
-                    event.postValue(Status.Success(it))
+                    _event.postValue(Status.Success(it))
                     Log.d("Mimo", it.toString())
                 }
             }, {
@@ -53,7 +62,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             { it ->
                 it.toData()?.data?.results?.let {
                     itemList.add(EventDetailsItem.Character(it))
-                    characters.postValue(Status.Success(it.filterNotNull()))
+                    _characters.postValue(Status.Success(it.filterNotNull()))
                     Log.d("Mimo", it.toString())
                 }
             }, {
@@ -67,7 +76,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             { it ->
                 it.toData()?.data?.results?.let {
                     itemList.add(EventDetailsItem.Series(it))
-                    series.postValue(Status.Success(it.filterNotNull()))
+                    _series.postValue(Status.Success(it.filterNotNull()))
                     Log.d("Mimo", it.toString())
                 }
             }, {
@@ -81,7 +90,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             { it ->
                 it.toData()?.data?.results?.let {
                     itemList.add(EventDetailsItem.Comics(it))
-                    comics.postValue(Status.Success(it.filterNotNull()))
+                    _comics.postValue(Status.Success(it.filterNotNull()))
                     Log.d("aaaaa", it.toString())
                 }
             }, {
@@ -101,5 +110,4 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     override fun onClickComics(comicsId: Int?) {
         _comicsId.postValue(comicsId)
     }
-
 }
