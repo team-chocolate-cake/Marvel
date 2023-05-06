@@ -8,6 +8,6 @@ import com.chocolatecake.marvel.ui.home.view.HomeListener
 class BannerAdapter(itemsBanner: List<EventResult?>,listener: HomeListener) :
     BaseAdapter<EventResult?>(itemsBanner, listener) {
     override val layoutId: Int
-        get() = R.layout.item_banner
+        get() = R.layout.home_item_banner
 
 }

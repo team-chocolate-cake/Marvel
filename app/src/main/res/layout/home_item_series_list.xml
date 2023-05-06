@@ -52,7 +52,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/series_title_text_view"
-            tools:listitem="@layout/item_series" />
+            tools:listitem="@layout/home_item_series" />
 
         <TextView
             android:id="@+id/title_comics"

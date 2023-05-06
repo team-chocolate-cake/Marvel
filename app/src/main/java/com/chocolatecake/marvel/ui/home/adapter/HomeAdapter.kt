@@ -5,9 +5,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.databinding.ItemBannerListBinding
-import com.chocolatecake.marvel.databinding.ItemComicBinding
-import com.chocolatecake.marvel.databinding.ItemSeriesListBinding
+import com.chocolatecake.marvel.databinding.HomeItemBannerListBinding
+import com.chocolatecake.marvel.databinding.HomeItemComicBinding
+import com.chocolatecake.marvel.databinding.HomeItemSeriesListBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.home.model.HomeItem
 import com.chocolatecake.marvel.ui.home.view.HomeListener
@@ -34,7 +34,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                 HeaderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_banner_list,
+                        R.layout.home_item_banner_list,
                         parent,
                         false
                     )
@@ -44,7 +44,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                 SeriesViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_series_list,
+                        R.layout.home_item_series_list,
                         parent,
                         false
                     )
@@ -54,7 +54,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                 ComicViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
-                        R.layout.item_comic,
+                        R.layout.home_item_comic,
                         parent,
                         false
                     )
@@ -111,9 +111,9 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
         return -1
     }
 
-    class HeaderViewHolder(val binding: ItemBannerListBinding) : BaseViewHolder(binding)
-    class SeriesViewHolder(val binding: ItemSeriesListBinding) : BaseViewHolder(binding)
-    class ComicViewHolder(val binding : ItemComicBinding) : BaseViewHolder(binding)
+    class HeaderViewHolder(val binding: HomeItemBannerListBinding) : BaseViewHolder(binding)
+    class SeriesViewHolder(val binding: HomeItemSeriesListBinding) : BaseViewHolder(binding)
+    class ComicViewHolder(val binding : HomeItemComicBinding) : BaseViewHolder(binding)
     companion object {
         private const val VIEW_TYPE_HEADER = 0
         private const val VIEW_TYPE_SERIES = 1
