@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
@@ -21,6 +22,11 @@ class MarvelRepositoryImpl : MarvelRepository {
     ): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComics(title, limit, offset))
     }
+
+    override fun getEventByComicId(comicId: Int): Single<Status<BaseResponse<List<EventResult>>?>> {
+        return wrapperToState(apiService.getEventByComicId(comicId))
+    }
+
 
     override fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicById(comicId))
