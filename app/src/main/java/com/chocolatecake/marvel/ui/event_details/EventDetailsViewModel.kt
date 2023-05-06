@@ -29,12 +29,16 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     val comics: MutableLiveData<Status<List<ComicsResult>>> get() = _comics
 
+    private val _characterId = MutableLiveData<Int?>()
+    val characterId: MutableLiveData<Int?> get() = _characterId
 
-    val _characterId = MutableLiveData<Int?>()
-    val _seriesId = MutableLiveData<Int?>()
-    val _comicsId = MutableLiveData<Int?>()
+    private val _seriesId = MutableLiveData<Int?>()
+    val seriesId: MutableLiveData<Int?> get() = _seriesId
 
-    val itemList: MutableList<EventDetailsItem> = mutableListOf()
+    private val _comicsId = MutableLiveData<Int?>()
+    val comicsId: MutableLiveData<Int?> get() = _comicsId
+
+    private val itemList: MutableList<EventDetailsItem> = mutableListOf()
 
     init {
         getEventDetails()
@@ -91,7 +95,6 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
                 it.toData()?.data?.results?.let {
                     itemList.add(EventDetailsItem.Comics(it))
                     _comics.postValue(Status.Success(it.filterNotNull()))
-                    Log.d("aaaaa", it.toString())
                 }
             }, {
                 Log.d("Mimo", it.toString())

@@ -1,7 +1,6 @@
 package com.chocolatecake.marvel.ui.event_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -48,17 +47,17 @@ class EventDetailsFragment :
     }
 
     private fun handleNavigation() {
-        viewModel._characterId.observe(viewLifecycleOwner) { characterId ->
+        viewModel.characterId.observe(viewLifecycleOwner) { characterId ->
             characterId?.let {
                 Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel._seriesId.observe(viewLifecycleOwner) { seriesId ->
+        viewModel.seriesId.observe(viewLifecycleOwner) { seriesId ->
             seriesId?.let {
                 Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
             }
         }
-        viewModel._comicsId.observe(viewLifecycleOwner) { comicsId ->
+        viewModel.comicsId.observe(viewLifecycleOwner) { comicsId ->
             comicsId?.let {
                 Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
             }

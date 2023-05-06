@@ -57,6 +57,7 @@ class EventAdapter(
                     )
                 )
             }
+
             else -> throw Exception("Mimo")
         }
     }
