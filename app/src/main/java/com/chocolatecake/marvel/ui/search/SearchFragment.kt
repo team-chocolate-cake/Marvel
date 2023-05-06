@@ -11,7 +11,6 @@ import com.chocolatecake.marvel.databinding.FragmentSeacrhBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.google.android.material.chip.Chip
 
-@Suppress("IMPLICIT_CAST_TO_ANY")
 class SearchFragment() : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
     override val viewModel: SearchViewModel by viewModels()
     override val layoutIdFragment: Int
@@ -20,52 +19,52 @@ class SearchFragment() : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val currentList = mutableListOf<SearchResult>()
-        val adapter = SearchAdapter(currentList, viewModel)
+        val currentList = mutableListOf<SearchItems>()
+        Log.d("current",currentList.toString())
+        val adapter = SearchAdapter(mutableListOf(SearchItems.SeriesItem(emptyList())), viewModel)
         binding.recyclerView.adapter = adapter
 
-        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
-            val selectedChip = view.findViewById<Chip>(checkedId)
-            selectedChip?.let { chip ->
-                when (chip.id) {
-                    R.id.seriesChip -> {
-                       /* viewModel.series.observe(viewLifecycleOwner) { seriesResultList ->
-                            val searchResults = seriesResultList.toData().let { it as? List<SearchResult>  }
-                            if (searchResults != null) {
-                                adapter.updateList(searchResults)
-                            }
-                        }*/
-
-                        viewModel.getAllSeries()
-                        binding.recyclerView.adapter = adapter
-
-                         //   .notifyDataSetChanged()
-                    }
-                    R.id.comicsChip -> {
-                        viewModel.comics.observe(viewLifecycleOwner) { comicsResultList ->
-                            val searchResults = comicsResultList?.toData()?.let { it as? List<SearchResult> }
-                            searchResults?.let {
-                                adapter.updateList(it)
-                                Log.d("update", it.toString())
-                            }
-                        }
-                    }
-                    R.id.characterChip -> {
-                        viewModel.character.observe(viewLifecycleOwner) { profileResultList ->
-                            val searchResults = profileResultList?.toData()?.let { it as? List<SearchResult> }
-                            searchResults?.let {
-                                adapter.updateList(it)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
+//            val selectedChip = view.findViewById<Chip>(checkedId)
+//            selectedChip?.let { chip ->
+//                when (chip.id) {
+//                    R.id.seriesChip -> {
+//                        viewModel.series.observe(viewLifecycleOwner) { seriesResultList ->
+//                           seriesResultList.toData()
+//                                ?.let { it as? List<SearchItems.SeriesItem>
+//                                    currentList.add(SearchItems.SeriesItem(it))
+//                                    Log.d("Mimo",it.toString())
+//                                }
+//                        }
+//                    }
+//
+//                 /*   R.id.comicsChip -> {
+//                        viewModel.comics.observe(viewLifecycleOwner) { comicsResultList ->
+//                            val searchResults = comicsResultList?.toData()
+//                                ?.let { it as? List<SearchItems.ComicsItem> }
+//                            searchResults?.let {
+//                                //adapter.updateList(it)
+//                                Log.d("update", it.toString())
+//                            }
+//                        }
+//                    }*/
+//
+//                /*    R.id.characterChip -> {
+//                        viewModel.character.observe(viewLifecycleOwner) { profileResultList ->
+//                            val searchResults = profileResultList?.toData()
+//                                ?.let { it as? List<SearchItems.CharacterItem> }
+//                            searchResults?.let {
+//                            //    adapter.updateList(it)
+//                            }
+//                        }
+//                    }*/
+//                }
+//                adapter.notifyDataSetChanged()
+//            }
+//        }
     }
 
-
     /*
-
     //    private fun addSearchCallBack() {
     //        Observable.create { emitter ->
     //            binding.editTextSearch.doOnTextChanged{ text, start, before, count ->
