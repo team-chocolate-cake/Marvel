@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.event_details.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,16 +11,14 @@ import com.chocolatecake.marvel.databinding.SeriesViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.event_details.EventDetailsListener
 import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem
-import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItemType
 
 class EventAdapter(
-    private val list: MutableList<EventDetailsItem>,
+    private var list: MutableList<EventDetailsItem>,
     private val eventDetailsListener: EventDetailsListener,
 ) :
-    BaseAdapter<EventDetailsItem?>(list, eventDetailsListener) {
+    BaseAdapter<EventDetailsItem>(list, eventDetailsListener) {
     override val layoutId: Int
         get() = 0
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
@@ -61,6 +58,10 @@ class EventAdapter(
         }
     }
 
+    override fun setItems(newItems: List<EventDetailsItem>) {
+        list = newItems.sortedBy { it.priority }.toMutableList()
+        super.setItems(newItems)
+    }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
@@ -70,7 +71,6 @@ class EventAdapter(
             is ComicsViewHolder -> bindComics(holder, position)
         }
     }
-
     private fun bindHeader(holder: HeaderViewHolder, position: Int) {
         val header = list[position] as EventDetailsItem.Header
         holder.binding.item = header.eventResult
@@ -83,6 +83,13 @@ class EventAdapter(
         holder.binding.item = character
     }
 
+    fun setItem(item: EventDetailsItem) {
+        val newItems = list.apply {
+            removeAt(item.priority)
+            add(item.priority, item)
+        }
+        setItems(newItems)
+    }
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = list[position] as EventDetailsItem.Series
         val adapter = SeriesAdapter(series.seriesResult, eventDetailsListener)
@@ -97,14 +104,18 @@ class EventAdapter(
         holder.binding.item = comics
     }
 
+
+
     override fun getItemViewType(position: Int): Int {
-        return when (list[position].type) {
-            EventDetailsItemType.HEADER -> VIEW_TYPE_HEADER
-            EventDetailsItemType.CHARACTER -> VIEW_TYPE_CHARACTER
-            EventDetailsItemType.SERIES -> VIEW_TYPE_SERIES
-            EventDetailsItemType.COMICS -> VIEW_TYPE_COMIC
-            else -> throw Exception("Mimo")
+        if (list.isNotEmpty()) {
+            return when (list[position]) {
+                is  EventDetailsItem.Header -> VIEW_TYPE_HEADER
+                is EventDetailsItem.Character -> VIEW_TYPE_CHARACTER
+                is EventDetailsItem.Series -> VIEW_TYPE_SERIES
+                is EventDetailsItem.Comics -> VIEW_TYPE_COMIC
+            }
         }
+        return -1
     }
 
     class HeaderViewHolder(val binding: HeaderViewBinding) : BaseViewHolder(binding)

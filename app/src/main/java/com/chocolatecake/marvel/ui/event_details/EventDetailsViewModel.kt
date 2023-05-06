@@ -21,6 +21,10 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     val series = MutableLiveData<Status<List<SeriesResult>>>()
     val comics = MutableLiveData<Status<List<ComicsResult>>>()
 
+    val _characterId = MutableLiveData<Int?>()
+    val _seriesId = MutableLiveData<Int?>()
+    val _comicsId = MutableLiveData<Int?>()
+
     val itemList: MutableList<EventDetailsItem> = mutableListOf()
 
     init {
@@ -87,15 +91,15 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     }
 
     override fun onClickCharacter(characterId: Int?) {
-        Log.d("Mimo", characterId.toString())
+        _characterId.postValue(characterId)
     }
 
     override fun onClickSeries(seriesId: Int?) {
-        Log.d("Mimo", seriesId.toString())
+        _seriesId.postValue(seriesId)
     }
 
     override fun onClickComics(comicsId: Int?) {
-        Log.d("Mimo", comicsId.toString())
+        _comicsId.postValue(comicsId)
     }
 
 }
