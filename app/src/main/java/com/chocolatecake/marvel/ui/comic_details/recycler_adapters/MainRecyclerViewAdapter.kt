@@ -11,7 +11,6 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItemType
-import kotlin.math.log
 
 class MainRecyclerViewAdapter(
     private val list: List<ComicDetailsItem>,
