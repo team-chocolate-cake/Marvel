@@ -28,7 +28,7 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
     private val _character=MutableLiveData<Status<List<ProfileResult>>>()
     val character:MutableLiveData<Status<List<ProfileResult>>>
         get()=_character
-    val itemsList= mutableListOf<SearchItems>()
+    val itemsList= mutableListOf<Any>()
     init {
         getAllSeries()
         getAllComics()

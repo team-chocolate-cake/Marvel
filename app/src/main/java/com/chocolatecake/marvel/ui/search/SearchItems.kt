@@ -4,7 +4,7 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 
-sealed class  SearchItems(val searchItemType:SearchItemType ){
+/*sealed class  SearchItems(val searchItemType:SearchItemType ){
  data class SeriesItem(val series: SeriesResult) : SearchItems(SearchItemType.TYPE_SERIES)
     data class ComicsItem(val comics: ComicsResult) : SearchItems(SearchItemType.TYPE_Comics)
 
@@ -13,5 +13,5 @@ sealed class  SearchItems(val searchItemType:SearchItemType ){
 }
 enum class SearchItemType {
   TYPE_SERIES,TYPE_Comics,TYPE_Character;
-}
+}*/
 
