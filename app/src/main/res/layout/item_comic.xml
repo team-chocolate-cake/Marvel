@@ -9,7 +9,7 @@
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.search.SearchInteractionListener" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -21,7 +21,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:onClick="@{()->listener.onclickComics(item.id)">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_thumbnail"
