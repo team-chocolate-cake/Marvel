@@ -54,7 +54,7 @@ class SearchAdapter(
     listener: SearchInteractionListener
 ) : BaseAdapter<SearchResult>(itemsList, listener) {
     override val layoutId: Int
-        get() = R.layout.item_series
+        get() = R.layout.item_character
 
     fun updateList(newItems: List<SearchResult>) {
         itemsList = newItems

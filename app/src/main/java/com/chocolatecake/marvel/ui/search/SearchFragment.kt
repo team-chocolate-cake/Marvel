@@ -29,12 +29,17 @@ class SearchFragment() : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() 
             selectedChip?.let { chip ->
                 when (chip.id) {
                     R.id.seriesChip -> {
-                        viewModel.series.observe(viewLifecycleOwner) { seriesResultList ->
+                       /* viewModel.series.observe(viewLifecycleOwner) { seriesResultList ->
                             val searchResults = seriesResultList.toData().let { it as? List<SearchResult>  }
                             if (searchResults != null) {
                                 adapter.updateList(searchResults)
                             }
-                        }
+                        }*/
+
+                        viewModel.getAllSeries()
+                        binding.recyclerView.adapter = adapter
+
+                         //   .notifyDataSetChanged()
                     }
                     R.id.comicsChip -> {
                         viewModel.comics.observe(viewLifecycleOwner) { comicsResultList ->
