@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import com.chocolatecake.marvel.BR
 
 abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragment() {
 
@@ -15,11 +15,7 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
     protected val binding: VDB
         get() = _binding as VDB
 
-    protected lateinit var viewModel: VM
-
-    abstract val viewModelClass: Class<VM>
-
-    abstract val inflater: (LayoutInflater, ViewGroup?, Boolean) -> VDB
+    abstract val viewModel: VM
     abstract val layoutIdFragment: Int
 
     override fun onCreateView(
@@ -27,12 +23,11 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this)[viewModelClass]
-        _binding = DataBindingUtil.inflate<VDB>(inflater, layoutIdFragment, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutIdFragment, container, false)
         _binding?.apply {
             lifecycleOwner = viewLifecycleOwner
+            setVariable(BR.viewModel, viewModel)
         }
         return binding.root
     }
-
 }
