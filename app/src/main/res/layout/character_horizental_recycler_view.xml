@@ -29,6 +29,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:items="@{myItem.list}"
+            android:clipToPadding="true"
+            android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
             tools:listitem="@layout/character_item" />

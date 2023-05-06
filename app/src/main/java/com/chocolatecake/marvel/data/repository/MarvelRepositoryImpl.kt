@@ -4,7 +4,7 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.E2ventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.StoriesResult
+import com.chocolatecake.marvel.data.model.StoryResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.remote.service.MarvelApi
 import com.chocolatecake.marvel.data.util.Status
@@ -93,19 +93,19 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
 
-    override fun getStories(): Single<Status<BaseResponse<StoriesResult>?>> {
+    override fun getStories(): Single<Status<BaseResponse<StoryResult>?>> {
         return wrapperToState(apiService.getStories())
     }
 
-    override fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
+    override fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoryResult>?>> {
         return wrapperToState(apiService.getStoryById(storyId))
     }
 
-    override fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
+    override fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoryResult>?>> {
         return wrapperToState(apiService.getCharactersForStory(storyId))
     }
 
-    override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
+    override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoryResult>?>> {
         return wrapperToState(apiService.getComicsForStory(storyId))
     }
 

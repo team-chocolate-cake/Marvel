@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.chocolatecake.marvel.ui.comic_details.ComicDetailsViewModel" />
@@ -20,13 +21,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:items="@{viewmodel.itemsList}"
-            app:showWhenSuccess="@{viewmodel.characters}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-         />
+            app:showWhenSuccess="@{viewmodel.characters}" />
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.comic_details.recycler_adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -10,7 +9,6 @@ import com.chocolatecake.marvel.databinding.HeaderRecyclerItemComicDetailsBindin
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
-import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItemType
 
 class MainRecyclerViewAdapter(
     private val list: List<ComicDetailsItem>,

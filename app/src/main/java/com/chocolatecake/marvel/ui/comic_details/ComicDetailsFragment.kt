@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ImageResponse
@@ -23,6 +24,11 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
         super.onViewCreated(view, savedInstanceState)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        val layoutManager = object : GridLayoutManager(context, 1) {
+            override fun isAutoMeasureEnabled() = true
+        }
+
+        binding.recyclerview.layoutManager = layoutManager
         val adapter = MainRecyclerViewAdapter(viewModel.itemsList, viewModel)
         binding.recyclerview.adapter = adapter
     }

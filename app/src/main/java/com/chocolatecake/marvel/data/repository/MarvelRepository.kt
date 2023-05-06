@@ -5,7 +5,7 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.E2ventResult
-import com.chocolatecake.marvel.data.model.StoriesResult
+import com.chocolatecake.marvel.data.model.StoryResult
 import com.chocolatecake.marvel.data.util.Status
 import io.reactivex.rxjava3.core.Single
 
@@ -50,8 +50,8 @@ interface MarvelRepository {
         creatorId: Int,
     ): Single<Status<BaseResponse<SeriesResult>?>>
 
-    fun getStories(): Single<Status<BaseResponse<StoriesResult>?>>
-    fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>>
-    fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>>
-    fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>>
+    fun getStories(): Single<Status<BaseResponse<StoryResult>?>>
+    fun getStoryById(storyId: Int): Single<Status<BaseResponse<StoryResult>?>>
+    fun getCharactersForStory(storyId: Int): Single<Status<BaseResponse<StoryResult>?>>
+    fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoryResult>?>>
 }
