@@ -11,7 +11,6 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem
 
 class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
@@ -39,6 +38,10 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     val comicsId: MutableLiveData<Int?> get() = _comicsId
 
     init {
+        reLoad()
+    }
+
+    fun reLoad() {
         getEventDetails()
         getCharactersByEventId()
         getComicsByEventId()
