@@ -9,7 +9,7 @@
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.search.SearchInteractionListener" />
     </data>
 
     <androidx.cardview.widget.CardView
