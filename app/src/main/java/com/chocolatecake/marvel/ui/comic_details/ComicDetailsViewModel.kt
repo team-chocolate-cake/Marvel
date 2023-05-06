@@ -3,10 +3,8 @@ package com.chocolatecake.marvel.ui.comic_details
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.CreationExtras
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
@@ -39,6 +37,7 @@ class ComicDetailsViewModel(
     init {
         getCurrentComic()
         getCharactersOfComic()
+        getEventsOfComic()
     }
 
     private fun getCurrentComic() {
@@ -54,6 +53,7 @@ class ComicDetailsViewModel(
             Log.i(TAG, "onGetCurrentComicSuccess: ${it.toString()}")
             itemsList.add(ComicDetailsItem.Header(it))
             _currentComic.postValue(Status.Success(it))
+            
         }
     }
 
@@ -73,6 +73,7 @@ class ComicDetailsViewModel(
             Log.i(TAG, "onGetCharacterSuccess: ${it.toString()}")
             itemsList.add(ComicDetailsItem.Characters(it))
             _characters.postValue(Status.Success(it))
+            
         }
     }
 
@@ -81,8 +82,23 @@ class ComicDetailsViewModel(
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    fun getEvents() {
+    private fun getEventsOfComic() {
+        repository
+            .getEventByComicId(currentComicId)
+            .subscribe(::onGetEventsOfComicSuccess,::onGetEventsOfComicFailure)
+            .add()
+    }
 
+    private fun onGetEventsOfComicSuccess(status:Status<BaseResponse<EventResult>?>){
+        status.toData()?.data?.results?.let {list->
+            Log.i(TAG, "onGetEventsOfComicSuccess: $list")
+            list.forEach {
+                itemsList.add(ComicDetailsItem.Events(it)) 
+            }
+        }
+    }
+    private fun onGetEventsOfComicFailure(throwable: Throwable){
+        _toastMessage.postValue(ERROR_OCCURRED)
     }
 
     override fun onCharacterClick(characterId: Int?) {
@@ -95,6 +111,7 @@ class ComicDetailsViewModel(
 
     companion object {
         private const val ERROR_OCCURRED = "error occurred"
+        private const val DATA_FETCHED_SUCCESSFULLY = "data fetched successfully"
         private const val TAG = "ComicDetailsViewModel"
     }
 }

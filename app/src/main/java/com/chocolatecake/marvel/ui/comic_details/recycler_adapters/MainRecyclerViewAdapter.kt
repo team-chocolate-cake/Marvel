@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.CharacterHorizentalRecyclerViewBinding
+import com.chocolatecake.marvel.databinding.EventItemBinding
 import com.chocolatecake.marvel.databinding.HeaderRecyclerItemComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener
@@ -25,12 +26,15 @@ class MainRecyclerViewAdapter(
     class CharacterViewHolder(val binding: CharacterHorizentalRecyclerViewBinding) :
         BaseViewHolder(binding)
 
+    class EventViewHolder(val binding: EventItemBinding) :
+        BaseViewHolder(binding)
 
 
     override fun getItemViewType(position: Int): Int {
         return when (list[position]) {
             is ComicDetailsItem.Header -> HEADER
             is ComicDetailsItem.Characters -> CHARACTERS
+            is ComicDetailsItem.Events -> EVENTS
             else -> throw Exception("item type not found")
         }
     }
@@ -39,14 +43,15 @@ class MainRecyclerViewAdapter(
         return when (viewType) {
             HEADER -> {
                 HeaderViewHolder(
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    R.layout.header_recycler_item_comic_details,
-                    parent,
-                    false
+                    DataBindingUtil.inflate(
+                        LayoutInflater.from(parent.context),
+                        R.layout.header_recycler_item_comic_details,
+                        parent,
+                        false
+                    )
                 )
-            )
             }
+
             CHARACTERS -> CharacterViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
@@ -55,6 +60,16 @@ class MainRecyclerViewAdapter(
                     false
                 )
             )
+
+            EVENTS -> EventViewHolder(
+                DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.event_item,
+                    parent,
+                    false
+                )
+            )
+
             else -> throw Exception("view not found")
         }
     }
@@ -63,7 +78,13 @@ class MainRecyclerViewAdapter(
         when (holder) {
             is HeaderViewHolder -> bindHeader(holder, position)
             is CharacterViewHolder -> bindCharacter(holder, position)
+            is EventViewHolder -> bindEvent(holder, position)
         }
+    }
+
+    private fun bindEvent(holder: EventViewHolder, position: Int) {
+        val eventItem = list[position] as ComicDetailsItem.Events
+        holder.binding.eventResult = eventItem.eventResult
     }
 
     private fun bindCharacter(holder: CharacterViewHolder, position: Int) {

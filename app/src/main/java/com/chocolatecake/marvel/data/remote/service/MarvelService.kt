@@ -24,7 +24,7 @@ interface MarvelService {
     @GET("comics/{comicId}/events")
     fun getEventByComicId(
         @Path("comicId") comicId: Int
-    ): Single<Response<BaseResponse<List<EventResult>>>>
+    ): Single<Response<BaseResponse<EventResult>>>
 
     @GET("comics/{comicId}")
     fun getComicById(

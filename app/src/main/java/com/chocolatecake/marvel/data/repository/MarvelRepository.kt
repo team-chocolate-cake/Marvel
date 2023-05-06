@@ -19,7 +19,7 @@ interface MarvelRepository {
 
     fun getEventByComicId(
         comicId: Int
-    ): Single<Status<BaseResponse<List<EventResult>>?>>
+    ): Single<Status<BaseResponse<EventResult>?>>
 
     fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>>
     fun getCharactersForComic(comicId: Int): Single<Status<BaseResponse<ProfileResult>?>>
