@@ -16,41 +16,28 @@ class MainRecyclerViewAdapter(
     private val list: List<ComicDetailsItem>,
     private val listener: ComicInteractionListener
 ) : BaseAdapter<ComicDetailsItem>(list, listener) {
-    init {
-        Log.i(TAG, "creation of main recycler")
-    }
+
 
     override val layoutId: Int
         get() = -1
 
     class HeaderViewHolder(val binding: HeaderRecyclerItemComicDetailsBinding) :
-        BaseViewHolder(binding){
-            init {
-                Log.i(TAG, "creation of HeaderViewHolder  ")
-            }
-        }
+        BaseViewHolder(binding)
 
     class CharacterViewHolder(val binding: CharacterHorizentalRecyclerViewBinding) :
-        BaseViewHolder(binding){
-        init {
-            Log.i(TAG, "creation of CharacterViewHolder  ")
-        }
-    }
+        BaseViewHolder(binding)
 
     override fun getItemViewType(position: Int): Int {
-        Log.i(TAG, "getItemViewType: start")
-        return when (list[position].type) {
-            ComicDetailsItemType.HEADER -> HEADER
-            ComicDetailsItemType.CHARACTERS -> CHARACTERS
+        return when (list[position]) {
+            is ComicDetailsItem.Header -> HEADER
+            is ComicDetailsItem.Characters -> CHARACTERS
             else -> throw Exception("item type not found")
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        Log.i(TAG, "onCreateViewHolder -> start")
         return when (viewType) {
             HEADER -> {
-                Log.i(TAG, "onCreateViewHolder -> header")
                 HeaderViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),

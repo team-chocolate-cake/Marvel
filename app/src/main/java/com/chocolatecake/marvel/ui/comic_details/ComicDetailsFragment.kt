@@ -20,14 +20,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewModel.updateCurrentComicId(1308)
-        val adapter = MainRecyclerViewAdapter(mutableListOf(
-            ComicDetailsItem.Header(
-                ComicsResult(
-                    thumbnail = ImageResponse(path = "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg")
-                )
-            )
-        ), viewModel)
+        val adapter = MainRecyclerViewAdapter(viewModel.itemsList, viewModel)
         binding.recyclerview.adapter = adapter
     }
 

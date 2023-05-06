@@ -11,9 +11,6 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
-import kotlin.math.log
 
 class ComicDetailsViewModel : BaseViewModel(), ComicInteractionListener {
 
@@ -29,8 +26,8 @@ class ComicDetailsViewModel : BaseViewModel(), ComicInteractionListener {
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
 
-    private val _characters = MutableLiveData<Status<List<ProfileResult>?>>()
-    val characters: LiveData<Status<List<ProfileResult>?>>
+    private val _characters = MutableLiveData<Status<List<SeriesResult?>>>()
+    val characters: LiveData<Status<List<SeriesResult?>>>
         get() = _characters
 
     private val _toastMessage = MutableLiveData<String>()
@@ -40,58 +37,52 @@ class ComicDetailsViewModel : BaseViewModel(), ComicInteractionListener {
     val itemsList = mutableListOf<ComicDetailsItem>()
 
     init {
-
+        Log.i(TAG, "view model ")
         getCurrentComic()
         getCharactersOfComic()
     }
 
     fun updateCurrentComicId(id: Int) {
-        Log.i(TAG, "updateCurrentComicId: ")
         _currentComicId.postValue(id)
     }
 
     private fun getCurrentComic() {
+        _currentComic.postValue(Status.Loading)
+        Log.i(TAG, "getCurrentComic: ")
         repository.getComicById(1308)
-            .subscribe(::onGetCurrentComicSuccess, this::onFailure)
+            .subscribe(::onGetCurrentComicSuccess, ::onGetCurrentComicFailure)
             .add()
-        Log.i(TAG, "getCurrentComic: else")
     }
 
     private fun onGetCurrentComicSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-
-        Log.i(TAG, "onGetCurrentComicSuccess: ")
-        status.toData()?.data?.results?.first().let {
+        status.toData()?.data?.results?.first()?.let {
             Log.i(TAG, "onGetCurrentComicSuccess: ${it.toString()}")
-            it?.let { it1 -> ComicDetailsItem.Header(it1) }
-                ?.let { it2 -> itemsList.add(it2) }
-
-            Log.i(TAG, "item list: ${itemsList.toString()}")
-            
+            itemsList.add(ComicDetailsItem.Header(it))
             _currentComic.postValue(Status.Success(it))
-
         }
     }
 
-    private fun onFailure(throwable: Throwable) {
-        Log.i(TAG, "onFailure: ${throwable.message} ")
+    private fun onGetCurrentComicFailure(throwable: Throwable) {
+        _currentComic.postValue(Status.Failure(throwable.message.toString()))
         _toastMessage.postValue(ERROR_OCCURRED)
     }
 
     private fun getCharactersOfComic() {
-        if (_currentComicId.value == null) return
-        repository.getCharactersForSeries(_currentComicId.value!!)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
+        repository.getCharactersForSeries(1308)
             .subscribe(::onGetCharacterSuccess, ::onGetCharacterFailure)
             .add()
     }
 
     private fun onGetCharacterSuccess(status: Status<BaseResponse<SeriesResult>?>) {
-
+        status.toData()?.data?.results?.let {
+            itemsList.add(ComicDetailsItem.Characters(it))
+            _characters.postValue(Status.Success(it))
+        }
     }
 
     private fun onGetCharacterFailure(throwable: Throwable) {
-
+        _toastMessage.postValue(ERROR_OCCURRED)
+        _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
     fun getEvents() {
