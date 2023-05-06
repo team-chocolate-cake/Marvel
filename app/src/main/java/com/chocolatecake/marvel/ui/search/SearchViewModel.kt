@@ -35,7 +35,7 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
         getAllCharacters()
     }
 
-    private  fun getAllSeries(){
+      fun getAllSeries(){
       repository.getSeries(searchQuery.value).subscribe(::onSeriesSuccess,::onFailure).add()
     }
     private fun onSeriesSuccess(seriesResult :Status<BaseResponse<SeriesResult>?>){
@@ -44,7 +44,7 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
             Log.e("Tag",it.toString())
         }
     }
-    private  fun getAllCharacters(){
+      fun getAllCharacters(){
         repository.getCharacters(searchQuery.value,).subscribe(::onCharactersSuccess,::onFailure).add()
     }
     private fun onCharactersSuccess(characterResult :Status<BaseResponse<ProfileResult>?>){
@@ -52,7 +52,7 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
             _character.postValue(Status.Success(it.filterNotNull()))
         }
     }
-   private fun getAllComics(){
+    fun getAllComics(){
         repository.getComics(searchQuery.value,).subscribe(::onComicsSuccess,
             this::onFailure
         ).add()
