@@ -1,30 +1,32 @@
 package com.chocolatecake.marvel.ui.search
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.data.model.base.SearchResult
-import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.databinding.FragmentSeacrhBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.google.android.material.chip.Chip
 
 class SearchFragment() : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
     override val viewModel: SearchViewModel by viewModels()
     override val layoutIdFragment: Int
         get() = R.layout.fragment_seacrh
+    lateinit var adapter: SearchAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val currentList = mutableListOf<SearchItems>()
-        Log.d("current",currentList.toString())
-        val adapter = SearchAdapter(
-            mutableListOf(SearchItems.SeriesItem(emptyList()))
-            , viewModel)
+        adapter = SearchAdapter(
+            mutableListOf(
+                SearchItems.SeriesItem(null),
+                SearchItems.ComicsItem(null),
+                SearchItems.CharacterItem(null),
+            ), viewModel
+        )
         binding.recyclerView.adapter = adapter
+        updateItems()
+        handleClickChips()
 
 //        binding.chipGroup.setOnCheckedChangeListener { group, checkedId ->
 //            val selectedChip = view.findViewById<Chip>(checkedId)
@@ -64,6 +66,51 @@ class SearchFragment() : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() 
 //                adapter.notifyDataSetChanged()
 //            }
 //        }
+    }
+
+    private fun updateItems() {
+        viewModel.series.observe(viewLifecycleOwner){
+            it.toData()?.let {
+                it.map {
+                    adapter.updateList(SearchItems.SeriesItem(it))
+                }
+            }
+        }
+        viewModel.comics.observe(viewLifecycleOwner){
+            it.toData()?.let {
+                it.map {
+                    adapter.updateList(SearchItems.ComicsItem(it))
+                }
+            }
+        }
+        viewModel.character.observe(viewLifecycleOwner){
+            it.toData()?.let {
+                it.map {
+                    adapter.updateList(SearchItems.CharacterItem(it))
+                }
+            }
+        }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun handleClickChips() {
+        viewModel.isSeriesSelected.observe(viewLifecycleOwner){
+            viewModel.getAllSeries()
+            binding.recyclerView.adapter?.notifyDataSetChanged()
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+        }
+        viewModel.isComicSelected.observe(viewLifecycleOwner){
+            viewModel.getAllComics()
+            binding.recyclerView.adapter?.notifyDataSetChanged()
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+
+        }
+        viewModel.isCharterSelected.observe(viewLifecycleOwner){
+            viewModel.getAllCharacters()
+            binding.recyclerView.adapter?.notifyDataSetChanged()
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
+
+        }
     }
 
     /*

@@ -19,24 +19,34 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
     private val _searchItemId= MutableLiveData<Int?>()
     val searchItemId:LiveData<Int?>
         get() = _searchItemId
-    private val _series=MutableLiveData<Status<List<SeriesResult>>>()
-    val series:MutableLiveData<Status<List<SeriesResult>>>
-        get()=_series
-    private val _comics=MutableLiveData<Status<List<ComicsResult>>>()
-    val comics:MutableLiveData<Status<List<ComicsResult>>>
-        get()=_comics
-    private val _character=MutableLiveData<Status<List<ProfileResult>>>()
-    val character:MutableLiveData<Status<List<ProfileResult>>>
-        get()=_character
-    val itemsList= mutableListOf<Any>()
+    private val _series = MutableLiveData<Status<List<SeriesResult>>>()
+    val series: MutableLiveData<Status<List<SeriesResult>>>
+        get() = _series
+    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
+    val comics: MutableLiveData<Status<List<ComicsResult>>>
+        get() = _comics
+    private val _character = MutableLiveData<Status<List<ProfileResult>>>()
+    val character: MutableLiveData<Status<List<ProfileResult>>>
+        get() = _character
+
+    private val _isSeriesSelected = MutableLiveData(false)
+    val isSeriesSelected: LiveData<Boolean> get() = _isSeriesSelected
+
+    private val _isComicSelected = MutableLiveData(false)
+    val isComicSelected: LiveData<Boolean> get() = _isComicSelected
+
+    private val _isCharterSelected = MutableLiveData(false)
+    val isCharterSelected: LiveData<Boolean> get() = _isCharterSelected
+    val itemsList = mutableListOf<Any>()
+
     init {
         getAllSeries()
         getAllComics()
         getAllCharacters()
     }
 
-      fun getAllSeries(){
-      repository.getSeries(searchQuery.value).subscribe(::onSeriesSuccess,::onFailure).add()
+    fun getAllSeries() {
+        repository.getSeries(searchQuery.value).subscribe(::onSeriesSuccess, ::onFailure).add()
     }
     private fun onSeriesSuccess(seriesResult :Status<BaseResponse<SeriesResult>?>){
         seriesResult.toData()?.data?.results?.let {
@@ -65,22 +75,35 @@ class SearchViewModel: BaseViewModel(),SearchInteractionListener{
             _comics.postValue(Status.Success(it.filterNotNull()))
         }
     }
+
     private fun onFailure(throwable: Throwable) {
         _series.postValue(Status.Failure(throwable.message.toString()))
         _comics.postValue(Status.Failure(throwable.message.toString()))
         _character.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onclickSeries(seriesId: Int?) {
-        _searchItemId.postValue(seriesId)
-    }
-   override fun onclickComics(comicsId: Int?) {
-        _searchItemId.postValue(comicsId)
+    override fun onclickSeries(id: Int?) {
+        _searchItemId.postValue(id)
     }
 
-   override fun onclickCharacters(charactersId: Int?) {
-        _searchItemId.postValue(charactersId)
+    override fun onclickComics(id: Int?) {
+        _searchItemId.postValue(id)
     }
 
+    override fun onclickCharacters(id: Int?) {
+        _searchItemId.postValue(id)
+    }
+
+    override fun onClickSeriesChip() {
+        _isSeriesSelected.postValue(true)
+    }
+
+    override fun onClickComicChip() {
+        _isComicSelected.postValue(true)
+    }
+
+    override fun onClickCharacterChip() {
+        _isCharterSelected.postValue(true)
+    }
 
 }

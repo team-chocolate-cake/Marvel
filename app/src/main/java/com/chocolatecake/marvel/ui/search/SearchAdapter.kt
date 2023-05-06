@@ -62,7 +62,7 @@ class SearchAdapter(
 
     fun updateList(item: SearchItems) {
         val newItems = itemsList.apply {
-            removeAt(item.priority)
+//            removeAt(item.priority)
             add(item.priority, item)
         }
         setItems(newItems)
@@ -146,7 +146,7 @@ class SearchAdapter(
 
     companion object {
         const val VIEW_TYPE_SERIES = 1
-        const val VIEW_TYPE_CHARACTER = 2
-        const val VIEW_TYPE_COMIC = 3
+        const val VIEW_TYPE_COMIC = 2
+        const val VIEW_TYPE_CHARACTER = 3
     }
 }
