@@ -62,7 +62,9 @@ class SearchAdapter(
 
     fun updateList(item: SearchItems) {
         val newItems = itemsList.apply {
+            item.priority.takeIf { it !=3 }?.run {
             removeAt(item.priority)
+            }
             add(item.priority, item)
         }
         setItems(newItems)
@@ -124,29 +126,29 @@ class SearchAdapter(
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = itemsList[position] as SearchItems.SeriesItem
-        series.series.forEach { holder.binding.item = it }
-       // holder.binding.item = series.series
+//        series.series.forEach { holder.binding.item = it }
+        holder.binding.item = series.series
     }
 
     class CharactersViewHolder(val binding: ItemCharacterBinding) : BaseViewHolder(binding)
 
     private fun bindCharacters(holder: CharactersViewHolder, position: Int) {
         val character = itemsList[position] as SearchItems.CharacterItem
-        character.character.forEach { holder.binding.item = it }
-      //  holder.binding.item = character.character
+//        character.character.forEach { holder.binding.item = it }
+        holder.binding.item = character.character
     }
 
     class ComicsViewHolder(val binding: ItemComicBinding) : BaseViewHolder(binding)
 
     private fun bindComics(holder: ComicsViewHolder, position: Int) {
         val comics = itemsList[position] as SearchItems.ComicsItem
-        comics.comics.forEach { holder.binding.item = it }
-       // holder.binding.item = comics.comics
+//        comics.comics.forEach { holder.binding.item = it }
+        holder.binding.item = comics.comics
     }
 
     companion object {
         const val VIEW_TYPE_SERIES = 1
-        const val VIEW_TYPE_CHARACTER = 2
-        const val VIEW_TYPE_COMIC = 3
+        const val VIEW_TYPE_COMIC = 2
+        const val VIEW_TYPE_CHARACTER = 3
     }
 }
