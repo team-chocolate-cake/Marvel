@@ -62,7 +62,9 @@ class SearchAdapter(
 
     fun updateList(item: SearchItems) {
         val newItems = itemsList.apply {
-//            removeAt(item.priority)
+            item.priority.takeIf { it !=3 }?.run {
+            removeAt(item.priority)
+            }
             add(item.priority, item)
         }
         setItems(newItems)
