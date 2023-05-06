@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="item"
-            type="com.chocolatecake.marvel.data.model.ProfileResult" />
+            name="myItem"
+            type="com.chocolatecake.marvel.data.model.SeriesResult" />
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener" />
@@ -18,7 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:onClick="@{()-> listener.onCharacterClick(item.id)}"
+        android:onClick="@{()-> listener.onCharacterClick(myItem.id)}"
+        android:layout_marginVertical="12dp"
         >
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -27,7 +28,7 @@
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.thumbnail}"
+            app:imageUrl="@{myItem.thumbnail}"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,22 +37,6 @@
             app:srcCompat="@drawable/ic_image_not_found"
             tools:srcCompat="@tools:sample/backgrounds/scenic"
             />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="@{item.name}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/shapeableImageView"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/shapeableImageView"
-            app:layout_constraintTop_toBottomOf="@+id/shapeableImageView"
-            tools:text="name" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -27,6 +27,8 @@ class MainRecyclerViewAdapter(
     class CharacterViewHolder(val binding: CharacterHorizentalRecyclerViewBinding) :
         BaseViewHolder(binding)
 
+
+
     override fun getItemViewType(position: Int): Int {
         return when (list[position]) {
             is ComicDetailsItem.Header -> HEADER
@@ -71,12 +73,12 @@ class MainRecyclerViewAdapter(
         val adapter =
             HorizontalCharacterAdapter(characterItem.list, listener)
         holder.binding.recyclerview.adapter = adapter
-        holder.binding.item = characterItem
+        holder.binding.myItem = characterItem
     }
 
     private fun bindHeader(holder: HeaderViewHolder, position: Int) {
         val headerItem = list[position] as ComicDetailsItem.Header
-        holder.binding.item = headerItem.comic
+        holder.binding.myItem = headerItem.comic
     }
 
     companion object {
