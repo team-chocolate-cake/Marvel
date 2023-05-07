@@ -14,40 +14,36 @@
             type="com.chocolatecake.marvel.ui.search.SearchInteractionListener" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_small"
-        android:backgroundTint="@color/black"
+        android:layout_margin="@dimen/spacing_tiny"
         android:onClick="@{() -> listener.onclickSeries(item.id)}">
 
-        <LinearLayout
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_view_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="top"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.thumbnail}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="9:16"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/text_view_title"
+            style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/image_view_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_card"
-                android:layout_gravity="top"
-                android:scaleType="centerCrop"
-                app:imageUrl="@{item.thumbnail}"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
-            <TextView
-                android:id="@+id/text_view_title"
-                style="@style/TextAppearance.MaterialComponents.Body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@{item.title}"
-                tools:text="@tools:sample/lorem/random" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+            android:layout_marginTop="@dimen/spacing_tiny"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{item.title}"
+            android:textAlignment="center"
+            app:layout_constraintTop_toBottomOf="@id/image_view_thumbnail"
+            tools:text="@tools:sample/lorem/random" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
