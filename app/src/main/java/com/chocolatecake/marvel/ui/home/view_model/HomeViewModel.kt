@@ -69,7 +69,7 @@ class HomeViewModel : BaseViewModel(), HomeListener {
 
     private fun getCurrentComic(){
         _comics.postValue(Status.Loading)
-        marvelRepository.getComics(limit = 8, offset=(0..50).random())
+        marvelRepository.getComics(limit = 4, offset=(1..5).random())
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 

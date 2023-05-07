@@ -15,8 +15,7 @@ import com.chocolatecake.marvel.ui.home.view.HomeViewPagerLayoutManager
 
 class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val listener: HomeListener) :
     BaseAdapter<HomeItem>(itemsHome, listener) {
-    override val layoutId: Int
-        get() = 0
+    override val layoutId: Int = 0
 
     fun setItem(item: HomeItem) {
         val newItems = itemsHome.apply {
@@ -77,7 +76,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
 
     private fun bindHeader(holder: HeaderViewHolder, position: Int) {
         val events = itemsHome[position] as HomeItem.EventsItem
-        val adapter = BannerAdapter(events.eventResult, listener)
+        val adapter = HomeBannerAdapter(events.eventResult, listener)
         holder.binding.recyclerViewBanner.adapter = adapter
         holder.binding.recyclerViewBanner.onFlingListener = null
         val snapHelper = PagerSnapHelper()
@@ -88,7 +87,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = itemsHome[position] as HomeItem.SeriesItem
-        val adapter = SeriesAdapter(series.seriesResult, listener)
+        val adapter = HomeSeriesAdapter(series.seriesResult, listener)
         holder.binding.recyclerViewSeries.adapter = adapter
         holder.binding.listener = listener
     }
@@ -113,10 +112,10 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
     class HeaderViewHolder(val binding: HomeItemBannerListBinding) : BaseViewHolder(binding)
     class SeriesViewHolder(val binding: HomeItemSeriesListBinding) : BaseViewHolder(binding)
     class ComicViewHolder(val binding : HomeItemComicBinding) : BaseViewHolder(binding)
-    companion object {
-        private const val VIEW_TYPE_HEADER = 0
-        private const val VIEW_TYPE_SERIES = 1
-        private const val VIEW_TYPE_COMIC = 2
-    }
 
+     companion object {
+         const val VIEW_TYPE_HEADER = 0
+         const val VIEW_TYPE_SERIES = 1
+         const val VIEW_TYPE_COMIC = 2
+    }
 }

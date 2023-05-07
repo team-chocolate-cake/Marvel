@@ -16,13 +16,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     lateinit var adapter: HomeAdapter
     override val viewModel: HomeViewModel by viewModels()
 
-    override val layoutIdFragment: Int
-        get() = R.layout.fragment_home
+    override val layoutIdFragment: Int = R.layout.fragment_home
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setAdapter()
-        updateItems()
+        updateAdapterItems()
         handelNavigation()
     }
 
@@ -50,7 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
         binding.recyclerViewHome.adapter = adapter
     }
 
-    private fun updateItems() {
+    private fun updateAdapterItems() {
         viewModel.events.observe(viewLifecycleOwner) { status ->
             status.toData()?.let {
                 adapter.setItem(HomeItem.EventsItem(it))
