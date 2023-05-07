@@ -15,7 +15,7 @@ class SearchListAdapter(private val listener: SearchInteractionListener) :
     ListAdapter<SearchItems, BaseAdapter.BaseViewHolder>(SearchDiffUtil()) {
     class SearchDiffUtil : DiffUtil.ItemCallback<SearchItems>() {
         override fun areItemsTheSame(oldItem: SearchItems, newItem: SearchItems): Boolean {
-            return oldItem.searchItemType == newItem.searchItemType
+            return oldItem == newItem
         }
 
         override fun areContentsTheSame(oldItem: SearchItems, newItem: SearchItems): Boolean {
