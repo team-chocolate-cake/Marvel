@@ -127,7 +127,7 @@ class EventAdapter(
     class SeriesViewHolder(val binding: SeriesViewBinding) : BaseViewHolder(binding)
     class ComicsViewHolder(val binding: ComicsViewBinding) : BaseViewHolder(binding)
 
-    companion object {
+    private companion object {
         private const val VIEW_TYPE_HEADER = 0
         private const val VIEW_TYPE_CHARACTER = 1
         private const val VIEW_TYPE_SERIES = 2
