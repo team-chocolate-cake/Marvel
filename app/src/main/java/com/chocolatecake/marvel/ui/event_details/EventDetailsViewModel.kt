@@ -38,10 +38,10 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     val comicsId: MutableLiveData<Int?> get() = _comicsId
 
     init {
-        reLoad()
+        reLoadData()
     }
 
-    fun reLoad() {
+    fun reLoadData() {
         getEventDetails()
         getCharactersByEventId()
         getComicsByEventId()
@@ -98,15 +98,15 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickCharacter(characterId: Int?) {
+    override fun onClickComics(comicsId: Int) {
+        _comicsId.postValue(comicsId)
+    }
+
+    override fun onClickCharacter(characterId: Int) {
         _characterId.postValue(characterId)
     }
 
-    override fun onClickSeries(seriesId: Int?) {
+    override fun onClickSeries(seriesId: Int) {
         _seriesId.postValue(seriesId)
-    }
-
-    override fun onClickComics(comicsId: Int?) {
-        _comicsId.postValue(comicsId)
     }
 }

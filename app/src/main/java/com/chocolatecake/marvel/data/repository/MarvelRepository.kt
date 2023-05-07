@@ -1,16 +1,13 @@
 package com.chocolatecake.marvel.data.repository
 
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
+import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.util.Status
 import io.reactivex.rxjava3.core.Single
-import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
 
 interface MarvelRepository {
     fun getComics(

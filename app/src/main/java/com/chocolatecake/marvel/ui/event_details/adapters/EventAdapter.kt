@@ -63,11 +63,6 @@ class EventAdapter(
         }
     }
 
-    override fun setItems(newItems: List<EventDetailsItem>) {
-        eventDetailsItems = newItems.sortedBy { it.priority }.toMutableList()
-        super.setItems(newItems)
-    }
-
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> bindHeader(holder, position)
@@ -95,6 +90,11 @@ class EventAdapter(
             add(item.priority, item)
         }
         setItems(newItems)
+    }
+
+    override fun setItems(newItems: List<EventDetailsItem>) {
+        eventDetailsItems = newItems.sortedBy { it.priority }.toMutableList()
+        super.setItems(newItems)
     }
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {

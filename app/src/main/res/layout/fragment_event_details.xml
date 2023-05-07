@@ -59,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:onClick="@{()-> viewModel.reLoad()}"
+            android:onClick="@{()-> viewModel.reLoadData()}"
             android:text="try again"
             android:textColor="@color/on_background_87"
             android:textSize="@dimen/text_medium"
