@@ -86,14 +86,14 @@ class EventAdapter(
 
     fun setItem(item: EventDetailsItem) {
         val newItems = eventDetailsItems.apply {
-            removeAt(item.priority)
-            add(item.priority, item)
+            removeAt(item.type.ordinal)
+            add(item.type.ordinal, item)
         }
         setItems(newItems)
     }
 
     override fun setItems(newItems: List<EventDetailsItem>) {
-        eventDetailsItems = newItems.sortedBy { it.priority }.toMutableList()
+        eventDetailsItems = newItems.sortedBy { it.type.ordinal }.toMutableList()
         super.setItems(newItems)
     }
 
