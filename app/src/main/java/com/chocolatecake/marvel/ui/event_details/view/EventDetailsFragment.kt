@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.event_details
+package com.chocolatecake.marvel.ui.event_details.view
 
 import android.os.Bundle
 import android.view.View
@@ -8,7 +8,8 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
-import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem
+import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem
+import com.chocolatecake.marvel.ui.event_details.view_model.EventDetailsViewModel
 
 class EventDetailsFragment :
     BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {

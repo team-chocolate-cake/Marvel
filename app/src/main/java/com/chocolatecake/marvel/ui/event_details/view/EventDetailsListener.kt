@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.event_details
+package com.chocolatecake.marvel.ui.event_details.view
 
 import com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener
 

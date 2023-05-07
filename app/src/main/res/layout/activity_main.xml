@@ -7,7 +7,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
-        android:name="com.chocolatecake.marvel.ui.event_details.EventDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.event_details.view.EventDetailsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_event_details" />

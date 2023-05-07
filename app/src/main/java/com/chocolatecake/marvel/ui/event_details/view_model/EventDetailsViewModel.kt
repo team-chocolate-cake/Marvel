@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.event_details
+package com.chocolatecake.marvel.ui.event_details.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +11,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.event_details.view.EventDetailsListener
 
 class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
 
