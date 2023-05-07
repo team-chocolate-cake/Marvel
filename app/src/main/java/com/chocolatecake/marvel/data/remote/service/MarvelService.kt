@@ -60,7 +60,7 @@ interface MarvelService {
     @GET("creators/{creatorId}")
     fun getCreatorById(
         @Path("creatorId") creatorId: Int,
-    ): Single<Response<BaseResponse<ComicsResult>>>
+    ): Single<Response<BaseResponse<ProfileResult>>>
 
     @GET("creators/{creatorId}/comics")
     fun getComicsForCreator(
