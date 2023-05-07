@@ -15,6 +15,9 @@ class EventDetailsFragment :
 
     private lateinit var adapter: EventAdapter
 
+    override val viewModel: EventDetailsViewModel by viewModels()
+    override val layoutIdFragment: Int = R.layout.fragment_event_details
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,7 +67,4 @@ class EventDetailsFragment :
         }
     }
 
-    override val viewModel: EventDetailsViewModel by viewModels()
-
-    override val layoutIdFragment: Int = R.layout.fragment_event_details
 }

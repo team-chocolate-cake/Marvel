@@ -85,7 +85,7 @@ class EventAdapter(
     private fun bindCharacters(holder: CharacterViewHolder, position: Int) {
         val character = eventDetailsItems[position] as EventDetailsItem.Character
         val adapter = CharactersAdapter(character.profileResult, eventDetailsListener)
-        holder.binding.recyclerView.adapter = adapter
+        holder.binding.recyclerViewCharacters.adapter = adapter
         holder.binding.item = character
     }
 
@@ -100,7 +100,7 @@ class EventAdapter(
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = eventDetailsItems[position] as EventDetailsItem.Series
         val adapter = SeriesAdapter(series.seriesResult, eventDetailsListener)
-        holder.binding.recyclerView2.adapter = adapter
+        holder.binding.recyclerViewSeries.adapter = adapter
         holder.binding.item = series
     }
 
