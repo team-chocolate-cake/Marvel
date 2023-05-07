@@ -1,7 +1,5 @@
 package com.chocolatecake.marvel.ui.search
 
-import android.util.Log
-import androidx.databinding.InverseBindingListener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -18,33 +16,31 @@ import java.util.concurrent.TimeUnit
 class SearchViewModel : BaseViewModel(), SearchInteractionListener {
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
     private val searchQuery = BehaviorSubject.createDefault(SearchQuery())
+
     var searchText: String?
         get() = searchQuery.value?.query
         set(value) {
-            searchQuery.onNext(SearchQuery(query = value?.takeIf { it.isNotBlank() }))
+            searchQuery.onNext(
+                SearchQuery(
+                    query = value?.takeIf { it.isNotBlank() },
+                    type = searchType
+                )
+            )
         }
 
     var searchType: SearchItemType
         get() = searchQuery.value?.type ?: SearchItemType.TYPE_SERIES
         set(value) {
-            searchQuery.onNext(SearchQuery(type = value))
+            searchQuery.onNext(SearchQuery(query = searchText, type = value))
         }
 
     private val _searchItemId = MutableLiveData<Int?>()
     val searchItemId: LiveData<Int?>
         get() = _searchItemId
 
-    private val _series = MutableLiveData<Status<List<SeriesResult>>>()
-    val series: MutableLiveData<Status<List<SeriesResult>>>
-        get() = _series
-
-    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
-    val comics: MutableLiveData<Status<List<ComicsResult>>>
-        get() = _comics
-
-    private val _character = MutableLiveData<Status<List<ProfileResult>>>()
-    val character: MutableLiveData<Status<List<ProfileResult>>>
-        get() = _character
+    private val _state = MutableLiveData<Status<SearchDataHolder>>()
+    val state: LiveData<Status<SearchDataHolder>>
+        get() = _state
 
     init {
         applySearch()
@@ -52,18 +48,23 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
 
     private fun applySearch() {
         searchQuery.debounce(500, TimeUnit.MILLISECONDS).subscribe {
-            when (searchType) {
-                SearchItemType.TYPE_SERIES -> getAllSeries()
-                SearchItemType.TYPE_COMICS -> getAllComics()
-                SearchItemType.TYPE_CHARACTER -> getAllCharacters()
-            }
-            Log.e("TAGTAG", "applySearch: $it", )
+            loadData()
         }.add()
+    }
+
+    fun loadData() {
+        _state.postValue(Status.Loading)
+        when (searchType) {
+            SearchItemType.TYPE_SERIES -> getAllSeries()
+            SearchItemType.TYPE_COMICS -> getAllComics()
+            SearchItemType.TYPE_CHARACTER -> getAllCharacters()
+        }
     }
 
     private fun getAllSeries() {
         repository.getSeries(searchText)
-            .subscribe(::onSeriesSuccess, ::onFailure).add()
+            .subscribe(::onSeriesSuccess, ::onFailure)
+            .add()
     }
 
     private fun getAllCharacters() {
@@ -78,28 +79,29 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
             .add()
     }
 
-    private fun onCharactersSuccess(characterResult: Status<BaseResponse<ProfileResult>?>) {
-        characterResult.toData()?.data?.results?.let {
-            _character.postValue(Status.Success(it.filterNotNull()))
-        }
-    }
-
     private fun onSeriesSuccess(seriesResult: Status<BaseResponse<SeriesResult>?>) {
-        seriesResult.toData()?.data?.results?.let {
-            _series.postValue(Status.Success(it.filterNotNull()))
+        seriesResult.toData()?.data?.results?.filterNotNull()?.let { result ->
+            val newState = Status.Success(SearchDataHolder(series = result))
+            _state.postValue(newState)
         }
     }
 
     private fun onComicsSuccess(comicResult: Status<BaseResponse<ComicsResult>?>) {
-        comicResult.toData()?.data?.results?.let {
-            _comics.postValue(Status.Success(it.filterNotNull()))
+        comicResult.toData()?.data?.results?.filterNotNull()?.let { result ->
+            val newState = Status.Success(SearchDataHolder(comics = result))
+            _state.postValue(newState)
+        }
+    }
+
+    private fun onCharactersSuccess(characterResult: Status<BaseResponse<ProfileResult>?>) {
+        characterResult.toData()?.data?.results?.filterNotNull()?.let { result ->
+            val newState = Status.Success(SearchDataHolder(characters = result))
+            _state.postValue(newState)
         }
     }
 
     private fun onFailure(throwable: Throwable) {
-        _series.postValue(Status.Failure(throwable.message.toString()))
-        _comics.postValue(Status.Failure(throwable.message.toString()))
-        _character.postValue(Status.Failure(throwable.message.toString()))
+        _state.postValue(Status.Failure(throwable.message.toString()))
     }
 
     override fun onclickSeries(id: Int?) {

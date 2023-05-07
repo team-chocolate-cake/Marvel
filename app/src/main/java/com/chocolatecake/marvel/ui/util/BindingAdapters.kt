@@ -1,13 +1,16 @@
 package com.chocolatecake.marvel.ui.util
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Fade
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
+import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ImageResponse
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseAdapter
@@ -21,17 +24,35 @@ fun <T> RecyclerView.setRecyclerItems(items: List<T>?) {
 
 @BindingAdapter(value = ["app:showWhenSuccess"])
 fun <T> View.showWhenSuccess(status: Status<T>?) {
-    this.isVisible = (status is Status.Success)
+    val transition = Fade()
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
+    visibility = if (status is Status.Success) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
 }
 
 @BindingAdapter(value = ["app:showWhenFailure"])
 fun <T> View.showWhenFailure(status: Status<T>?) {
-    this.isVisible = (status is Status.Failure)
+    val transition = Fade()
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
+    visibility = if (status is Status.Failure) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
 }
 
 @BindingAdapter(value = ["app:showWhenLoading"])
 fun <T> View.showWhenLoading(status: Status<T>?) {
-    this.isVisible = (status is Status.Loading)
+    val transition = Fade()
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
+    visibility = if (status is Status.Loading) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
 }
 
 @BindingAdapter(value = ["app:imageUrl"])
@@ -43,6 +64,7 @@ fun ImageView.loadImage(imageResponse: ImageResponse?) {
     }
     Glide.with(context)
         .load(url)
+        .thumbnail(Glide.with(context).load(R.raw.loading))
         .fitCenter()
         .centerCrop()
         .into(this)
@@ -50,7 +72,7 @@ fun ImageView.loadImage(imageResponse: ImageResponse?) {
 
 @BindingAdapter("selectedType")
 fun Chip.setSelectedEnum(selectedEnum: SearchItemType) {
-    isChecked = (text.toString().uppercase() == selectedEnum.toString())
+    isChecked = ("TYPE_" + text.toString().uppercase() == selectedEnum.toString())
 }
 
 @BindingAdapter("selectedTypeAttrChanged")
