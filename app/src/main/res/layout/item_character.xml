@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.ProfileResult"/>
+            type="com.chocolatecake.marvel.data.model.ProfileResult" />
+
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.search.SearchInteractionListener" />
@@ -17,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_small"
         android:backgroundTint="@color/black"
-        android:onClick="@{()->listener.onclickCharacters(item.id)">
+        android:onClick="@{() -> listener.onclickCharacters(item.id)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,6 +33,7 @@
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{item.thumbnail}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

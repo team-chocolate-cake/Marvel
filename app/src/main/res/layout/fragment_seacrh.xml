@@ -8,14 +8,6 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.search.SearchViewModel" />
-
-        <variable
-            name="viewModelHeader"
-            type="com.chocolatecake.marvel.ui.search.SearchViewModel" />
-
-        <variable
-            name="listener"
-            type="com.chocolatecake.marvel.ui.search.SearchInteractionListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,14 +15,6 @@
         android:layout_height="match_parent"
         tools:context=".ui.search.SearchFragment">
 
-        <View
-            android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="82dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edit_text_search"
@@ -38,9 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
-            android:text="@={viewModel.searchQuery}"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@={viewModel.searchText}"
             app:layout_constraintTop_toTopOf="parent" />
 
         <HorizontalScrollView
@@ -52,7 +35,7 @@
             android:paddingHorizontal="16dp"
             android:scrollbars="none"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view">
+            app:layout_constraintTop_toBottomOf="@id/edit_text_search">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroup"
@@ -65,33 +48,31 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/seriesChip"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
+                    selectedType="@={viewModel.searchType}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:onClick="@{()-> listener.onClickSeriesChip()}"
-                    android:text="@string/series"
-                    tools:text="series" />
+                    android:text="@string/series" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/comicsChip"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
+                    selectedType="@={viewModel.searchType}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> listener.onClickComicChip()}"
                     android:layout_gravity="center"
-                    android:text="@string/comics"
-                    tools:text="comics" />
+                    android:text="@string/comics" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/characterChip"
                     style="@style/Widget.MaterialComponents.Chip.Filter"
+                    selectedType="@={viewModel.searchType}"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> listener.onClickCharacterChip()}"
                     android:layout_gravity="end"
-                    android:text="@string/character"
-                    tools:text="character" />
+                    android:text="@string/character" />
             </com.google.android.material.chip.ChipGroup>
+
         </HorizontalScrollView>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -106,35 +87,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_filters"
             app:spanCount="2"
-            tools:listitem="@layout/item_series"
-            app:items="@{viewModel.series.toData()}"/>
+            tools:listitem="@layout/item_character" />
 
-<!--        app:showWhenSuccess="@{viewMode}"-->
+        <!--        app:showWhenSuccess="@{viewMode}"-->
 
-<!--        <ProgressBar-->
-<!--            android:id="@+id/progressBar"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:indeterminateTint="@color/primary"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+        <!--        <ProgressBar-->
+        <!--            android:id="@+id/progressBar"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:indeterminateTint="@color/primary"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent" />-->
 
-<!--        <com.airbnb.lottie.LottieAnimationView-->
-<!--            android:id="@+id/lottieAnimationView"-->
-<!--            android:layout_width="100dp"-->
-<!--            android:layout_height="100dp"-->
-<!--            android:clickable="true"-->
-<!--            android:focusable="true"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:lottie_autoPlay="true"-->
-<!--            app:lottie_loop="true"-->
-<!--            app:lottie_rawRes="@raw/error"-->
-<!--            app:showWhenFailure="@{viewModel.comics}" />-->
+        <!--        <com.airbnb.lottie.LottieAnimationView-->
+        <!--            android:id="@+id/lottieAnimationView"-->
+        <!--            android:layout_width="100dp"-->
+        <!--            android:layout_height="100dp"-->
+        <!--            android:clickable="true"-->
+        <!--            android:focusable="true"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:lottie_autoPlay="true"-->
+        <!--            app:lottie_loop="true"-->
+        <!--            app:lottie_rawRes="@raw/error"-->
+        <!--            app:showWhenFailure="@{viewModel.comics}" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

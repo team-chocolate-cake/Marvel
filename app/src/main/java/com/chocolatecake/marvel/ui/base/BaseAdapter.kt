@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.ui.base
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -41,6 +42,7 @@ abstract class BaseAdapter<T>(
         val diffUtil = DiffUtil.calculateDiff(DiffUtils(items, newItems))
         items = newItems
         diffUtil.dispatchUpdatesTo(this)
+        Log.d("123123123", "setItems: $items")
     }
 
     fun getItems() = items
