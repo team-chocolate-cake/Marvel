@@ -11,6 +11,7 @@ import com.chocolatecake.marvel.databinding.SeriesViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.event_details.EventDetailsListener
 import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItem
+import com.chocolatecake.marvel.ui.event_details.data.EventDetailsItemType
 
 class EventAdapter(
     private var eventDetailsItems: MutableList<EventDetailsItem>,
@@ -22,7 +23,7 @@ class EventAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            VIEW_TYPE_HEADER -> {
+            EventDetailsItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -31,7 +32,7 @@ class EventAdapter(
                 )
             }
 
-            VIEW_TYPE_CHARACTER -> {
+            EventDetailsItemType.CHARACTER.ordinal -> {
                 CharacterViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -40,7 +41,7 @@ class EventAdapter(
                 )
             }
 
-            VIEW_TYPE_SERIES -> {
+            EventDetailsItemType.SERIES.ordinal -> {
                 SeriesViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -49,7 +50,7 @@ class EventAdapter(
                 )
             }
 
-            VIEW_TYPE_COMIC -> {
+            EventDetailsItemType.COMICS.ordinal -> {
                 ComicsViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -110,27 +111,10 @@ class EventAdapter(
         holder.binding.item = comics
     }
 
-    override fun getItemViewType(position: Int): Int {
-        if (eventDetailsItems.isNotEmpty()) {
-            return when (eventDetailsItems[position]) {
-                is EventDetailsItem.Header -> VIEW_TYPE_HEADER
-                is EventDetailsItem.Character -> VIEW_TYPE_CHARACTER
-                is EventDetailsItem.Series -> VIEW_TYPE_SERIES
-                is EventDetailsItem.Comics -> VIEW_TYPE_COMIC
-            }
-        }
-        return -1
-    }
+    override fun getItemViewType(position: Int): Int = eventDetailsItems[position].type.ordinal
 
     class HeaderViewHolder(val binding: HeaderViewBinding) : BaseViewHolder(binding)
     class CharacterViewHolder(val binding: CharacterViewBinding) : BaseViewHolder(binding)
     class SeriesViewHolder(val binding: SeriesViewBinding) : BaseViewHolder(binding)
     class ComicsViewHolder(val binding: ComicsViewBinding) : BaseViewHolder(binding)
-
-    private companion object {
-        private const val VIEW_TYPE_HEADER = 0
-        private const val VIEW_TYPE_CHARACTER = 1
-        private const val VIEW_TYPE_SERIES = 2
-        private const val VIEW_TYPE_COMIC = 3
-    }
 }
