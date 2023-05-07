@@ -72,7 +72,7 @@ fun ImageView.loadImage(imageResponse: ImageResponse?) {
 
 @BindingAdapter("selectedType")
 fun Chip.setSelectedEnum(selectedEnum: SearchItemType) {
-    isChecked = (text.toString().uppercase() == selectedEnum.toString())
+    isChecked = ("TYPE_" + text.toString().uppercase() == selectedEnum.toString())
 }
 
 @BindingAdapter("selectedTypeAttrChanged")

@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -39,8 +38,8 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
     val searchItemId: LiveData<Int?>
         get() = _searchItemId
 
-    private val _state = MutableLiveData<Status<SearchUiState>>()
-    val state: LiveData<Status<SearchUiState>>
+    private val _state = MutableLiveData<Status<SearchDataHolder>>()
+    val state: LiveData<Status<SearchDataHolder>>
         get() = _state
 
     init {
@@ -82,27 +81,26 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
 
     private fun onSeriesSuccess(seriesResult: Status<BaseResponse<SeriesResult>?>) {
         seriesResult.toData()?.data?.results?.filterNotNull()?.let { result ->
-            val newState = Status.Success(SearchUiState(series = result))
+            val newState = Status.Success(SearchDataHolder(series = result))
             _state.postValue(newState)
         }
     }
 
     private fun onComicsSuccess(comicResult: Status<BaseResponse<ComicsResult>?>) {
         comicResult.toData()?.data?.results?.filterNotNull()?.let { result ->
-            val newState = Status.Success(SearchUiState(comics = result))
+            val newState = Status.Success(SearchDataHolder(comics = result))
             _state.postValue(newState)
         }
     }
 
     private fun onCharactersSuccess(characterResult: Status<BaseResponse<ProfileResult>?>) {
         characterResult.toData()?.data?.results?.filterNotNull()?.let { result ->
-            val newState = Status.Success(SearchUiState(characters = result))
+            val newState = Status.Success(SearchDataHolder(characters = result))
             _state.postValue(newState)
         }
     }
 
     private fun onFailure(throwable: Throwable) {
-        Log.e("TAGTAG", "onFailure: ${throwable.message}")
         _state.postValue(Status.Failure(throwable.message.toString()))
     }
 

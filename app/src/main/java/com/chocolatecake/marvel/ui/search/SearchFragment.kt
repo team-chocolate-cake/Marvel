@@ -53,7 +53,6 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
 
     private fun observeListItems() {
         viewModel.state.observe(viewLifecycleOwner) {
-            Log.d("TAGTAG", "observeListItems: ${it.toData()}")
             if (it is Status.Success) {
                 when (viewModel.searchType) {
                     TYPE_SERIES -> adapter.submitList(it.data.series.map { series -> SearchItems.SeriesItem(series) })
