@@ -4,97 +4,98 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsViewModel" />
-        <variable
-            name="item"
-            type="com.chocolatecake.marvel.data.model.ProfileResult" />
+
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.creatorDetails.CreatorDetailsFragment">
+        android:fillViewport="true"
+        android:scrollbars="none">
 
-        <ImageView
-            android:id="@+id/iv_creator_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:background="@drawable/round_corner_background"
-            android:scaleType="centerCrop"
-            app:imageUrl="@{viewModel.creator.toData().get(0).thumbnail}"
-            app:layout_constraintBottom_toBottomOf="@+id/text_view_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.19"
-            tools:src="@tools:sample/avatars" />
-        <TextView
-            android:id="@+id/text_view_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="84dp"
-            android:layout_marginTop="100dp"
-            android:text="name"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            app:layout_constraintStart_toEndOf="@+id/iv_creator_image"
-            app:layout_constraintTop_toTopOf="parent" />
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_view_series"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:text="@string/series"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_view_series"
-            app:layout_constraintTop_toBottomOf="@+id/iv_creator_image"
-             />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_series"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:orientation="horizontal"
-            app:items="@{viewModel.seriesList.toData()}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_series"
-            tools:listitem="@layout/series_item" />
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/text_view_comic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Comics"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_view_comic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_view_series"
-         />
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_comic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="16dp"
-            android:orientation="horizontal"
-            app:items="@{viewModel.comicsList.toData()}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_comic"
-            tools:listitem="@layout/comic_item" />
+            tools:context=".ui.creatorDetails.CreatorDetailsFragment">
 
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_creator_image"
+                style="@style/ShapeAppearance.Material3.Corner.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                app:imageUrl="@{viewModel.creator.toData().get(0).thumbnail}"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
+                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/text_view_name"
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:text="@{viewModel.creator.toData().get(0).fullName}"
+                android:textColor="@color/on_background_60"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_creator_image"
+                tools:text="@tools:sample/lorem" />
+
+            <TextView
+                android:id="@+id/text_view_series"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/series"
+                android:textColor="@color/on_background_38"
+                app:layout_constraintStart_toStartOf="@id/text_view_name"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_name" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_series"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/spacing_custom"
+                app:items="@{viewModel.seriesList.toData()}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_series"
+                tools:listitem="@layout/series_item" />
+
+            <TextView
+                android:id="@+id/text_view_comic"
+                style="@style/TextAppearance.Material3.BodyLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/comics"
+                android:textColor="@color/on_background_38"
+                app:layout_constraintStart_toStartOf="@id/text_view_name"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_view_series" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_comic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_tiny"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/spacing_custom"
+                app:items="@{viewModel.comicsList.toData()}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_comic"
+                tools:listitem="@layout/comic_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
