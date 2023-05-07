@@ -66,12 +66,10 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
     }
 
     override fun onClickSeries(seriesId: Int?) {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
 
     override fun onClickComics(comicsId: Int?) {
-        TODO("Not yet implemented")
+        // TODO("Not yet implemented")
     }
-
-
 }

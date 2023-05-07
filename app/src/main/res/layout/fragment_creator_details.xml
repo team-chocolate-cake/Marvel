@@ -43,7 +43,7 @@
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_tiny"
                 android:text="@{viewModel.creator.toData().get(0).fullName}"
-                android:textColor="@color/on_background_60"
+                android:textColor="@color/on_background_87"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_creator_image"
                 tools:text="@tools:sample/lorem" />
