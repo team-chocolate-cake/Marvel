@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.CharacterDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
+import com.chocolatecake.marvel.ui.character_details.adapters.CharacterDetailsAdapter
 
 class CharacterDetailsFragment :
     BaseFragment<CharacterDetailsBinding, CharacterDetailsViewModel>() {

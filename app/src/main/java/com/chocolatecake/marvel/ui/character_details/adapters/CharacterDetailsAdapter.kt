@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.character_details
+package com.chocolatecake.marvel.ui.character_details.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,6 +8,8 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.databinding.CharacterComicsBinding
 import com.chocolatecake.marvel.databinding.CharacterHeaderBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
+import com.chocolatecake.marvel.ui.character_details.CharacterDetailsItem
+import com.chocolatecake.marvel.ui.character_details.CharacterDetailsListener
 
 class CharacterDetailsAdapter(
     private val list: List<CharacterDetailsItem>,
@@ -18,7 +20,7 @@ class CharacterDetailsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            R.layout.character_header -> {
+            HEADER -> {
                 CharacterHeaderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -28,7 +30,8 @@ class CharacterDetailsAdapter(
                     )
                 )
             }
-            R.layout.character_comics -> {
+
+            COMICS_SECTION -> {
                 CharacterComicsViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context),
@@ -38,6 +41,7 @@ class CharacterDetailsAdapter(
                     )
                 )
             }
+
             else -> throw IllegalStateException("Unknown view type $viewType")
         }
     }
@@ -63,8 +67,8 @@ class CharacterDetailsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return when (list[position]) {
-            is CharacterDetailsItem.Header -> R.layout.character_header
-            is CharacterDetailsItem.Comics -> R.layout.character_comics
+            is CharacterDetailsItem.Header -> HEADER
+            is CharacterDetailsItem.Comics -> COMICS_SECTION
         }
     }
 
@@ -73,5 +77,10 @@ class CharacterDetailsAdapter(
 
     class CharacterComicsViewHolder(val binding: CharacterComicsBinding) :
         BaseViewHolder(binding)
+
+    companion object {
+        const val HEADER = 0
+        const val COMICS_SECTION = 1
+    }
 }
 

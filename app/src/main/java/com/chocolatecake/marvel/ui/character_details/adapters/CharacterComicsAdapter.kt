@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.character_details
+package com.chocolatecake.marvel.ui.character_details.adapters
 
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ComicsResult
