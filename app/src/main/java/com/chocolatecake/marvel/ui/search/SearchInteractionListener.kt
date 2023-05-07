@@ -5,7 +5,4 @@ interface SearchInteractionListener : BaseAdapter.BaseInteractionListener {
     fun onclickSeries(id:Int?)
     fun onclickComics(id:Int?)
     fun onclickCharacters(id:Int?)
-    fun onClickSeriesChip()
-    fun onClickComicChip()
-    fun onClickCharacterChip()
 }

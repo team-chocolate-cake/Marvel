@@ -8,15 +8,7 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.search.SearchViewModel" />
-
-        <variable
-            name="viewModelHeader"
-            type="com.chocolatecake.marvel.ui.search.SearchViewModel" />
-
-        <variable
-            name="listener"
-            type="com.chocolatecake.marvel.ui.search.SearchInteractionListener" />
-    </data>
+         </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,13 +24,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <EditText
             android:id="@+id/edit_text_search"
             style="@style/TextStyle.BodyMedium.SearchBoxStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16sp"
-            android:text="@={viewModel.searchQuery}"
+            android:text="@={viewModel.searchQuery.queryText}"
+            app:textAttrChanged="@{view -> view.bindEditText(viewModel.searchQuery::setQueryText)}"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +62,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:onClick="@{()-> listener.onClickSeriesChip()}"
                     android:text="@string/series"
                     tools:text="series" />
 
@@ -77,7 +70,6 @@
                     style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> listener.onClickComicChip()}"
                     android:layout_gravity="center"
                     android:text="@string/comics"
                     tools:text="comics" />
@@ -87,7 +79,6 @@
                     style="@style/Widget.MaterialComponents.Chip.Filter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()-> listener.onClickCharacterChip()}"
                     android:layout_gravity="end"
                     android:text="@string/character"
                     tools:text="character" />
@@ -106,8 +97,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_filters"
             app:spanCount="2"
-            tools:listitem="@layout/item_series"
-            app:items="@{viewModel.series.toData()}"/>
+            tools:listitem="@layout/item_character" />
 
 <!--        app:showWhenSuccess="@{viewMode}"-->
 
