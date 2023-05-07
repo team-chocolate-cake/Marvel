@@ -15,7 +15,7 @@ interface MarvelService {
 
     @GET("comics")
     fun getComics(
-        @Query("title") title: String? = null,
+        @Query("titleStartsWith") title: String? = null,
         @Query("limit") limit: Int? = null
     ): Single<Response<BaseResponse<ComicsResult>>>
 
@@ -31,7 +31,7 @@ interface MarvelService {
 
     @GET("characters")
     fun getCharacters(
-        @Query("name") name: String? = null,
+        @Query("nameStartsWith") name: String? = null,
         @Query("limit") limit: Int? = null
     ): Single<Response<BaseResponse<ProfileResult>>>
 
@@ -74,7 +74,7 @@ interface MarvelService {
 
     @GET("series")
     fun getSeries(
-        @Query("title") title: String? = null,
+        @Query("titleStartsWith") title: String? = null,
         @Query("limit") limit: Int? = null
     ): Single<Response<BaseResponse<SeriesResult>>>
 
