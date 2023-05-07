@@ -61,7 +61,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 adapter.setItem(HomeItem.SeriesItem(it))
             }
         }
-        viewModel.comic.observe(viewLifecycleOwner){status ->
+        viewModel.comics.observe(viewLifecycleOwner){ status ->
             status.toData()?.forEach{
                 adapter.setItem(HomeItem.ComicItem(it))
             }

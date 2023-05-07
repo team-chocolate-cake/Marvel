@@ -60,7 +60,6 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                     )
                 )
             }
-
             else -> throw Exception("UNKNOWN VIEW TYPE")
         }
     }

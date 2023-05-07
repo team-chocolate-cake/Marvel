@@ -21,8 +21,9 @@ class HomeViewModel : BaseViewModel(), HomeListener {
     private val _series = MutableLiveData<Status<List<SeriesResult>>>()
     val series: LiveData<Status<List<SeriesResult>>> get() = _series
 
-    private val _comic = MutableLiveData<Status<List<ComicsResult>>>()
-    val comic: LiveData<Status<List<ComicsResult>>> get() = _comic
+    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
+    val comics: LiveData<Status<List<ComicsResult>>> get() = _comics
+
     private val _eventId = MutableLiveData<Int?>()
     val eventId: LiveData<Int?> get() = _eventId
 
@@ -65,11 +66,13 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         marvelRepository.getSeries(limit = 8, offset = (0..50).random())
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
+
     private fun getCurrentComic(){
-        _comic.postValue(Status.Loading)
+        _comics.postValue(Status.Loading)
         marvelRepository.getComics(limit = 8, offset=(0..50).random())
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
+
     private fun onSeriesSuccess(status: Status<BaseResponse<SeriesResult>?>) {
         status.toData()?.data?.results?.let {
             _series.postValue(Status.Success(it.filterNotNull()))
@@ -78,14 +81,14 @@ class HomeViewModel : BaseViewModel(), HomeListener {
 
     private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>){
         status.toData()?.data?.results?.let{
-            _comic.postValue(Status.Success(it.filterNotNull()))
+            _comics.postValue(Status.Success(it.filterNotNull()))
         }
     }
 
     private fun onFailure(throwable: Throwable) {
         _events.postValue(Status.Failure(throwable.message.toString()))
         _series.postValue(Status.Failure(throwable.message.toString()))
-        _comic.postValue(Status.Failure(throwable.message.toString()))
+        _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
     override fun onClickBanner(eventId: Int?) {
