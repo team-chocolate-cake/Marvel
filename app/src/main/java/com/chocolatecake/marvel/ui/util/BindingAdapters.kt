@@ -47,7 +47,7 @@ fun <T> View.showWhenFailure(status: Status<T>?) {
     }
 }
 
-@BindingAdapter("app:isListEmpty")
+@BindingAdapter("app:showWhenListEmpty")
 fun View.showWhenDoneLoadingAndListIsEmpty(emptyList: Boolean?) {
     visibility = if (emptyList!!) {
         View.VISIBLE
@@ -56,6 +56,14 @@ fun View.showWhenDoneLoadingAndListIsEmpty(emptyList: Boolean?) {
     }
 }
 
+@BindingAdapter("app:hideWhenListIsEmpty")
+fun View.hideWhenListIsEmpty(emptyList: Boolean?) {
+    visibility = if (emptyList == true) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
 
 @BindingAdapter(value = ["app:showWhenLoading"])
 fun <T> View.showWhenLoading(status: Status<T>?) {

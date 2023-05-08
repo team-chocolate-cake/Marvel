@@ -6,5 +6,8 @@ sealed class Status<out T> {
     data class Success<T>(val data: T) : Status<T>()
 
     fun toData(): T? = if (this is Success) data else null
-    fun toEmpty(): Boolean = toData()== emptyList<T>()
+    fun toEmpty(): Boolean = when (this) {
+        is Success -> data is List<*> && data.isEmpty()
+        else -> true
+    }
 }

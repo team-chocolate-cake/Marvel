@@ -15,6 +15,19 @@
         android:layout_height="match_parent"
         tools:context=".ui.search.view.SearchFragment">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_results"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_semi_large"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showWhenListEmpty="@{viewModel.state.toEmpty()}" />
+
 
         <EditText
             android:id="@+id/edit_text_search"
@@ -24,7 +37,7 @@
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="@={viewModel.searchText}"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <HorizontalScrollView
             android:id="@+id/layout_filters"
@@ -81,6 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="true"
+            app:hideWhenListIsEmpty="@{viewModel.state.toEmpty()}"
             android:paddingHorizontal="@dimen/spacing_custom"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -116,19 +130,6 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/error"
             app:showWhenFailure="@{viewModel.state}" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_results"
-            android:textSize="@dimen/text_semi_large"
-            app:isListEmpty="@{viewModel.state.toEmpty()}"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
