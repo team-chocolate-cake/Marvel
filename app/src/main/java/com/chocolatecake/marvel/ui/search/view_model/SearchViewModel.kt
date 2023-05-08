@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.search
+package com.chocolatecake.marvel.ui.search.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +10,10 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
+import com.chocolatecake.marvel.ui.search.model.SearchItemType
+import com.chocolatecake.marvel.ui.search.model.SearchQuery
+import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 

@@ -11,6 +11,6 @@
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_seacrh"
         android:id="@+id/container"
-        android:name="com.chocolatecake.marvel.ui.search.SearchFragment"/>
+        android:name="com.chocolatecake.marvel.ui.search.view.SearchFragment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

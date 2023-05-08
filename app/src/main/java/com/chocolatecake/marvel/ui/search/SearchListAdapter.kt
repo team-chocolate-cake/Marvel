@@ -10,6 +10,9 @@ import com.chocolatecake.marvel.databinding.ItemCharacterBinding
 import com.chocolatecake.marvel.databinding.ItemComicBinding
 import com.chocolatecake.marvel.databinding.ItemSeriesBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
+import com.chocolatecake.marvel.ui.search.model.SearchItemType
+import com.chocolatecake.marvel.ui.search.model.SearchItems
+import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
 
 class SearchListAdapter(private val listener: SearchInteractionListener) :
     ListAdapter<SearchItems, BaseAdapter.BaseViewHolder>(SearchDiffUtil()) {

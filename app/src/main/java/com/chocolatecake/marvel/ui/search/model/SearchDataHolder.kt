@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.search
+package com.chocolatecake.marvel.ui.search.model
 
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
