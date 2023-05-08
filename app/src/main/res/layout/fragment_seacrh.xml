@@ -123,6 +123,8 @@
             android:text="@string/no_results"
             android:textSize="@dimen/text_semi_large"
             app:isListEmpty="@{viewModel.state.toEmpty()}"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

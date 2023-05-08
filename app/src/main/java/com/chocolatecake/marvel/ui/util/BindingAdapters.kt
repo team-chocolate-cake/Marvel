@@ -49,7 +49,11 @@ fun <T> View.showWhenFailure(status: Status<T>?) {
 
 @BindingAdapter("app:isListEmpty")
 fun View.showWhenDoneLoadingAndListIsEmpty(emptyList: Boolean?) {
-    isVisible = emptyList!!
+    visibility = if (emptyList!!) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
 }
 
 
