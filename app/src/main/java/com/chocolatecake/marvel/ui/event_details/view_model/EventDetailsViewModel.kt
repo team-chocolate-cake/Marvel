@@ -20,8 +20,8 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     private val _event = MutableLiveData<Status<EventResult>>()
     val event: LiveData<Status<EventResult>> get() = _event
 
-    private val _characters = MutableLiveData<Status<List<ProfileResult?>>>()
-    val characters: MutableLiveData<Status<List<ProfileResult?>>> get() = _characters
+    private val _characters = MutableLiveData<Status<List<ProfileResult>>>()
+    val characters: MutableLiveData<Status<List<ProfileResult>>> get() = _characters
 
     private val _series = MutableLiveData<Status<List<SeriesResult>>>()
     val series: MutableLiveData<Status<List<SeriesResult>>> get() = _series

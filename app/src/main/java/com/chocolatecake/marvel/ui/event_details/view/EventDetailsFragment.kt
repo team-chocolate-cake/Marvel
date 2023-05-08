@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.chocolatecake.marvel.R
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
@@ -24,7 +25,7 @@ class EventDetailsFragment :
 
         adapter = EventAdapter(
             mutableListOf(
-                EventDetailsItem.Header(null),
+                EventDetailsItem.Header(EventResult()),
                 EventDetailsItem.Character(emptyList()),
                 EventDetailsItem.Series(emptyList()),
                 EventDetailsItem.Comics(emptyList())

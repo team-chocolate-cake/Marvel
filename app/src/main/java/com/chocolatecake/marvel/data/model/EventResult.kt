@@ -8,7 +8,7 @@ data class EventResult(
     @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("thumbnail")
-    val thumbnail: ImageResponse?,
+    val thumbnail: ImageResponse?= null,
     @SerializedName("title")
     val title: String? = null,
 )
