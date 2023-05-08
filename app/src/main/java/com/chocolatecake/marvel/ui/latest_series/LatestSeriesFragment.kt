@@ -9,14 +9,12 @@ import com.chocolatecake.marvel.ui.base.BaseFragment
 
 class LatestSeriesFragment() : BaseFragment<FragmentLatestSeriesBinding, LatestSeriesViewModel>() {
 
+    override val viewModel: LatestSeriesViewModel by viewModels()
+
+    override val layoutIdFragment = R.layout.fragment_latest_series
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = LatestSeriesAdapter(mutableListOf(), viewModel)
         binding.recyclerViewSeries.adapter = adapter
     }
-
-    override val viewModel: LatestSeriesViewModel by viewModels()
-
-    override val layoutIdFragment: Int
-        get() = R.layout.fragment_latest_series
 }
