@@ -12,9 +12,10 @@ class LatestSeriesFragment() : BaseFragment<FragmentLatestSeriesBinding, LatestS
     override val viewModel: LatestSeriesViewModel by viewModels()
 
     override val layoutIdFragment = R.layout.fragment_latest_series
+
+    val adapter = LatestSeriesAdapter(mutableListOf(), viewModel)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = LatestSeriesAdapter(mutableListOf(), viewModel)
         binding.recyclerViewSeries.adapter = adapter
     }
 }
