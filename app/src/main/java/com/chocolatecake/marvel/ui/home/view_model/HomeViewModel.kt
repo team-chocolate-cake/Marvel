@@ -63,13 +63,13 @@ class HomeViewModel : BaseViewModel(), HomeListener {
 
     private fun getCurrentSeries() {
         _series.postValue(Status.Loading)
-        marvelRepository.getSeries(limit = 8, offset = (0..50).random())
+        marvelRepository.getSeries(limit = 4, offset = (0..50).random())
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
     private fun getCurrentComic(){
         _comics.postValue(Status.Loading)
-        marvelRepository.getComics(limit = 4, offset=(1..5).random())
+        marvelRepository.getComics(limit = 4, offset=(0..50).random())
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
