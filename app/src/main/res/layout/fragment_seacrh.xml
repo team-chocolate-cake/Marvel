@@ -18,15 +18,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:text="@string/no_results"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_semi_large"
-            android:textStyle="bold"
+            android:textColor="@color/on_background_87"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenListEmpty="@{viewModel.state.toEmpty()}"/>
+            app:showWhenListEmpty="@{viewModel.state.toData()}"/>
 
 
         <EditText

@@ -14,6 +14,7 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ImageResponse
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseAdapter
+import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.google.android.material.chip.Chip
 
@@ -45,10 +46,10 @@ fun <T> View.showWhenFailure(status: Status<T>?) {
 }
 
 @BindingAdapter("app:showWhenListEmpty")
-fun <T> View.showWhenDoneLoadingAndListIsEmpty(emptyList: Boolean?) {
+fun <T> View.showWhenDoneLoadingAndListIsEmpty(searchDataHolder: SearchDataHolder?) {
     val transition = Fade()
     TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
-    visibility = if (emptyList == true) {
+    visibility = if (searchDataHolder?.isEmpty() == true) {
         View.VISIBLE
     } else {
         View.GONE
