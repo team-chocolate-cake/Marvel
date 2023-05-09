@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.EventResult" />
+            type="com.chocolatecake.marvel.data.model.ProfileResult" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,18 +14,17 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/series"
+            android:id="@+id/text_view_characters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Events"
+            android:text="Characters"
             android:textSize="@dimen/text_large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_events"
+            android:id="@+id/recycler_view_characters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
@@ -33,9 +32,9 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/series"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_characters"
             app:spanCount="3"
-            tools:listitem="@layout/event_item" />
+            tools:listitem="@layout/series_details_character_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

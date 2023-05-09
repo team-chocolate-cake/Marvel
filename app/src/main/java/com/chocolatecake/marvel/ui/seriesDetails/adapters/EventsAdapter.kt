@@ -8,5 +8,5 @@ import com.chocolatecake.marvel.ui.seriesDetails.view.SeriesDetailsListener
 class EventsAdapter(itemsEvents: List<EventResult?>, listener: SeriesDetailsListener):
     BaseAdapter<EventResult?>(itemsEvents, listener) {
 
-    override val layoutId: Int = R.layout.event_item
+    override val layoutId: Int = R.layout.series_details_event_item
 }

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.databinding.CharacterViewBinding
-import com.chocolatecake.marvel.databinding.ComicsViewBinding
-import com.chocolatecake.marvel.databinding.EventsViewBinding
-import com.chocolatecake.marvel.databinding.HeaderViewBinding
+import com.chocolatecake.marvel.databinding.SeriesDetailsCharacterViewBinding
+import com.chocolatecake.marvel.databinding.SeriesDetailsComicsViewBinding
+import com.chocolatecake.marvel.databinding.SeriesDetailsEventsViewBinding
+import com.chocolatecake.marvel.databinding.SeriesDetailsHeaderViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItem
 import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItemType
@@ -39,7 +39,7 @@ class SeriesDetailsAdapter(
             SeriesDetailsItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.header_view, parent, false
+                        LayoutInflater.from(parent.context), R.layout.series_details_header_view, parent, false
                     )
                 )
             }
@@ -47,7 +47,7 @@ class SeriesDetailsAdapter(
            SeriesDetailsItemType.CHARACTERS.ordinal -> {
                 CharactersViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.character_view, parent, false
+                        LayoutInflater.from(parent.context), R.layout.series_details_character_view, parent, false
                     )
                 )
             }
@@ -55,7 +55,7 @@ class SeriesDetailsAdapter(
             SeriesDetailsItemType.EVENTS.ordinal -> {
                 EventViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.events_view, parent, false
+                        LayoutInflater.from(parent.context), R.layout.series_details_events_view, parent, false
                     )
                 )
             }
@@ -63,7 +63,7 @@ class SeriesDetailsAdapter(
             SeriesDetailsItemType.COMICS.ordinal-> {
                 ComicViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.comics_view, parent, false
+                        LayoutInflater.from(parent.context), R.layout.series_details_comics_view, parent, false
                     )
                 )
             }
@@ -119,9 +119,9 @@ class SeriesDetailsAdapter(
 
     override fun getItemViewType(position: Int): Int = itemsSeriesDetails[position].type.ordinal
 
-    class HeaderViewHolder(val binding: HeaderViewBinding) : BaseViewHolder(binding)
-    class CharactersViewHolder(val binding: CharacterViewBinding) : BaseViewHolder(binding)
-    class ComicViewHolder(val binding: ComicsViewBinding) : BaseViewHolder(binding)
-    class EventViewHolder(val binding: EventsViewBinding) : BaseViewHolder(binding)
+    class HeaderViewHolder(val binding: SeriesDetailsHeaderViewBinding) : BaseViewHolder(binding)
+    class CharactersViewHolder(val binding: SeriesDetailsCharacterViewBinding) : BaseViewHolder(binding)
+    class ComicViewHolder(val binding: SeriesDetailsComicsViewBinding) : BaseViewHolder(binding)
+    class EventViewHolder(val binding: SeriesDetailsEventsViewBinding) : BaseViewHolder(binding)
 
 }
