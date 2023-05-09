@@ -13,12 +13,5 @@ class HorizontalCharacterAdapter(
 ) : BaseAdapter<SeriesResult?>(items,listener) {
 
     override val layoutId: Int = R.layout.character_item
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
-        super.onBindViewHolder(holder, position)
-        val currentItem = getItems()[position]
-        if (holder is ItemViewHolder){
-            holder.binding.setVariable(BR.myItem, currentItem)
-        }
-    }
 
 }

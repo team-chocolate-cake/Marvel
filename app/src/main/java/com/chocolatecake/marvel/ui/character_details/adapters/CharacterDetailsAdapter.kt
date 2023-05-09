@@ -9,14 +9,13 @@ import com.chocolatecake.marvel.databinding.CharacterComicsBinding
 import com.chocolatecake.marvel.databinding.CharacterHeaderBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.character_details.CharacterDetailsItem
-import com.chocolatecake.marvel.ui.character_details.CharacterDetailsListener
+import com.chocolatecake.marvel.ui.comic.ComicListener
 
 class CharacterDetailsAdapter(
     private val itemsList: List<CharacterDetailsItem>,
-    private val listener: CharacterDetailsListener,
+    private val listener: ComicListener,
 ) : BaseAdapter<CharacterDetailsItem>(itemsList, listener) {
-    override val layoutId: Int
-        get() = R.layout.character_details
+    override val layoutId: Int = R.layout.character_details
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {

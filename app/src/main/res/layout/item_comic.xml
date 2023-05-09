@@ -32,7 +32,6 @@
                 android:layout_gravity="top"
                 app:imageUrl="@{item.thumbnail}"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{item.thumbnail}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -44,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="@dimen/spacing_tiny"
-                android:text="@{item.description}"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{item.title}"

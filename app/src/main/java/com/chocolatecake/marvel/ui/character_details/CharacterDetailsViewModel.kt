@@ -10,8 +10,9 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.comic.ComicListener
 
-class CharacterDetailsViewModel : BaseViewModel(), CharacterDetailsListener {
+class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     private val _character = MutableLiveData<Status<ProfileResult>>()
