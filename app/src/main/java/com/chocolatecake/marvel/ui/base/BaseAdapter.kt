@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chocolatecake.marvel.BR
-
+import com.chocolatecake.marvel.data.model.ProfileResult
 abstract class BaseAdapter<T>(
     private var items: List<T>,
     private var listener: BaseInteractionListener

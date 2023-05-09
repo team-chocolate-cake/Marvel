@@ -12,8 +12,13 @@ interface MarvelRepository {
     fun getComics(
         title: String? = null,
         limit: Int? = null,
-        offset: Int? = null
+        offset: Int? = null,
     ): Single<Status<BaseResponse<ComicsResult>?>>
+
+
+    fun getEventByComicId(
+        comicId: Int
+    ): Single<Status<BaseResponse<EventResult>?>>
 
     fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>>
     fun getCharactersForComic(comicId: Int): Single<Status<BaseResponse<ProfileResult>?>>
@@ -33,8 +38,9 @@ interface MarvelRepository {
     ): Single<Status<BaseResponse<SeriesResult>?>>
 
     fun getSeriesById(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
-    fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
-    fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
+    fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<ProfileResult>?>>
+    fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<ComicsResult>?>>
+    fun getEventsForSeries(seriesId: Int) : Single<Status<BaseResponse<EventResult>?>>
 
     fun getCreators(
         firstName: String? = null,
@@ -44,9 +50,7 @@ interface MarvelRepository {
 
     fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>>
     fun getComicsForCreator(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>>
-    fun getSeriesForCreator(
-        creatorId: Int,
-    ): Single<Status<BaseResponse<SeriesResult>?>>
+    fun getSeriesForCreator(creatorId: Int, ): Single<Status<BaseResponse<SeriesResult>?>>
 
     fun getEvents(
         limit: Int? = null,
@@ -56,4 +60,13 @@ interface MarvelRepository {
     fun getEventById(eventId: Int): Single<Status<BaseResponse<EventResult>?>>
     fun getCharactersForEvent(eventId: Int): Single<Status<BaseResponse<EventResult>?>>
     fun getComicsForEvent(eventId: Int): Single<Status<BaseResponse<EventResult>?>>
+
+    fun getCharactersByEventId(eventId: Int): Single<Status<BaseResponse<ProfileResult>?>>
+
+    fun getSeriesByEventId(eventId: Int): Single<Status<BaseResponse<SeriesResult>?>>
+
+    fun getComicsByEventId(eventId: Int): Single<Status<BaseResponse<ComicsResult>?>>
+
+    fun getSpecificEventByEventId(eventId: Int): Single<Status<BaseResponse<EventResult>?>>
+
 }

@@ -1,7 +1,5 @@
 package com.chocolatecake.marvel.data.model
 
-import com.chocolatecake.marvel.data.model.*
-import com.chocolatecake.marvel.data.model.base.*
 import com.google.gson.annotations.SerializedName
 
 data class EventResult(
@@ -10,7 +8,7 @@ data class EventResult(
     @SerializedName("id")
     val id: Int? = 0,
     @SerializedName("thumbnail")
-    val thumbnail: ImageResponse?,
+    val thumbnail: ImageResponse?= null,
     @SerializedName("title")
     val title: String? = null,
 )
