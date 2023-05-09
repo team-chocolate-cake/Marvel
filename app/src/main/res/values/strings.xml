@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Marvel</string>
+    <string name="series">Series</string>
+    <string name="comics">Comics</string>
+    <string name="character">Character</string>
+    <string name="no_results">No Results</string>
     <string name="series_title">Series Title</string>
     <string name="text_view_description">description description description description description description description description description description description description</string>
     <string name="comics">Comics</string>

@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.ui.base
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -41,6 +42,7 @@ abstract class BaseAdapter<T>(
         val diffUtil = DiffUtil.calculateDiff(DiffUtils(items, newItems))
         items = newItems
         diffUtil.dispatchUpdatesTo(this)
+        Log.d("123123123", "setItems: $items")
     }
 
     fun getItems() = items
@@ -58,8 +60,12 @@ abstract class BaseAdapter<T>(
         override fun getNewListSize() = newList.size
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             oldList[oldItemPosition] == newList[newItemPosition]
-
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) = true
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val oldItem = oldList[oldItemPosition]
+            val newItem = newList[newItemPosition]
+            // Compare the relevant fields for equality
+            return oldItem == newItem
+        }
 
     }
 
