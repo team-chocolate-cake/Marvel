@@ -9,6 +9,9 @@ import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
+import com.chocolatecake.marvel.ui.base.BaseAdapter
+import android.view.View
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ImageResponse
@@ -78,13 +81,8 @@ fun <T> View.showWhenLoading(status: Status<T>?) {
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageResponse: ImageResponse?) {
-    val url = if (imageResponse?.path?.split("/")?.last() == "image_not_available") {
-        "https://fandomwire.com/wp-content/uploads/2018/07/Marvel-Logo-14.jpg"
-    } else {
-        imageResponse?.toUrl()
-    }
     Glide.with(context)
-        .load(url)
+        .load(imageResponse?.toUrl())
         .thumbnail(Glide.with(context).load(R.raw.loading))
         .fitCenter()
         .centerCrop()

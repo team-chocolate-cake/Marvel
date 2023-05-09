@@ -4,7 +4,7 @@ import com.chocolatecake.marvel.data.model.*
 import com.chocolatecake.marvel.data.model.base.*
 import com.google.gson.annotations.SerializedName
 
-data class StoriesResult(
+data class StoryResult(
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("id")

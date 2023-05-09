@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="item"
+            type="com.chocolatecake.marvel.data.model.SeriesResult" />
+
+        <variable
+            name="listener"
+            type="com.chocolatecake.marvel.ui.home.view.HomeListener" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/spacing_tiny"
+        android:onClick="@{() -> listener.onClickSeries(item.id)}"
+        android:backgroundTint="@color/black">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_view_series"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:background="@color/cardview_dark_background"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                app:imageUrl="@{item.thumbnail}" />
+
+            <TextView
+                android:id="@+id/text_view_title_series"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@{item.title}" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>
