@@ -16,6 +16,7 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
         get() = _binding as VDB
 
     abstract val viewModel: VM
+
     abstract val layoutIdFragment: Int
 
     override fun onCreateView(
@@ -25,8 +26,8 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutIdFragment, container, false)
         _binding?.apply {
-            lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.viewModel, viewModel)
+           lifecycleOwner = viewLifecycleOwner
+            setVariable(BR.viewModel,viewModel)
         }
         return binding.root
     }

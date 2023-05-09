@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoriesResult
@@ -102,6 +103,22 @@ class MarvelRepositoryImpl : MarvelRepository {
 
     override fun getComicsForStory(storyId: Int): Single<Status<BaseResponse<StoriesResult>?>> {
         return wrapperToState(apiService.getComicsForStory(storyId))
+    }
+
+    override fun getCharactersByEventId(eventId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
+        return wrapperToState(apiService.getCharactersByEventId(eventId))
+    }
+
+    override fun getSeriesByEventId(eventId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+        return wrapperToState(apiService.getSeriesByEventId(eventId))
+    }
+
+    override fun getComicsByEventId(eventId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+        return wrapperToState(apiService.getComicsByEventId(eventId))
+    }
+
+    override fun getSpecificEventByEventId(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getSpecificEventByEventId(eventId))
     }
 
     private fun <T> wrapperToState(response: Single<Response<BaseResponse<T>>>)
