@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
-import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
@@ -24,8 +24,8 @@ class ComicDetailsViewModel(
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
 
-    private val _characters = MutableLiveData<Status<List<SeriesResult?>>>()
-    val characters: LiveData<Status<List<SeriesResult?>>>
+    private val _characters = MutableLiveData<Status<List<ProfileResult?>>>()
+    val characters: LiveData<Status<List<ProfileResult?>>>
         get() = _characters
 
     private val _toastMessage = MutableLiveData<String>()
@@ -68,7 +68,7 @@ class ComicDetailsViewModel(
             .add()
     }
 
-    private fun onGetCharacterSuccess(status: Status<BaseResponse<SeriesResult>?>) {
+    private fun onGetCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
         status.toData()?.data?.results?.let {
             Log.i(TAG, "onGetCharacterSuccess: ${it.toString()}")
             itemsList.add(ComicDetailsItem.Characters(it))
