@@ -112,6 +112,7 @@ class MarvelRepositoryImpl : MarvelRepository {
             : Single<Status<BaseResponse<T>?>> {
         return response.map {
             try {
+                Status.Loading
                 if (it.isSuccessful) {
                     Status.Success(it.body())
                 } else {

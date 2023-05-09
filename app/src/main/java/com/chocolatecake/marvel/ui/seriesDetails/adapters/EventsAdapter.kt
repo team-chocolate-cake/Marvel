@@ -6,7 +6,7 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener
 
 class EventsAdapter(itemsEvents: List<EventResult?>, listener: SeriesDetailsListener):
-BaseAdapter<EventResult?>(itemsEvents, listener) {
-    override val layoutId: Int
-        get() = R.layout.event_item
+    BaseAdapter<EventResult?>(itemsEvents, listener) {
+
+    override val layoutId: Int = R.layout.event_item
 }

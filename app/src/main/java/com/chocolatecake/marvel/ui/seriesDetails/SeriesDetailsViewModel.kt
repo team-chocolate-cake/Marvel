@@ -16,16 +16,18 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
 
     val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
-    val itemList: MutableList<SeriesDetailsItem> = mutableListOf()
 
     private val _series = MutableLiveData<Status<SeriesResult?>>()
-    private val _events = MutableLiveData<Status<List<EventResult?>>>()
-    private val _characters = MutableLiveData<Status<List<ProfileResult?>>>()
-    private val _comics = MutableLiveData<Status<List<ComicsResult?>>>()
-    val events: LiveData<Status<List<EventResult?>>> get() = _events
     val series: LiveData<Status<SeriesResult?>> get() = _series
-    val comics: LiveData<Status<List<ComicsResult?>>> get() = _comics
+
+    private val _characters = MutableLiveData<Status<List<ProfileResult?>>>()
     val characters: LiveData<Status<List<ProfileResult?>>> get() = _characters
+
+    private val _comics = MutableLiveData<Status<List<ComicsResult?>>>()
+    val comics: LiveData<Status<List<ComicsResult?>>> get() = _comics
+
+    private val _events = MutableLiveData<Status<List<EventResult?>>>()
+    val events: LiveData<Status<List<EventResult?>>> get() = _events
 
 
     init {
@@ -40,8 +42,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getSeriesById() {
-        _series.postValue(Status.Loading)
-        repository.getSeriesById(2541)
+        repository.getSeriesById(SERIES_ITEM_ID)
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
@@ -52,8 +53,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getCharactersForSeries() {
-        _characters.postValue(Status.Loading)
-        repository.getCharactersForSeries(2541)
+        repository.getCharactersForSeries(SERIES_ITEM_ID)
             .subscribe(::onCharactersSuccess, ::onFailure).add()
     }
 
@@ -64,8 +64,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getComicsForSeries() {
-        _comics.postValue(Status.Loading)
-        repository.getComicsForSeries(2541)
+        repository.getComicsForSeries(SERIES_ITEM_ID)
             .subscribe(
                 ::onComicsSuccess, ::onFailure
             ).add()
@@ -78,8 +77,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getEventsForSeries() {
-        _events.postValue(Status.Loading)
-        repository.getEventsForSeries(2541)
+        repository.getEventsForSeries(SERIES_ITEM_ID)
             .subscribe(::onEventsSuccess, ::onFailure).add()
     }
 
@@ -108,5 +106,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
         Log.e("najeia", characterId.toString())
     }
 
-
+    companion object{
+        private const val SERIES_ITEM_ID = 2541
+    }
 }

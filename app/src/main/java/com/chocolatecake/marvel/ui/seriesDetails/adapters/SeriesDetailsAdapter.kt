@@ -10,27 +10,33 @@ import com.chocolatecake.marvel.databinding.EventsViewBinding
 import com.chocolatecake.marvel.databinding.HeaderViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItem
+import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItemType
 import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsListener
 
-class SeriesAdapter(
+class SeriesDetailsAdapter(
     private var itemsSeriesDetails: MutableList<SeriesDetailsItem>,
     private val listener: SeriesDetailsListener
 ) : BaseAdapter<SeriesDetailsItem>(itemsSeriesDetails, listener) {
 
-    override val layoutId: Int
-        get() = 1
+    override val layoutId: Int = 1
 
     fun setItem(item: SeriesDetailsItem) {
         val newItems = itemsSeriesDetails.apply {
-            removeAt(item.priority)
-            add(item.priority, item)
+            removeAt(item.type.ordinal)
+            add(item.type.ordinal, item)
         }
         setItems(newItems)
     }
 
+    override fun setItems(newItems: List<SeriesDetailsItem>) {
+        itemsSeriesDetails = newItems.sortedBy { it.type.ordinal }.toMutableList()
+        super.setItems(newItems)
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
-            TYPE_HEADER -> {
+            SeriesDetailsItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.header_view, parent, false
@@ -38,7 +44,7 @@ class SeriesAdapter(
                 )
             }
 
-            TYPE_CHARACTERS -> {
+           SeriesDetailsItemType.CHARACTERS.ordinal -> {
                 CharactersViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.character_view, parent, false
@@ -46,7 +52,7 @@ class SeriesAdapter(
                 )
             }
 
-            TYPE_EVENTS -> {
+            SeriesDetailsItemType.EVENTS.ordinal -> {
                 EventViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.events_view, parent, false
@@ -54,7 +60,7 @@ class SeriesAdapter(
                 )
             }
 
-            TYPE_COMICS -> {
+            SeriesDetailsItemType.COMICS.ordinal-> {
                 ComicViewHolder(
                     DataBindingUtil.inflate(
                         LayoutInflater.from(parent.context), R.layout.comics_view, parent, false
@@ -70,6 +76,7 @@ class SeriesAdapter(
         if (itemsSeriesDetails.isEmpty() || position == -1) {
             return
         }
+
         when (itemsSeriesDetails[position]) {
             is SeriesDetailsItem.EventsItem -> bindEvents(holder as EventViewHolder, position)
             is SeriesDetailsItem.SeriesItem -> bindHeader(holder as HeaderViewHolder, position)
@@ -108,35 +115,11 @@ class SeriesAdapter(
         headerViewHolder.binding.item = currentItem.seriesResult
     }
 
-
-    override fun setItems(newItems: List<SeriesDetailsItem>) {
-        itemsSeriesDetails = newItems.sortedBy { it.priority }.toMutableList()
-        super.setItems(newItems)
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        if (itemsSeriesDetails.isNotEmpty()) {
-            return when (itemsSeriesDetails[position]) {
-
-                is SeriesDetailsItem.SeriesItem -> TYPE_HEADER
-                is SeriesDetailsItem.EventsItem -> TYPE_EVENTS
-                is SeriesDetailsItem.CharactersItem -> TYPE_CHARACTERS
-                is SeriesDetailsItem.ComicsItem -> TYPE_COMICS
-            }
-        }
-        return -1
-    }
+    override fun getItemViewType(position: Int): Int = itemsSeriesDetails[position].type.ordinal
 
     class HeaderViewHolder(val binding: HeaderViewBinding) : BaseViewHolder(binding)
     class CharactersViewHolder(val binding: CharacterViewBinding) : BaseViewHolder(binding)
     class ComicViewHolder(val binding: ComicsViewBinding) : BaseViewHolder(binding)
     class EventViewHolder(val binding: EventsViewBinding) : BaseViewHolder(binding)
 
-
-    companion object {
-        const val TYPE_HEADER = 1
-        const val TYPE_CHARACTERS = 2
-        const val TYPE_EVENTS = 3
-        const val TYPE_COMICS = 4
-    }
 }

@@ -49,6 +49,7 @@ fun ImageView.loadImage(imageResponse: ImageResponse?) {
     } else {
         imageResponse?.toUrl()
     }
+
     Glide.with(context)
         .load(url)
         .thumbnail(Glide.with(context).load(R.raw.loading))
