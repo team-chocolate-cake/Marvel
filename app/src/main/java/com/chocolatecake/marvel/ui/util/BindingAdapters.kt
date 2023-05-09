@@ -3,8 +3,6 @@ package com.chocolatecake.marvel.ui.util
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -16,7 +14,6 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ImageResponse
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseAdapter
-import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.google.android.material.chip.Chip
 
