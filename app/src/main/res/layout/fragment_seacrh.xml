@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenListEmpty="@{viewModel.state.toEmpty()}" />
+            app:showWhenListEmpty="@{viewModel.state}"/>
 
 
         <EditText
@@ -94,7 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:clipToPadding="true"
-            app:hideWhenListIsEmpty="@{viewModel.state.toEmpty()}"
             android:paddingHorizontal="@dimen/spacing_custom"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
