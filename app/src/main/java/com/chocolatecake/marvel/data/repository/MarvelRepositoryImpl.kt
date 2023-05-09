@@ -23,6 +23,11 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getComics(title, limit, offset))
     }
 
+    override fun getEventByComicId(comicId: Int): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getEventByComicId(comicId))
+    }
+
+
     override fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicById(comicId))
     }

@@ -16,6 +16,11 @@ interface MarvelRepository {
         offset: Int? = null,
     ): Single<Status<BaseResponse<ComicsResult>?>>
 
+
+    fun getEventByComicId(
+        comicId: Int
+    ): Single<Status<BaseResponse<EventResult>?>>
+
     fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>>
     fun getCharactersForComic(comicId: Int): Single<Status<BaseResponse<ProfileResult>?>>
     fun getCharacters(

@@ -21,6 +21,11 @@ interface MarvelService {
         @Query("offset") offset: Int? = null
     ): Single<Response<BaseResponse<ComicsResult>>>
 
+    @GET("comics/{comicId}/events")
+    fun getEventByComicId(
+        @Path("comicId") comicId: Int
+    ): Single<Response<BaseResponse<EventResult>>>
+
     @GET("comics/{comicId}")
     fun getComicById(
         @Path("comicId") comicId: Int,
