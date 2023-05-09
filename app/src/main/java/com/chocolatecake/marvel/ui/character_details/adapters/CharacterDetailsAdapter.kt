@@ -12,9 +12,9 @@ import com.chocolatecake.marvel.ui.character_details.CharacterDetailsItem
 import com.chocolatecake.marvel.ui.character_details.CharacterDetailsListener
 
 class CharacterDetailsAdapter(
-    private val list: List<CharacterDetailsItem>,
+    private val itemsList: List<CharacterDetailsItem>,
     private val listener: CharacterDetailsListener,
-) : BaseAdapter<CharacterDetailsItem>(list, listener) {
+) : BaseAdapter<CharacterDetailsItem>(itemsList, listener) {
     override val layoutId: Int
         get() = R.layout.character_details
 
@@ -54,19 +54,19 @@ class CharacterDetailsAdapter(
     }
 
     private fun bindCharacterHeader(holder: CharacterHeaderViewHolder, position: Int) {
-        val header = list[position] as CharacterDetailsItem.Header
+        val header = itemsList[position] as CharacterDetailsItem.Header
         holder.binding.item = header.characterInfo
     }
 
     private fun bindCharacterComics(holder: CharacterComicsViewHolder, position: Int) {
-        val comics = list[position] as CharacterDetailsItem.Comics
+        val comics = itemsList[position] as CharacterDetailsItem.Comics
         val adapter = CharacterComicsAdapter(comics.result as List<ComicsResult>, listener)
         holder.binding.recyclerViewComicsList.adapter = adapter
         holder.binding.item = comics
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (list[position]) {
+        return when (itemsList[position]) {
             is CharacterDetailsItem.Header -> HEADER
             is CharacterDetailsItem.Comics -> COMICS_SECTION
         }
