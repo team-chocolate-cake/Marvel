@@ -8,7 +8,7 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentSeriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItem
-import com.chocolatecake.marvel.ui.seriesDetails.modelView.SeriesDetailsViewModel
+import com.chocolatecake.marvel.ui.seriesDetails.viewModel.SeriesDetailsViewModel
 import com.chocolatecake.marvel.ui.seriesDetails.adapters.SeriesDetailsAdapter
 
 class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesDetailsViewModel>() {

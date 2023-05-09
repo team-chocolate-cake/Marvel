@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.seriesDetails.modelView
+package com.chocolatecake.marvel.ui.seriesDetails.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
