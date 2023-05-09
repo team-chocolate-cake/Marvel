@@ -7,16 +7,18 @@
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
+
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.base.BaseAdapter.BaseInteractionListener" />
+            type="com.chocolatecake.marvel.ui.comic.ComicListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_small"
-        android:backgroundTint="@color/black">
+        android:layout_margin="@dimen/spacing_tiny"
+        android:backgroundTint="@color/black"
+        android:onClick="@{()-> listener.onClickComic(item.id)}">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -29,19 +31,22 @@
                 android:layout_height="@dimen/height_card"
                 android:layout_gravity="top"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{item.thumbnail}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
                 android:id="@+id/text_view_title"
-                style="@style/TextAppearance.MaterialComponents.Body1"
+                style="@style/TextAppearance.MaterialComponents.Body2"
+                android:textColor="@color/on_background_60"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="@dimen/spacing_tiny"
                 android:ellipsize="end"
                 android:maxLines="2"
-                tools:text="@tools:sample/lorem/random"/>
+                android:text="@{item.title}"
+                tools:text="@tools:sample/lorem/random" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
