@@ -8,7 +8,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
-        android:name="com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.search.view.SearchFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/character_details" />
