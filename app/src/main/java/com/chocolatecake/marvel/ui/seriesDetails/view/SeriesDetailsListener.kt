@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.seriesDetails
+package com.chocolatecake.marvel.ui.seriesDetails.view
 
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 

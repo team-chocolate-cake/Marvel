@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.seriesDetails
+package com.chocolatecake.marvel.ui.seriesDetails.modelView
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,6 +12,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.seriesDetails.view.SeriesDetailsListener
 
 class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
 
