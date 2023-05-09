@@ -3,4 +3,8 @@
     <string name="series_title">Series Title</string>
     <string name="text_view_description">description description description description description description description description description description description description</string>
     <string name="comics">Comics</string>
+    <string name="home_newest_series_title">Latest series</string>
+    <string name="suggest_for_you">Suggested for you</string>
+    <string name="more">Show more</string>
+    <string name="try_again">Try again</string>
 </resources>
