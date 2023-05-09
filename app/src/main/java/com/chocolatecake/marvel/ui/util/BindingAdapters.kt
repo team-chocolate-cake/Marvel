@@ -48,10 +48,10 @@ fun <T> View.showWhenFailure(status: Status<T>?) {
 }
 
 @BindingAdapter("app:showWhenListEmpty")
-fun <T> View.showWhenDoneLoadingAndListIsEmpty(/*emptyList: Boolean?, */status: Status<T>?) {
+fun <T> View.showWhenDoneLoadingAndListIsEmpty(emptyList: Boolean?) {
     val transition = Fade()
     TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
-    visibility = if (/*emptyList == true && */status is Status.Success) {
+    visibility = if (emptyList == true) {
         View.VISIBLE
     } else {
         View.GONE
