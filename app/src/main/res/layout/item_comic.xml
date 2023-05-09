@@ -14,7 +14,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_tiny"
         android:backgroundTint="@color/black"
@@ -30,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_card"
                 android:layout_gravity="top"
+                app:imageUrl="@{item.thumbnail}"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{item.thumbnail}"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
@@ -43,6 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_marginTop="@dimen/spacing_tiny"
+                android:text="@{item.description}"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="@{item.title}"
