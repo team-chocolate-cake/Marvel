@@ -86,12 +86,16 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getSeriesById(seriesId))
     }
 
-    override fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+    override fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
         return wrapperToState(apiService.getCharactersForSeries(seriesId))
     }
 
-    override fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+    override fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
+    }
+
+    override fun getEventsForSeries(seriesId: Int): Single<Status<BaseResponse<EventResult>?>> {
+        return wrapperToState(apiService.getEventsForSeries(seriesId))
     }
 
     override fun getStories(): Single<Status<BaseResponse<StoriesResult>?>> {
@@ -130,6 +134,7 @@ class MarvelRepositoryImpl : MarvelRepository {
             : Single<Status<BaseResponse<T>?>> {
         return response.map {
             try {
+                Status.Loading
                 if (it.isSuccessful) {
                     Status.Success(it.body())
                 } else {

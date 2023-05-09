@@ -93,12 +93,17 @@ interface MarvelService {
     @GET("series/{seriesId}/characters")
     fun getCharactersForSeries(
         @Path("seriesId") seriesId: Int,
-    ): Single<Response<BaseResponse<SeriesResult>>>
+    ): Single<Response<BaseResponse<ProfileResult>>>
 
     @GET("series/{seriesId}/comics")
     fun getComicsForSeries(
         @Path("seriesId") seriesId: Int,
-    ): Single<Response<BaseResponse<SeriesResult>>>
+    ): Single<Response<BaseResponse<ComicsResult>>>
+
+    @GET("series/{seriesId}/events")
+    fun getEventsForSeries(
+        @Path("seriesId") seriesId: Int,
+    ): Single<Response<BaseResponse<EventResult>>>
 
 
     @GET("stories")

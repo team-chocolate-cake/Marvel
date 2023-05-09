@@ -38,8 +38,9 @@ interface MarvelRepository {
     ): Single<Status<BaseResponse<SeriesResult>?>>
 
     fun getSeriesById(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
-    fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
-    fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>>
+    fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<ProfileResult>?>>
+    fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<ComicsResult>?>>
+    fun getEventsForSeries(seriesId: Int) : Single<Status<BaseResponse<EventResult>?>>
 
     fun getCreators(
         firstName: String? = null,
