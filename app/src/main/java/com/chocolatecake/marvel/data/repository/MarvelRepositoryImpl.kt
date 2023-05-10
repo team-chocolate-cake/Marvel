@@ -62,7 +62,7 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getCreators(firstName, middleName, lastName))
     }
 
-    override fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+    override fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
         return wrapperToState(apiService.getCreatorById(creatorId))
     }
 

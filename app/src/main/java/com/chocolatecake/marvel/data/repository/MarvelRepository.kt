@@ -48,7 +48,7 @@ interface MarvelRepository {
         lastName: String? = null
     ): Single<Status<BaseResponse<ProfileResult>?>>
 
-    fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>>
+    fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ProfileResult>?>>
     fun getComicsForCreator(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>>
     fun getSeriesForCreator(creatorId: Int, ): Single<Status<BaseResponse<SeriesResult>?>>
 
