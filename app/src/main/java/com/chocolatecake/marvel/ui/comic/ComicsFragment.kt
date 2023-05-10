@@ -9,13 +9,15 @@ import com.chocolatecake.marvel.databinding.FragmentComicsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 
 class ComicsFragment : BaseFragment<FragmentComicsBinding, ComicsViewModel>() {
-    override val viewModel: ComicsViewModel by viewModels()
+    override val viewModelClass: Class<ComicsViewModel>
+        get() = ComicsViewModel::class.java
+
     override val layoutIdFragment: Int
         get() = R.layout.fragment_comics
 
-    override fun onReady(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
-    }
+//    override fun onReady(savedInstanceState: Bundle?) {
+//        TODO("Not yet implemented")
+//    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

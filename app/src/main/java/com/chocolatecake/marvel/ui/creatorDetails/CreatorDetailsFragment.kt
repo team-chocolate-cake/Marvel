@@ -14,7 +14,8 @@ import com.chocolatecake.marvel.ui.creatorDetails.adapter.ComicAdapter
 import com.chocolatecake.marvel.ui.creatorDetails.adapter.SeriesAdapter
 
 class CreatorDetailsFragment : BaseFragment<FragmentCreatorDetailsBinding,CreatorDetailsViewModel>() {
-    override val viewModel: CreatorDetailsViewModel by viewModels()
+    override val viewModelClass: Class<CreatorDetailsViewModel>
+        get() = CreatorDetailsViewModel::class.java
 
     override val layoutIdFragment: Int
         get() = R.layout.fragment_creator_details

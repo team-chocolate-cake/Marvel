@@ -12,12 +12,11 @@ import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
 import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem
 import com.chocolatecake.marvel.ui.event_details.view_model.EventDetailsViewModel
 
-class EventDetailsFragment :
-    BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
+class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
 
     private lateinit var adapter: EventAdapter
-
-    override val viewModel: EventDetailsViewModel by viewModels()
+    override val viewModelClass: Class<EventDetailsViewModel>
+        get() = EventDetailsViewModel::class.java
     override val layoutIdFragment: Int = R.layout.fragment_event_details
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

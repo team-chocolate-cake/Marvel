@@ -7,6 +7,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
 
 class LatestSeriesViewModel : BaseViewModel(), SeriesInteractionListener {
 
@@ -39,6 +40,6 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesInteractionListener {
     }
 
     override fun onClickSeries(seriesId: Int) {
-        _id.postValue(seriesId)
+       // _id.postValue(seriesId)
     }
 }

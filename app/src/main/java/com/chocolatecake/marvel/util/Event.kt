@@ -20,20 +20,11 @@ open class Event<out T>(private val content: T) {
     fun peekContent(): T = content
 }
 
-class EventObserve<T>(private val onEventUnhandledContent:(T) ->Unit)
-    : Observer<Event<T>> {
+class EventObserve<T>(private val onEventUnhandledContent:(T) ->Unit) :
+    Observer<Event<T>> {
     override fun onChanged(value: Event<T>) {
         value?.getContentIfNotHandled()?.let {
             onEventUnhandledContent(it)
         }
-    }
-}
-
-
-fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, observer: (t: T) -> Unit) {
-    this.observe(
-        owner
-    ) {
-        it?.let(observer)
     }
 }

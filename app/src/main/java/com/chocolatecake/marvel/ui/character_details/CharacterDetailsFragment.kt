@@ -10,7 +10,9 @@ import com.chocolatecake.marvel.ui.character_details.adapters.CharacterDetailsAd
 
 class CharacterDetailsFragment :
     BaseFragment<CharacterDetailsBinding, CharacterDetailsViewModel>() {
-    override val viewModel: CharacterDetailsViewModel by viewModels()
+    override val viewModelClass: Class<CharacterDetailsViewModel>
+        get() = CharacterDetailsViewModel::class.java
+
     override val layoutIdFragment: Int
         get() = R.layout.character_details
 

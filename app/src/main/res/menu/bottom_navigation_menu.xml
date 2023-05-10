@@ -11,7 +11,7 @@
         android:title="Search" />
 
     <item
-        android:id="@+id/comicsFragment3"
+        android:id="@+id/comicsFragment"
         android:icon="@drawable/icon_home"
         android:title="Comics"/>
 

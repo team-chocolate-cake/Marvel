@@ -5,18 +5,35 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.chocolatecake.marvel.ui.nav.HomeFragment"
+        android:name="com.chocolatecake.marvel.ui.home.view.HomeFragment"
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.chocolatecake.marvel.ui.nav.SearchFragment"
+        android:name="com.chocolatecake.marvel.ui.search.view.SearchFragment"
         android:label="SearchFragment" />
     <fragment
         android:id="@+id/seriesFragment"
-        android:name="com.chocolatecake.marvel.ui.nav.SeriesFragment"
-        android:label="SeriesFragment" />
+        android:name="com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragment"
+        android:label="SeriesFragment" >
+        <action
+            android:id="@+id/action_seriesFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment"
+            app:popUpTo="@id/comicsDetailsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
     <fragment
-        android:id="@+id/comicsFragment3"
-        android:name="com.chocolatecake.marvel.ui.nav.ComicsFragment"
-        android:label="ComicsFragment" />
+        android:id="@+id/comicsFragment"
+        android:name="com.chocolatecake.marvel.ui.comic.ComicsFragment"
+        android:label="ComicsFragment" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/comicsDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.comic_details.ComicDetailsFragment"
+        android:label="ComicsDetailsFragment" >
+        <argument
+            android:name="comicId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

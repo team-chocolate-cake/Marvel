@@ -19,7 +19,9 @@ class ComicDetailsViewModel(
     private val repository by lazy {
         MarvelRepositoryImpl()
     }
-    private var currentComicId: Int = 1308
+
+    var currentComicId: Int = 1308
+
     private val _currentComic = MutableLiveData<Status<ComicsResult?>>()
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
@@ -34,13 +36,19 @@ class ComicDetailsViewModel(
 
     val itemsList = mutableListOf<ComicDetailsItem>()
 
-    init {
-        getCurrentComic()
-        getCharactersOfComic()
-        getEventsOfComic()
+//    init {
+//        getCurrentComic()
+//        getCharactersOfComic()
+//        getEventsOfComic()
+//    }
+
+    fun loadData(id :Int){
+        getCurrentComic(id)
+        getCharactersOfComic(id)
+        getEventsOfComic(id)
     }
 
-    private fun getCurrentComic() {
+    private fun getCurrentComic(currentComicId :Int) {
         _currentComic.postValue(Status.Loading)
         Log.i(TAG, "getCurrentComic: ")
         repository.getComicById(currentComicId)
@@ -62,7 +70,7 @@ class ComicDetailsViewModel(
         _toastMessage.postValue(ERROR_OCCURRED)
     }
 
-    private fun getCharactersOfComic() {
+    private fun getCharactersOfComic(currentComicId: Int) {
         repository.getCharactersForSeries(currentComicId)
             .subscribe(::onGetCharacterSuccess, ::onGetCharacterFailure)
             .add()
@@ -82,7 +90,7 @@ class ComicDetailsViewModel(
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    private fun getEventsOfComic() {
+    private fun getEventsOfComic(currentComicId: Int) {
         repository
             .getEventByComicId(currentComicId)
             .subscribe(::onGetEventsOfComicSuccess,::onGetEventsOfComicFailure)

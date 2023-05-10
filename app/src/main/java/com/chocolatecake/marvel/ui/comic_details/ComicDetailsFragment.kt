@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
@@ -12,8 +13,11 @@ import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.MainRecyclerV
 
 
 class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDetailsViewModel>() {
+    override val viewModelClass: Class<ComicDetailsViewModel>
+        get() = ComicDetailsViewModel::class.java
 
-    override val viewModel: ComicDetailsViewModel by viewModels()
+    val args: ComicDetailsFragmentArgs by navArgs()
+
     override val layoutIdFragment: Int
         get() = R.layout.fragment_comic_details
 
@@ -21,9 +25,11 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
         super.onViewCreated(view, savedInstanceState)
         setup()
         addCallBacks()
+        viewModel.loadData(args.comicId)
     }
 
     private fun setup() {
+        viewModel.currentComicId = args.comicId
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         val layoutManager = object : GridLayoutManager(context, 1) {

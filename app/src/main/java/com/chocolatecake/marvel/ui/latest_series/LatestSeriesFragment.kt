@@ -9,7 +9,8 @@ import com.chocolatecake.marvel.ui.base.BaseFragment
 
 class LatestSeriesFragment() : BaseFragment<FragmentLatestSeriesBinding, LatestSeriesViewModel>() {
 
-    override val viewModel: LatestSeriesViewModel by viewModels()
+    override val viewModelClass: Class<LatestSeriesViewModel>
+        get() = LatestSeriesViewModel::class.java
 
     override val layoutIdFragment = R.layout.fragment_latest_series
 

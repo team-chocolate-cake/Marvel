@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.seriesDetails.viewModel
+package com.chocolatecake.marvel.ui.series_details.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -12,7 +12,11 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.seriesDetails.view.SeriesDetailsListener
+import com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragment
+import com.chocolatecake.marvel.ui.comic.ComicsFragment
+import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragment
+import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
+import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener
 
 class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
 
@@ -97,17 +101,30 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
 
     override fun onClickEvent(eventId: Int?) {
         Log.e("najeia", eventId.toString())
+        //  navigate(
+//            CharacterDetailsFragment.actionFirstSceneFragmentToSecondSceneFragment(
+//                characterId = characterId
+//            )
     }
 
     override fun onClickComic(comicId: Int?) {
         Log.e("najeia", comicId.toString())
+        navigate(
+            SeriesDetailsFragmentDirections.actionSeriesFragmentToComicsDetailsFragment(
+                comicId = comicId!!
+            )
+        )
     }
 
     override fun onClickCharacter(characterId: Int?) {
         Log.e("najeia", characterId.toString())
+        //  navigate(
+//            CharacterDetailsFragment.actionFirstSceneFragmentToSecondSceneFragment(
+//                characterId = characterId
+//            )
     }
 
-    companion object{
+    companion object {
         private const val SERIES_ITEM_ID = 2541
     }
 }
