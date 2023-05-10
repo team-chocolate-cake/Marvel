@@ -38,6 +38,7 @@ android {
         jvmTarget = '17'
     }
     buildFeatures {
+        viewBinding true
         dataBinding true
         buildConfig true
     }
@@ -80,7 +81,4 @@ dependencies {
 
     /// splash
     implementation 'androidx.core:core-splashscreen:1.0.1'
-
-
-
 }

@@ -13,6 +13,10 @@ class ComicsFragment : BaseFragment<FragmentComicsBinding, ComicsViewModel>() {
     override val layoutIdFragment: Int
         get() = R.layout.fragment_comics
 
+    override fun onReady(savedInstanceState: Bundle?) {
+        TODO("Not yet implemented")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = ComicsAdapter(mutableListOf(), viewModel)
