@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsListener" />
+            type="com.chocolatecake.marvel.ui.core.listener.SeriesListener" />
 
     </data>
 

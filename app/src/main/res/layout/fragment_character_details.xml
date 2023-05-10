@@ -7,8 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsViewModel" />
-
+            type="com.chocolatecake.marvel.ui.character_details.CharacterDetailsViewModel" />
     </data>
 
     <ScrollView
@@ -19,83 +18,62 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".ui.creatorDetails.CreatorDetailsFragment">
+            android:layout_height="wrap_content">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iv_creator_image"
-                style="@style/ShapeAppearance.Material3.Corner.Medium"
+                android:id="@+id/image_view_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{viewModel.creator.toData().get(0).thumbnail}"
+                app:imageUrl="@{viewModel.character.toData().thumbnail}"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
-                app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"
-                tools:src="@tools:sample/backgrounds/scenic" />
+                app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
-                android:id="@+id/text_view_name"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:text="@{viewModel.creator.toData().get(0).fullName}"
-                android:textColor="@color/on_background_87"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_creator_image"
-                tools:text="@tools:sample/lorem" />
-
-            <TextView
-                android:id="@+id/text_view_series"
-                style="@style/TextAppearance.Material3.BodyLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:text="@string/series"
-                android:textColor="@color/on_background_38"
-                app:layout_constraintStart_toStartOf="@id/text_view_name"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_name" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_series"
+                android:id="@+id/text_view_character_full_name"
+                text="@{viewModel.character.toData().name}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/spacing_custom"
-                app:items="@{viewModel.seriesList.toData()}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_series"
-                app:showWhenSuccess="@{viewModel.seriesList}"
-                tools:listitem="@layout/series_item" />
+                android:layout_marginTop="@dimen/spacing_small"
+                android:textSize="@dimen/text_giant"
+                app:layout_constraintTop_toBottomOf="@id/image_view_thumbnail"
+                tools:text="@tools:sample/full_names" />
 
             <TextView
-                android:id="@+id/text_view_comic"
-                style="@style/TextAppearance.Material3.BodyLarge"
-                android:layout_width="wrap_content"
+                android:id="@+id/text_view_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_small"
+                android:ellipsize="end"
+                android:maxLines="6"
+                android:text="@{viewModel.character.toData().description}"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_character_full_name"
+                tools:text="@tools:sample/lorem/random" />
+
+            <TextView
+                android:id="@+id/text_view_comics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@string/comics"
-                android:textColor="@color/on_background_38"
-                app:layout_constraintStart_toStartOf="@id/text_view_name"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_view_series" />
+                android:textSize="@dimen/text_giant"
+                app:layout_constraintTop_toBottomOf="@id/text_view_description" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_comic"
+                android:id="@+id/recycler_view_comics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_tiny"
+                android:layout_marginTop="@dimen/spacing_small"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/spacing_custom"
-                app:items="@{viewModel.comicsList.toData()}"
+                app:items="@{viewModel.comics.toData()}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/text_view_comic"
-                tools:listitem="@layout/comic_item" />
+                app:layout_constraintTop_toBottomOf="@id/text_view_comics"
+                tools:listitem="@layout/series_item" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -106,7 +84,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:showWhenLoading="@{viewModel.comicsList}" />
+                app:showWhenLoading="@{viewModel.character}" />
 
 
             <com.airbnb.lottie.LottieAnimationView
@@ -115,7 +93,7 @@
                 android:layout_height="180dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:onClick="@{()-> viewModel.loadData()}"
+                android:onClick="@{()-> viewModel.loadDetails()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -123,7 +101,7 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/error"
-                app:showWhenFailure="@{viewModel.comicsList}" />
+                app:showWhenFailure="@{viewModel.character}" />
 
             <TextView
                 android:id="@+id/text_view_try_again"
@@ -131,15 +109,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto"
-                android:onClick="@{()-> viewModel.loadData()}"
+                android:onClick="@{()-> viewModel.loadDetails()}"
                 android:text="@string/try_again"
                 android:textColor="@color/on_background_87"
                 android:textSize="@dimen/text_medium"
                 app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
                 app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
                 app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
-                app:showWhenFailure="@{viewModel.comicsList}" />
-
+                app:showWhenFailure="@{viewModel.character}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
+
 </layout>

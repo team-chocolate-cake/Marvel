@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.chocolatecake.marvel.ui.comic_details.ComicDetailsViewModel" />
     </data>
 
@@ -15,18 +15,17 @@
         android:layout_height="match_parent"
         tools:context=".ui.comic_details.ComicDetailsFragment">
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:items="@{viewmodel.itemsList}"
+            app:items="@{viewModel.itemsList}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenSuccess="@{viewmodel.characters}" />
+            app:showWhenSuccess="@{viewModel.characters}" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -37,13 +36,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenLoading="@{viewmodel.currentComic}" />
+            app:showWhenLoading="@{viewModel.currentComic}" />
+
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:id="@+id/lottieAnimationView"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{()-> viewModel.loadData()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,8 +53,22 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/error"
-            app:showWhenFailure="@{viewmodel.currentComic}" />
+            app:showWhenFailure="@{viewModel.currentComic}" />
 
+        <TextView
+            android:id="@+id/text_view_try_again"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:onClick="@{()-> viewModel.loadData()}"
+            android:text="@string/try_again"
+            android:textColor="@color/on_background_87"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
+            app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
+            app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
+            app:showWhenFailure="@{viewModel.currentComic}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

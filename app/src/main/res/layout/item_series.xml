@@ -11,14 +11,14 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.search.view.SearchInteractionListener" />
+            type="com.chocolatecake.marvel.ui.core.listener.SeriesListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/spacing_tiny"
-        android:onClick="@{() -> listener.onclickSeries(item.id)}">
+        android:onClick="@{() -> listener.onClickSeries(item.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_thumbnail"

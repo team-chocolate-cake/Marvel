@@ -16,16 +16,16 @@
         tools:context=".ui.search.view.SearchFragment">
 
         <TextView
+            style="@style/TextAppearance.Material3.BodyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.Material3.BodyMedium"
             android:text="@string/no_results"
             android:textColor="@color/on_background_87"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenListEmpty="@{viewModel.state.toData()}"/>
+            app:showWhenListEmpty="@{viewModel.state.toData()}" />
 
 
         <EditText
@@ -115,8 +115,8 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:focusable="true"
             android:onClick="@{()-> viewModel.loadData()}"
@@ -129,6 +129,19 @@
             app:lottie_rawRes="@raw/error"
             app:showWhenFailure="@{viewModel.state}" />
 
-
+        <TextView
+            android:id="@+id/text_view_try_again"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:onClick="@{()-> viewModel.loadData()}"
+            android:text="@string/try_again"
+            android:textColor="@color/on_background_87"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
+            app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
+            app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
+            app:showWhenFailure="@{viewModel.state}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

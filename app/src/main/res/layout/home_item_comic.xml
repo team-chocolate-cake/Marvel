@@ -10,7 +10,7 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.home.view.HomeListener" />
+            type="com.chocolatecake.marvel.ui.core.listener.ComicListener" />
     </data>
 
     <androidx.cardview.widget.CardView

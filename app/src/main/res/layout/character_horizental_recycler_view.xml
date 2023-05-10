@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="myItem"
+            name="item"
             type="com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem.Characters" />
     </data>
 
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:items="@{myItem.list}"
+            app:items="@{item.list}"
             android:clipToPadding="true"
             android:paddingHorizontal="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
