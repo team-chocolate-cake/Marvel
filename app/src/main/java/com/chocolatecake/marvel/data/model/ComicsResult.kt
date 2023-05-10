@@ -21,4 +21,14 @@ data class ComicsResult(
     val title: String? = null,
     @SerializedName("variants")
     val variants: List<ItemResponse>? = listOf(),
-)
+){
+    data class ItemResponse(
+        @SerializedName("name")
+        val name: String? = null,
+    )
+
+    data class TextObject(
+        @SerializedName("text")
+        val text: String? = null,
+    )
+}

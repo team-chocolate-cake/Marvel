@@ -9,4 +9,11 @@ data class BaseResponse<T>(
     val data: Data<T>? = null,
     @SerializedName("status")
     val status: String? = null,
-)
+){
+    data class Data<T>(
+        @SerializedName("count")
+        val count: Int? = null,
+        @SerializedName("results")
+        val results: List<T?>? = listOf(),
+    )
+}
