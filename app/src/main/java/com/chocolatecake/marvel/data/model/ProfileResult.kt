@@ -9,6 +9,8 @@ data class ProfileResult(
     val id: Int? = null,
     @SerializedName("name")
     val name: String? = null,
+    @SerializedName("fullName")
+    val fullName: String? = null,
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("thumbnail")

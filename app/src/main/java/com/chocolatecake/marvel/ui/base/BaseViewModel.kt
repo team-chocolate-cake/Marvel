@@ -8,7 +8,6 @@ import com.chocolatecake.marvel.util.Event
 import com.chocolatecake.marvel.util.NavigationCommand
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
-
 abstract class BaseViewModel : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
