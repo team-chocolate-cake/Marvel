@@ -108,15 +108,16 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
         _state.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onclickSeries(id: Int?) {
+
+    override fun onClickSeries(id: Int) {
         _searchItemId.postValue(id)
     }
 
-    override fun onclickComics(id: Int?) {
+    override fun onClickComic(id: Int) {
         _searchItemId.postValue(id)
     }
 
-    override fun onclickCharacters(id: Int?) {
+    override fun onClickCharacter(id: Int) {
         _searchItemId.postValue(id)
     }
 }

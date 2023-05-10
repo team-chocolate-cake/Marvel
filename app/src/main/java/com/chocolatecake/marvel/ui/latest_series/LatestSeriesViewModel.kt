@@ -7,10 +7,10 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 
-class LatestSeriesViewModel : BaseViewModel(), SeriesInteractionListener {
+class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
 
-    private val LIMIT = 100
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
     private val _latestSeriesList = MutableLiveData<Status<List<SeriesResult>>>()
@@ -22,10 +22,10 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesInteractionListener {
         get() = _id
 
     init {
-        getLatestSeriesList()
+        loadData()
     }
 
-    private fun getLatestSeriesList() {
+    fun loadData() {
         repository.getSeries(limit = LIMIT).subscribe({
             it.toData()?.data?.results?.let { result ->
                 _latestSeriesList.postValue(
@@ -38,7 +38,11 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesInteractionListener {
         }).add()
     }
 
-    override fun onClickSeries(seriesId: Int) {
-        _id.postValue(seriesId)
+    override fun onClickSeries(id: Int) {
+        _id.postValue(id)
+    }
+
+    private companion object{
+        const val LIMIT = 100
     }
 }

@@ -66,9 +66,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
 
     fun getComicsForSeries() {
         repository.getComicsForSeries(SERIES_ITEM_ID)
-            .subscribe(
-                ::onComicsSuccess, ::onFailure
-            ).add()
+            .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
     private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>) {
@@ -95,19 +93,19 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickEvent(eventId: Int?) {
-        Log.e("najeia", eventId.toString())
+    override fun onClickEvent(id: Int) {
+        Log.e("najeia", id.toString())
     }
 
-    override fun onClickComic(comicId: Int?) {
-        Log.e("najeia", comicId.toString())
+    override fun onClickComic(id: Int) {
+        Log.e("najeia", id.toString())
     }
 
-    override fun onClickCharacter(characterId: Int?) {
-        Log.e("najeia", characterId.toString())
+    override fun onClickCharacter(id: Int) {
+        Log.e("najeia", id.toString())
     }
 
-    companion object{
+    companion object {
         private const val SERIES_ITEM_ID = 2541
     }
 }

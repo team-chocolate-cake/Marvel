@@ -8,6 +8,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.core.listener.ComicListener
 
 class ComicsViewModel : BaseViewModel(), ComicListener {
     private val repository: MarvelRepository = MarvelRepositoryImpl()
@@ -43,7 +44,7 @@ class ComicsViewModel : BaseViewModel(), ComicListener {
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickComic(comicId: Int) {
-        _navigateToDetailsScreen.postValue(comicId)
+    override fun onClickComic(id: Int) {
+        _navigateToDetailsScreen.postValue(id)
     }
 }

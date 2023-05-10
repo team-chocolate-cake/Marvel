@@ -14,8 +14,7 @@ import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.MainRecyclerV
 class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDetailsViewModel>() {
 
     override val viewModel: ComicDetailsViewModel by viewModels()
-    override val layoutIdFragment: Int
-        get() = R.layout.fragment_comic_details
+    override val layoutIdFragment = R.layout.fragment_comic_details
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -24,8 +23,6 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun setup() {
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
         val layoutManager = object : GridLayoutManager(context, 1) {
             override fun isAutoMeasureEnabled() = true
         }
@@ -42,13 +39,6 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
 
     private fun createToast(s: String) {
         Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show()
-    }
-
-
-    companion object {
-        fun newInstance() {
-
-        }
     }
 
 }

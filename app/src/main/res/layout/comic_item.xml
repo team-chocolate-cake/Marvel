@@ -11,14 +11,14 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsListener" />
+            type="com.chocolatecake.marvel.ui.core.listener.ComicListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/spacing_tiny"
-        android:onClick="@{()->listener.onClickComics(item.id)}">
+        android:onClick="@{()->listener.onClickComic(item.id)}">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_comic"
@@ -28,7 +28,8 @@
             android:scaleType="centerCrop"
             app:imageUrl="@{item.thumbnail}"
             app:layout_constraintDimensionRatio="9:16"
-            tools:src="@tools:sample/backgrounds/scenic" />
+            tools:src="@tools:sample/backgrounds/scenic"
+            tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

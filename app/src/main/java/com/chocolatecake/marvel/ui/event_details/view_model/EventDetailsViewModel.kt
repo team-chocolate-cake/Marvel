@@ -99,15 +99,15 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickComics(comicsId: Int) {
-        _comicsId.postValue(comicsId)
+    override fun onClickComic(id: Int) {
+        _comicsId.postValue(id)
     }
 
-    override fun onClickCharacter(characterId: Int) {
-        _characterId.postValue(characterId)
+    override fun onClickCharacter(id: Int) {
+        _characterId.postValue(id)
     }
 
-    override fun onClickSeries(seriesId: Int) {
-        _seriesId.postValue(seriesId)
+    override fun onClickSeries(id: Int) {
+        _seriesId.postValue(id)
     }
 }

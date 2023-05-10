@@ -91,16 +91,16 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickBanner(eventId: Int?) {
-        _eventId.postValue(eventId)
+    override fun onClickEvent(id: Int) {
+        _eventId.postValue(id)
     }
 
-    override fun onClickSeries(seriesId: Int?) {
-        _seriesId.postValue(seriesId)
+    override fun onClickSeries(id: Int) {
+        _seriesId.postValue(id)
     }
 
-    override fun onClickComic(comicId: Int?) {
-        _comicId.postValue(comicId)
+    override fun onClickComic(id: Int) {
+        _comicId.postValue(id)
     }
 
     override fun onClickMoreComics() {

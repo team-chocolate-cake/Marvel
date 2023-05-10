@@ -3,6 +3,7 @@ package com.chocolatecake.marvel.ui.comic
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.ui.base.BaseAdapter
+import com.chocolatecake.marvel.ui.core.listener.ComicListener
 
 class ComicsAdapter(
     items: List<ComicsResult>,
@@ -12,6 +13,3 @@ class ComicsAdapter(
         get() = R.layout.item_comic
 }
 
-interface ComicListener : BaseAdapter.BaseInteractionListener {
-    fun onClickComic(comicId: Int)
-}

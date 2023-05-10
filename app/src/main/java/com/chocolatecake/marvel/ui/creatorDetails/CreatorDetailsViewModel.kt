@@ -22,13 +22,13 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
     private val creatorId: Int? = null
 
     init {
-        loadData(creatorId ?: 1)
+        loadData()
     }
 
-    fun loadData(id: Int) {
-        getCreator(id)
-        getSeries(id)
-        getComics(id)
+    fun loadData() {
+        getCreator(creatorId ?: 1)
+        getSeries(creatorId ?: 1)
+        getComics(creatorId ?: 1)
     }
 
     private fun getCreator(id: Int) {
@@ -65,11 +65,11 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
         }).add()
     }
 
-    override fun onClickSeries(seriesId: Int?) {
-        // TODO("Not yet implemented")
+    override fun onClickSeries(id: Int) {
+       // TODO("Not yet implemented")
     }
 
-    override fun onClickComics(comicsId: Int?) {
-        // TODO("Not yet implemented")
+    override fun onClickComic(id: Int) {
+        //TODO("Not yet implemented")
     }
 }
