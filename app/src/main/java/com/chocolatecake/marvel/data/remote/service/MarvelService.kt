@@ -147,7 +147,7 @@ interface MarvelService {
     ): Single<Response<BaseResponse<StoryResult>>>
 
 
-    @GET("stories/{storyId}/characters")
+    @GET("stories/{storyId}/creators")
     fun getCreatorsByStoryId(
         @Path("storyId") storyId: Int
     ): Single<Response<BaseResponse<ProfileResult>>>

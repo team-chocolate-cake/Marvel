@@ -46,7 +46,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getStoryById() {
         _creators.postValue(Status.Loading)
-        repository.getStoryById(22)
+        repository.getStoryById(1229)
             .subscribe(::onStorySuccess, ::onFailure).add()
     }
 
@@ -59,7 +59,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getCreatorsByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getCreatorsByStoryId(22)
+        repository.getCreatorsByStoryId(1229)
             .subscribe(::onCreatorsSuccess, ::onFailure).add()
     }
 
@@ -71,7 +71,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getSeriesByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getSeriesByStoryId(22)
+        repository.getSeriesByStoryId(1229)
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
@@ -83,7 +83,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getComicsByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getComicsByStoryId(22)
+        repository.getComicsByStoryId(1229)
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
