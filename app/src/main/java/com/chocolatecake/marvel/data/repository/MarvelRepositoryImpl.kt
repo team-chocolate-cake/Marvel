@@ -4,6 +4,7 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.model.StoryResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.remote.service.MarvelApi
 import com.chocolatecake.marvel.data.util.Status
@@ -18,39 +19,39 @@ class MarvelRepositoryImpl : MarvelRepository {
         title: String?,
         limit: Int?,
         offset: Int?
-    ): Single<Status<BaseResponse<ComicsResult>?>> {
+    ): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComics(title, limit, offset))
     }
 
-    override fun getEventByComicId(comicId: Int): Single<Status<BaseResponse<EventResult>?>> {
+    override fun getEventByComicId(comicId: Int): Single<Status<List<EventResult>>> {
         return wrapperToState(apiService.getEventByComicId(comicId))
     }
 
 
-    override fun getComicById(comicId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+    override fun getComicById(comicId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicById(comicId))
     }
 
-    override fun getCharactersForComic(comicId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
+    override fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCharactersForComic(comicId))
     }
 
     override fun getCharacters(
         name: String?,
         limit: Int?
-    ): Single<Status<BaseResponse<ProfileResult>?>> {
+    ): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCharacters(name, limit))
     }
 
-    override fun getCharacterById(characterId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
+    override fun getCharacterById(characterId: Int): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCharacterById(characterId))
     }
 
-    override fun getComicsForCharacter(characterId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+    override fun getComicsForCharacter(characterId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicsForCharacter(characterId))
     }
 
-    override fun getCharacterSeries(characterId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+    override fun getCharacterSeries(characterId: Int): Single<Status<List<SeriesResult>>> {
         return wrapperToState(apiService.getSeriesForCharacter(characterId))
     }
 
@@ -58,19 +59,19 @@ class MarvelRepositoryImpl : MarvelRepository {
         firstName: String?,
         middleName: String?,
         lastName: String?
-    ): Single<Status<BaseResponse<ProfileResult>?>> {
+    ): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCreators(firstName, middleName, lastName))
     }
 
-    override fun getCreatorById(creatorId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
+    override fun getCreatorById(creatorId: Int): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCreatorById(creatorId))
     }
 
-    override fun getComicsForCreator(creatorId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+    override fun getComicsForCreator(creatorId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicsForCreator(creatorId))
     }
 
-    override fun getSeriesForCreator(creatorId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+    override fun getSeriesForCreator(creatorId: Int): Single<Status<List<SeriesResult>>> {
         return wrapperToState(apiService.getSeriesForCreator(creatorId))
     }
 
@@ -78,72 +79,80 @@ class MarvelRepositoryImpl : MarvelRepository {
         title: String?,
         offset: Int?,
         limit: Int?
-    ): Single<Status<BaseResponse<SeriesResult>?>> {
+    ): Single<Status<List<SeriesResult>>> {
         return wrapperToState(apiService.getSeries(title, offset, limit))
     }
 
-    override fun getSeriesById(seriesId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+    override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesResult>>> {
         return wrapperToState(apiService.getSeriesById(seriesId))
     }
 
-    override fun getCharactersForSeries(seriesId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
+    override fun getCharactersForSeries(seriesId: Int): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCharactersForSeries(seriesId))
     }
 
-    override fun getComicsForSeries(seriesId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+    override fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
 
     override fun getEvents(
         limit: Int?,
         offset: Int?
-    ): Single<Status<BaseResponse<EventResult>?>> {
+    ): Single<Status<List<EventResult>>> {
         return wrapperToState(apiService.getEvents(limit, offset))
     }
 
-    override fun getEventsForSeries(seriesId: Int): Single<Status<BaseResponse<EventResult>?>> {
+    override fun getEventsForSeries(seriesId: Int): Single<Status<List<EventResult>>> {
         return wrapperToState(apiService.getEventsForSeries(seriesId))
     }
 
-    override fun getEventById(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
-        return wrapperToState(apiService.getEventById(eventId))
+
+    override fun getStories(limit: Int?, offset: Int?): Single<Status<List<StoryResult>>> {
+        return wrapperToState(apiService.getStories(limit, offset))
     }
 
-    override fun getCharactersForEvent(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
-        return wrapperToState(apiService.getCharactersForEvent(eventId))
+    override fun getStoryById(storyId: Int): Single<Status<List<StoryResult>>> {
+        return wrapperToState(apiService.getStoryById(storyId))
     }
 
-    override fun getComicsForEvent(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
-        return wrapperToState(apiService.getComicsForEvent(eventId))
+    override fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileResult>>> {
+        return wrapperToState(apiService.getCreatorsByStoryId(storyId))
     }
 
-    override fun getCharactersByEventId(eventId: Int): Single<Status<BaseResponse<ProfileResult>?>> {
+    override fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicsResult>>> {
+        return wrapperToState(apiService.getComicsByStoryId(storyId))
+    }
+
+    override fun getSeriesByStoryId(storyId: Int): Single<Status<List<SeriesResult>>> {
+        return wrapperToState(apiService.getSeriesByStoryId(storyId))
+    }
+
+
+    override fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCharactersByEventId(eventId))
     }
 
-    override fun getSeriesByEventId(eventId: Int): Single<Status<BaseResponse<SeriesResult>?>> {
+    override fun getSeriesByEventId(eventId: Int): Single<Status<List<SeriesResult>>> {
         return wrapperToState(apiService.getSeriesByEventId(eventId))
     }
 
-    override fun getComicsByEventId(eventId: Int): Single<Status<BaseResponse<ComicsResult>?>> {
+    override fun getComicsByEventId(eventId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicsByEventId(eventId))
     }
 
-    override fun getSpecificEventByEventId(eventId: Int): Single<Status<BaseResponse<EventResult>?>> {
+    override fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventResult>>> {
         return wrapperToState(apiService.getSpecificEventByEventId(eventId))
     }
 
-    private fun <T> wrapperToState(response: Single<Response<BaseResponse<T>>>)
-            : Single<Status<BaseResponse<T>?>> {
-        return response.map {
-            try {
-                if (it.isSuccessful) {
-                    Status.Success(it.body())
-                } else {
-                    Status.Failure(it.message())
-                }
-            } catch (e: Exception) {
-                Status.Failure(e.message.toString())
+
+    private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>): Single<Status<List<T>>> {
+        return response.map { baseResponse ->
+            if (baseResponse.isSuccessful) {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList<T>()
+                )
+            } else {
+                Status.Failure(baseResponse.message())
             }
         }.observeOnMainThread()
     }
