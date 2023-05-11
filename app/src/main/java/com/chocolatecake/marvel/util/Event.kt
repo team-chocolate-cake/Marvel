@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.util
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
+
 import androidx.lifecycle.Observer
 
 open class Event<out T>(private val content: T) {
@@ -20,10 +19,9 @@ open class Event<out T>(private val content: T) {
     fun peekContent(): T = content
 }
 
-class EventObserve<T>(private val onEventUnhandledContent:(T) ->Unit) :
-    Observer<Event<T>> {
+class EventObserve<T>(private val onEventUnhandledContent:(T) ->Unit) : Observer<Event<T>> {
     override fun onChanged(value: Event<T>) {
-        value?.getContentIfNotHandled()?.let {
+        value.getContentIfNotHandled()?.let {
             onEventUnhandledContent(it)
         }
     }

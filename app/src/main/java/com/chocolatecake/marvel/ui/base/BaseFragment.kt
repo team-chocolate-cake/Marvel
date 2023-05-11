@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.marvel.BR
 import com.chocolatecake.marvel.util.NavigationCommand
@@ -19,39 +18,26 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
     protected val binding: VDB
         get() = _binding as VDB
 
-    abstract val viewModelClass: Class<VM>
-    protected val viewModel: VM by lazy { ViewModelProvider(this)[viewModelClass] }
+    abstract val viewModel: VM
 
     abstract val layoutIdFragment: Int
-
-//    protected abstract fun onReady(savedInstanceState: Bundle?)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate(
-            inflater,
-            layoutIdFragment,
-            container,
-            false
-        )
-
+        _binding = DataBindingUtil.inflate(inflater, layoutIdFragment, container, false)
         _binding?.apply {
             lifecycleOwner = viewLifecycleOwner
-            setVariable(BR.viewModel, viewModel)
+            setVariable(BR.viewModel,viewModel)
         }
-
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeNavigation()
-
-//        onReady(savedInstanceState)
     }
 
     private fun observeNavigation() {

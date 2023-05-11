@@ -16,8 +16,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     lateinit var adapter: HomeAdapter
     override val layoutIdFragment: Int = R.layout.fragment_home
-    override val viewModelClass: Class<HomeViewModel>
-        get() = HomeViewModel::class.java
+    override val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

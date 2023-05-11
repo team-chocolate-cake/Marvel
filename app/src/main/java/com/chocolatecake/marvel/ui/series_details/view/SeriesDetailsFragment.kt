@@ -13,8 +13,7 @@ import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsAdapter
 
 class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesDetailsViewModel>() {
 
-    override val viewModelClass: Class<SeriesDetailsViewModel>
-        get() = SeriesDetailsViewModel::class.java
+    override val viewModel: SeriesDetailsViewModel by viewModels()
     override val layoutIdFragment: Int
         get() = R.layout.fragment_series_details
     lateinit var seriesDetailsAdapter: SeriesDetailsAdapter

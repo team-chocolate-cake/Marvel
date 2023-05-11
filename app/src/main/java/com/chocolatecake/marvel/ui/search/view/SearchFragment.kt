@@ -14,8 +14,7 @@ import com.chocolatecake.marvel.ui.search.SearchListAdapter
 import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
 
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
-    override val viewModelClass: Class<SearchViewModel>
-        get() = SearchViewModel::class.java
+    override val viewModel: SearchViewModel by viewModels()
     override val layoutIdFragment: Int
         get() = R.layout.fragment_seacrh
 

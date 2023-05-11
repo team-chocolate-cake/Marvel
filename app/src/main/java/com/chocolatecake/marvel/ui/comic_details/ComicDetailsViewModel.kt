@@ -15,7 +15,7 @@ class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
     private val repository by lazy {
         MarvelRepositoryImpl()
     }
-    private var currentComicId: Int = 1308
+    var currentComicId: Int = 1308
     private val _currentComic = MutableLiveData<Status<ComicsResult?>>()
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
@@ -29,10 +29,6 @@ class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
         get() = _toastMessage
 
     val itemsList = mutableListOf<ComicDetailsItem>()
-
-    init {
-       loadData()
-    }
 
     fun loadData(){
         getCurrentComic()

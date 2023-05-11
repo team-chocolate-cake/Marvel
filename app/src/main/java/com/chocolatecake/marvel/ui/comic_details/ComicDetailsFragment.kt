@@ -26,7 +26,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
 
     private fun setup() {
         viewModel.currentComicId = args.comicId
-        viewModel.loadData(args.comicId)
+        viewModel.loadData()
         val layoutManager = object : GridLayoutManager(context, 1) {
             override fun isAutoMeasureEnabled() = true
         }

@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.series_details.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -11,9 +10,6 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragment
-import com.chocolatecake.marvel.ui.comic.ComicsFragment
-import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragment
 import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
 import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener
 
@@ -103,14 +99,14 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     override fun onClickEvent(id: Int) {
         //  navigate(
 //            CharacterDetailsFragment.actionFirstSceneFragmentToSecondSceneFragment(
-//                characterId = characterId
+//                characterId = id
 //            )
     }
 
     override fun onClickComic(id: Int) {
         navigate(
             SeriesDetailsFragmentDirections.actionSeriesFragmentToComicsDetailsFragment(
-                comicId = comicId!!
+                comicId = id
             )
         )
     }
@@ -118,7 +114,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     override fun onClickCharacter(id: Int) {
         //  navigate(
 //            CharacterDetailsFragment.actionFirstSceneFragmentToSecondSceneFragment(
-//                characterId = characterId
+//                characterId = id
 //            )
     }
 
