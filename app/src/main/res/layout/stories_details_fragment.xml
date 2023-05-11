@@ -127,5 +127,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenLoading="@{viewModel.story}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
