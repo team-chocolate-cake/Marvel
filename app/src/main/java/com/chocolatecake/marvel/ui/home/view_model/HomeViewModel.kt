@@ -9,6 +9,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.home.view.HomeFragmentDirections
 import com.chocolatecake.marvel.ui.home.view.HomeListener
 
 class HomeViewModel : BaseViewModel(), HomeListener {
@@ -91,23 +92,23 @@ class HomeViewModel : BaseViewModel(), HomeListener {
     }
 
     override fun onClickEvent(id: Int) {
-        _eventId.postValue(id)
+        navigate(HomeFragmentDirections.actionHomeFragmentToEventDetailsFragment(id))
     }
 
     override fun onClickSeries(id: Int) {
-        _seriesId.postValue(id)
+        navigate(HomeFragmentDirections.actionHomeFragmentToSeriesDetailsFragment(id))
     }
 
     override fun onClickComic(id: Int) {
-        _comicId.postValue(id)
+        navigate(HomeFragmentDirections.actionHomeFragmentToComicsDetailsFragment(id))
     }
 
     override fun onClickMoreComics() {
-        _navigateToComic.postValue(true)
+        navigate(HomeFragmentDirections.actionHomeFragmentToComicsFragment())
     }
 
     override fun onClickMoreSeries() {
-        _navigateToSeries.postValue(true)
+        navigate(HomeFragmentDirections.actionHomeFragmentToLatestSeriesFragment())
     }
 
 }

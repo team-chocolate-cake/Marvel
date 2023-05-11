@@ -10,12 +10,11 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
-class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
+class ComicDetailsViewModel(private val currentComicId: Int): BaseViewModel(), ComicInteractionListener {
 
     private val repository by lazy {
         MarvelRepositoryImpl()
     }
-    var currentComicId: Int = 1308
     private val _currentComic = MutableLiveData<Status<ComicsResult?>>()
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
@@ -29,6 +28,10 @@ class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
         get() = _toastMessage
 
     val itemsList = mutableListOf<ComicDetailsItem>()
+
+    init {
+        loadData()
+    }
 
     fun loadData(){
         getCurrentComic()

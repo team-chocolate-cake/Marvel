@@ -10,13 +10,15 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.MainRecyclerViewAdapter
+import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 
 
 class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDetailsViewModel>() {
 
-    override val viewModel: ComicDetailsViewModel by viewModels()
+    override val viewModel: ComicDetailsViewModel by viewModels { ViewModeFactory(args.comicId)}
+
     override val layoutIdFragment = R.layout.fragment_comic_details
-    val args: ComicDetailsFragmentArgs by navArgs()
+    private val args: ComicDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,8 +27,8 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun setup() {
-        viewModel.currentComicId = args.comicId
-        viewModel.loadData()
+//        viewModel.currentComicId = args.comicId
+//        viewModel.loadData()
         val layoutManager = object : GridLayoutManager(context, 1) {
             override fun isAutoMeasureEnabled() = true
         }
