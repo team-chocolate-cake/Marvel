@@ -14,7 +14,7 @@ import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 
-class StoriesDetailsViewModel : BaseViewModel(),CreatorsListener,ComicListener,SeriesListener {
+class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener, SeriesListener {
 
     private val repository: MarvelRepository by lazy {
         MarvelRepositoryImpl()
@@ -45,6 +45,7 @@ class StoriesDetailsViewModel : BaseViewModel(),CreatorsListener,ComicListener,S
     }
 
     private fun getStoryById() {
+        _creators.postValue(Status.Loading)
         repository.getStoryById(22)
             .subscribe(::onStorySuccess, ::onFailure).add()
     }
@@ -57,6 +58,7 @@ class StoriesDetailsViewModel : BaseViewModel(),CreatorsListener,ComicListener,S
 
 
     private fun getCreatorsByStoryId() {
+        _creators.postValue(Status.Loading)
         repository.getCreatorsByStoryId(22)
             .subscribe(::onCreatorsSuccess, ::onFailure).add()
     }
@@ -68,6 +70,7 @@ class StoriesDetailsViewModel : BaseViewModel(),CreatorsListener,ComicListener,S
     }
 
     private fun getSeriesByStoryId() {
+        _creators.postValue(Status.Loading)
         repository.getSeriesByStoryId(22)
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
@@ -79,7 +82,9 @@ class StoriesDetailsViewModel : BaseViewModel(),CreatorsListener,ComicListener,S
     }
 
     private fun getComicsByStoryId() {
-        repository.getComicsByStoryId(22).subscribe(::onComicsSuccess, ::onFailure).add()
+        _creators.postValue(Status.Loading)
+        repository.getComicsByStoryId(22)
+            .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {

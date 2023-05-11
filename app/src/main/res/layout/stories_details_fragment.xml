@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Comics"
+            android:text="@string/comics"
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="Series"
+            android:text="@string/series"
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -117,5 +117,15 @@
             app:layout_constraintTop_toBottomOf="@+id/text_view_series"
             tools:listitem="@layout/series_item" />
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:showWhenLoading="@{viewModel.story}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
