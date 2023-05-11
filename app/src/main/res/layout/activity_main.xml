@@ -8,9 +8,9 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_container_view"
-        android:name="com.chocolatecake.marvel.ui.search.view.SearchFragment"
+        android:name="com.chocolatecake.marvel.ui.home.view.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/character_details" />
+        tools:layout="@layout/fragment_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
