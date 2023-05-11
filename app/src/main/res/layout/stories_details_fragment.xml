@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.storiesDetails.view_model.StoriesDetailsViewModel" />
+        <variable
+            name="item"
+            type="com.chocolatecake.marvel.data.model.StoryResult" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,19 +23,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
-            android:text="@{viewModel.story.toData().date}"
+            tools:text="12/10/2022"
+            android:text="@{viewModel.story.toData().formattedDate}"
             android:textSize="@dimen/text_semi_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/text_view_desc"
-            android:layout_width="wrap_content"
+            android:id="@+id/text_view_title"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_medium"
+            android:layout_marginEnd="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
-            android:text="@{viewModel.story.toData().description}"
+            android:text="@{viewModel.story.toData().title}"
             android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_date" />
 
@@ -46,7 +52,7 @@
             android:textSize="@dimen/text_small"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_desc" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_creators"
@@ -59,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_creators"
-            tools:listitem="@layout/item_character" />
+            tools:listitem="@layout/item_creator" />
 
 
         <TextView
