@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.storiesDetails
+package com.chocolatecake.marvel.ui.storiesDetails.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +10,11 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.core.listener.ComicListener
+import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
+import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 
-class StoriesDetailsViewModel : BaseViewModel() {
+class StoriesDetailsViewModel : BaseViewModel(),CreatorsListener,ComicListener,SeriesListener {
 
     private val repository: MarvelRepository by lazy {
         MarvelRepositoryImpl()
@@ -88,5 +91,14 @@ class StoriesDetailsViewModel : BaseViewModel() {
         _series.postValue(Status.Failure(throwable.message.toString()))
         _comics.postValue(Status.Failure(throwable.message.toString()))
         _creators.postValue(Status.Failure(throwable.message.toString()))
+    }
+
+    override fun onClickComic(id: Int) {
+    }
+
+    override fun onClickCreator(id: Int) {
+    }
+
+    override fun onClickSeries(id: Int) {
     }
 }

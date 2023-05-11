@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.chocolatecake.marvel.ui.storiesDetails.StoriesDetailsViewModel" />
+            type="com.chocolatecake.marvel.ui.storiesDetails.view_model.StoriesDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
