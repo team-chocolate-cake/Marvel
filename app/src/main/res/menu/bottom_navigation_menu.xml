@@ -16,7 +16,7 @@
         android:title="Comics"/>
 
     <item
-        android:id="@+id/seriesFragment"
+        android:id="@+id/seriesDetailsFragment"
         android:icon="@drawable/icon_home"
         android:title="Series"/>
 </menu>
