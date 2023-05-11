@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.stories
+package com.chocolatecake.marvel.ui.stories.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -27,6 +27,7 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
     }
 
     private fun getStories() {
+        _stories.postValue(Status.Loading)
         repository.getStories(limit = 30)
             .subscribe(::onStoriesSuccess, ::onFailure).add()
     }
