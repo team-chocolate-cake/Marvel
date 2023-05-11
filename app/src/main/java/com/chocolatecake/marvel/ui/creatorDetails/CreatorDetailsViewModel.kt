@@ -11,7 +11,7 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 
 class CreatorDetailsViewModel(
-    private val creatorId: Int
+    private val creatorId: Int,
 ) : BaseViewModel(), CreatorDetailsListener {
     val comicsList = MutableLiveData<Status<List<ComicsResult>?>>()
     val seriesList = MutableLiveData<Status<List<SeriesResult>?>>()
@@ -20,6 +20,7 @@ class CreatorDetailsViewModel(
     private val repository: MarvelRepository by lazy {
         MarvelRepositoryImpl()
     }
+
 
     init {
         loadData()
@@ -37,7 +38,6 @@ class CreatorDetailsViewModel(
                 creator.postValue(Status.Success(it))
             }
         }, {
-            Log.d("nahed", it.toString())
         }).add()
     }
 
@@ -66,10 +66,10 @@ class CreatorDetailsViewModel(
     }
 
     override fun onClickSeries(id: Int) {
-       // TODO("Not yet implemented")
+        navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToSeriesDetailsFragment(id))
     }
 
     override fun onClickComic(id: Int) {
-        //TODO("Not yet implemented")
+        navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToComicsDetailsFragment(id))
     }
 }

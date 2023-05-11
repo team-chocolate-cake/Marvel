@@ -10,11 +10,13 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
-class ComicDetailsViewModel(private val currentComicId: Int): BaseViewModel(), ComicInteractionListener {
+class ComicDetailsViewModel(private val currentComicId: Int):
+    BaseViewModel(), ComicInteractionListener {
 
     private val repository by lazy {
         MarvelRepositoryImpl()
     }
+
     private val _currentComic = MutableLiveData<Status<ComicsResult?>>()
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
@@ -28,6 +30,7 @@ class ComicDetailsViewModel(private val currentComicId: Int): BaseViewModel(), C
         get() = _toastMessage
 
     val itemsList = mutableListOf<ComicDetailsItem>()
+
 
     init {
         loadData()
@@ -59,6 +62,7 @@ class ComicDetailsViewModel(private val currentComicId: Int): BaseViewModel(), C
         _toastMessage.postValue(ERROR_OCCURRED)
     }
 
+
     private fun getCharactersOfComic() {
         repository.getCharactersForSeries(currentComicId)
             .subscribe(::onGetCharacterSuccess, ::onGetCharacterFailure)
@@ -78,6 +82,7 @@ class ComicDetailsViewModel(private val currentComicId: Int): BaseViewModel(), C
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
+
     private fun getEventsOfComic() {
         repository
             .getEventByComicId(currentComicId)
@@ -92,17 +97,20 @@ class ComicDetailsViewModel(private val currentComicId: Int): BaseViewModel(), C
             }
         }
     }
+
     private fun onGetEventsOfComicFailure(throwable: Throwable){
         _toastMessage.postValue(throwable.message)
     }
 
+
     override fun onClickCharacter(id: Int) {
-//        TODO("Not yet implemented")
+        navigate(ComicDetailsFragmentDirections.actionComicsDetailsFragmentToCharacterDetailsFragment(id))
     }
 
     override fun onClickEvent(id: Int) {
-//        TODO("Not yet implemented")
+        navigate(ComicDetailsFragmentDirections.actionComicsDetailsFragmentToEventDetailsFragment(id))
     }
+
 
     companion object {
         private const val ERROR_OCCURRED = "error occurred"

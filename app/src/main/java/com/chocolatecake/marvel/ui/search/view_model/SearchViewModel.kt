@@ -12,13 +12,19 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.chocolatecake.marvel.ui.search.model.SearchQuery
+import com.chocolatecake.marvel.ui.search.view.SearchFragmentDirections
 import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
+import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel : BaseViewModel(), SearchInteractionListener {
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
     private val searchQuery = BehaviorSubject.createDefault(SearchQuery())
+
+    private val _state = MutableLiveData<Status<SearchDataHolder>>()
+    val state: LiveData<Status<SearchDataHolder>>
+        get() = _state
 
     var searchText: String?
         get() = searchQuery.value?.query
@@ -37,13 +43,6 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
             searchQuery.onNext(SearchQuery(query = searchText, type = value))
         }
 
-    private val _searchItemId = MutableLiveData<Int?>()
-    val searchItemId: LiveData<Int?>
-        get() = _searchItemId
-
-    private val _state = MutableLiveData<Status<SearchDataHolder>>()
-    val state: LiveData<Status<SearchDataHolder>>
-        get() = _state
 
     init {
         applySearch()
@@ -109,14 +108,14 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
 
 
     override fun onClickSeries(id: Int) {
-        _searchItemId.postValue(id)
+        navigate(SearchFragmentDirections.actionSearchFragmentToSeriesDetailsFragment(id))
     }
 
     override fun onClickComic(id: Int) {
-        _searchItemId.postValue(id)
+        navigate(SearchFragmentDirections.actionSearchFragmentToComicsDetailsFragment(id))
     }
 
     override fun onClickCharacter(id: Int) {
-        _searchItemId.postValue(id)
+        navigate(SearchFragmentDirections.actionSearchFragmentToCharacterDetailsFragment(id))
     }
 }

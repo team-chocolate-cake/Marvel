@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.character_details
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -14,6 +13,7 @@ import com.chocolatecake.marvel.ui.core.listener.ComicListener
 class CharacterDetailsViewModel(
     private val characterId: Int
 ) : BaseViewModel(), ComicListener {
+
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
@@ -23,6 +23,7 @@ class CharacterDetailsViewModel(
     private val _character = MutableLiveData<Status<ProfileResult>>()
     val character: LiveData<Status<ProfileResult>>
         get() = _character
+
 
     init {
         loadDetails()
@@ -46,6 +47,7 @@ class CharacterDetailsViewModel(
         }
     }
 
+
     private fun loadComics() {
         _comics.postValue(Status.Loading)
         repository.getComicsForCharacter(characterId)
@@ -59,13 +61,19 @@ class CharacterDetailsViewModel(
         }
     }
 
+
     private fun onCharacterFailure(throwable: Throwable) {
         _character.postValue(Status.Failure(throwable.message.toString()))
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
+
     override fun onClickComic(id: Int) {
-        Log.i("Clicked", id.toString())
+        navigate(
+            CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToComicsDetailsFragment(
+                id
+            )
+        )
     }
 
 }

@@ -3,16 +3,20 @@ package com.chocolatecake.marvel.ui.storiesDetails.view
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentStoriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
+import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.storiesDetails.adapter.ComicsAdapter
 import com.chocolatecake.marvel.ui.storiesDetails.adapter.CreatorsAdapter
 import com.chocolatecake.marvel.ui.storiesDetails.adapter.SeriesAdapter
 import com.chocolatecake.marvel.ui.storiesDetails.view_model.StoriesDetailsViewModel
 
 class StoriesDetailsFragment  :BaseFragment<FragmentStoriesDetailsBinding, StoriesDetailsViewModel>(){
-    override val viewModel: StoriesDetailsViewModel by viewModels()
+
+    private val args: StoriesDetailsFragmentArgs by navArgs()
+    override val viewModel: StoriesDetailsViewModel by viewModels{ ViewModeFactory(args.storyId)}
     override val layoutIdFragment: Int
         get() = R.layout.fragment_stories_details
 

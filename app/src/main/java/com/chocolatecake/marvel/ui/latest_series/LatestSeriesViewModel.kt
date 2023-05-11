@@ -18,9 +18,6 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
     val latestSeriesList: LiveData<Status<List<SeriesResult>>>
         get() = _latestSeriesList
 
-    private var _id = MutableLiveData<Int>()
-    val id: LiveData<Int>
-        get() = _id
 
     init {
         loadData()
@@ -40,7 +37,7 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
     }
 
     override fun onClickSeries(id: Int) {
-        _id.postValue(id)
+        navigate(LatestSeriesFragmentDirections.actionLatestSeriesFragmentToSeriesDetailsFragment(id))
     }
 
     private companion object{

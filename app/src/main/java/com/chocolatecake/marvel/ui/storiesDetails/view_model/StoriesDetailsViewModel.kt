@@ -13,8 +13,11 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
+import com.chocolatecake.marvel.ui.storiesDetails.view.StoriesDetailsFragmentDirections
 
-class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener, SeriesListener {
+class StoriesDetailsViewModel(
+    private val storyId: Int,
+) : BaseViewModel(), CreatorsListener, ComicListener, SeriesListener {
 
     private val repository: MarvelRepository by lazy {
         MarvelRepositoryImpl()
@@ -46,7 +49,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getStoryById() {
         _creators.postValue(Status.Loading)
-        repository.getStoryById(1229)
+        repository.getStoryById(storyId)
             .subscribe(::onStorySuccess, ::onFailure).add()
     }
 
@@ -59,7 +62,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getCreatorsByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getCreatorsByStoryId(1229)
+        repository.getCreatorsByStoryId(storyId)
             .subscribe(::onCreatorsSuccess, ::onFailure).add()
     }
 
@@ -71,7 +74,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getSeriesByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getSeriesByStoryId(1229)
+        repository.getSeriesByStoryId(storyId)
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
@@ -83,7 +86,7 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
 
     private fun getComicsByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getComicsByStoryId(1229)
+        repository.getComicsByStoryId(storyId)
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
@@ -100,11 +103,26 @@ class StoriesDetailsViewModel : BaseViewModel(), CreatorsListener, ComicListener
     }
 
     override fun onClickComic(id: Int) {
+        navigate(
+            StoriesDetailsFragmentDirections.actionStoriesDetailsFragmentToComicsDetailsFragment(
+                id
+            )
+        )
     }
 
     override fun onClickCreator(id: Int) {
+        navigate(
+            StoriesDetailsFragmentDirections.actionStoriesDetailsFragmentToCreatorDetailsFragment(
+                id
+            )
+        )
     }
 
     override fun onClickSeries(id: Int) {
+        navigate(
+            StoriesDetailsFragmentDirections.actionStoriesDetailsFragmentToSeriesDetailsFragment(
+                id
+            )
+        )
     }
 }

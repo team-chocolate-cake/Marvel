@@ -3,17 +3,20 @@ package com.chocolatecake.marvel.ui.series_details.view
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentSeriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
+import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.series_details.SeriesDetailsItem
 import com.chocolatecake.marvel.ui.series_details.viewModel.SeriesDetailsViewModel
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsAdapter
 
 class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesDetailsViewModel>() {
 
-    override val viewModel: SeriesDetailsViewModel by viewModels()
+    private val args: SeriesDetailsFragmentArgs by navArgs()
+    override val viewModel: SeriesDetailsViewModel by viewModels{ ViewModeFactory(args.seriesId)}
     override val layoutIdFragment: Int
         get() = R.layout.fragment_series_details
     lateinit var seriesDetailsAdapter: SeriesDetailsAdapter

@@ -13,7 +13,9 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
 import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener
 
-class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
+class SeriesDetailsViewModel(
+    private val seriesId: Int,
+) : BaseViewModel(), SeriesDetailsListener {
 
     val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
@@ -46,7 +48,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getSeriesById() {
-        repository.getSeriesById(SERIES_ITEM_ID)
+        repository.getSeriesById(seriesId)
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
@@ -57,7 +59,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getCharactersForSeries() {
-        repository.getCharactersForSeries(SERIES_ITEM_ID)
+        repository.getCharactersForSeries(seriesId)
             .subscribe(::onCharactersSuccess, ::onFailure).add()
     }
 
@@ -68,7 +70,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getComicsForSeries() {
-        repository.getComicsForSeries(SERIES_ITEM_ID)
+        repository.getComicsForSeries(seriesId)
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
@@ -79,7 +81,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     fun getEventsForSeries() {
-        repository.getEventsForSeries(SERIES_ITEM_ID)
+        repository.getEventsForSeries(seriesId)
             .subscribe(::onEventsSuccess, ::onFailure).add()
     }
 
@@ -97,10 +99,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     override fun onClickEvent(id: Int) {
-        //  navigate(
-//            CharacterDetailsFragment.actionFirstSceneFragmentToSecondSceneFragment(
-//                characterId = id
-//            )
+      navigate(SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToEventDetailsFragment(id))
     }
 
     override fun onClickComic(id: Int) {
@@ -112,13 +111,7 @@ class SeriesDetailsViewModel : BaseViewModel(), SeriesDetailsListener {
     }
 
     override fun onClickCharacter(id: Int) {
-        //  navigate(
-//            CharacterDetailsFragment.actionFirstSceneFragmentToSecondSceneFragment(
-//                characterId = id
-//            )
-    }
+        navigate(SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToCharacterDetailsFragment(id))
 
-    companion object {
-        private const val SERIES_ITEM_ID = 2541
     }
 }
