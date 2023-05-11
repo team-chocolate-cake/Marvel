@@ -27,10 +27,10 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
 
     fun loadData() {
         repository.getSeries(limit = LIMIT).subscribe({
-            it.toData()?.data?.results?.let { result ->
+            it.toData()?.let { result ->
                 _latestSeriesList.postValue(
                     Status.Success(
-                        result.filterNotNull().sortedByDescending { it.startYear })
+                        result.sortedByDescending { it.startYear })
                 )
             }
         }, {

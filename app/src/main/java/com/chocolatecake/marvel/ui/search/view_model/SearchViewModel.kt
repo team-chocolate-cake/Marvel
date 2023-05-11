@@ -5,15 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
+import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.chocolatecake.marvel.ui.search.model.SearchQuery
-import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
+import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
@@ -83,22 +82,22 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
             .add()
     }
 
-    private fun onSeriesSuccess(seriesResult: Status<BaseResponse<SeriesResult>?>) {
-        seriesResult.toData()?.data?.results?.filterNotNull()?.let { result ->
+    private fun onSeriesSuccess(seriesResult: Status<List<SeriesResult>>) {
+        seriesResult.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(series = result))
             _state.postValue(newState)
         }
     }
 
-    private fun onComicsSuccess(comicResult: Status<BaseResponse<ComicsResult>?>) {
-        comicResult.toData()?.data?.results?.filterNotNull()?.let { result ->
+    private fun onComicsSuccess(comicResult: Status<List<ComicsResult>>) {
+        comicResult.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(comics = result))
             _state.postValue(newState)
         }
     }
 
-    private fun onCharactersSuccess(characterResult: Status<BaseResponse<ProfileResult>?>) {
-        characterResult.toData()?.data?.results?.filterNotNull()?.let { result ->
+    private fun onCharactersSuccess(characterResult: Status<List<ProfileResult>>) {
+        characterResult.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(characters = result))
             _state.postValue(newState)
         }

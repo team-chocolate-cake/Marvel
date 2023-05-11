@@ -5,6 +5,7 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.model.StoryResult
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import retrofit2.http.GET
@@ -17,7 +18,7 @@ interface MarvelService {
     fun getComics(
         @Query("titleStartsWith") title: String? = null,
         @Query("limit") limit: Int? = null,
-        @Query("offset")  offset: Int? = null
+        @Query("offset") offset: Int? = null
     ): Single<Response<BaseResponse<ComicsResult>>>
 
     @GET("comics/{comicId}/events")
@@ -112,21 +113,6 @@ interface MarvelService {
         @Query("offset") offset: Int? = null
     ): Single<Response<BaseResponse<EventResult>>>
 
-    @GET("events/{eventId}")
-    fun getEventById(
-        @Path("eventId") storyId: Int,
-    ): Single<Response<BaseResponse<EventResult>>>
-
-    @GET("events/{eventId}/characters")
-    fun getCharactersForEvent(
-        @Path("eventId") storyId: Int,
-    ): Single<Response<BaseResponse<EventResult>>>
-
-    @GET("events/{eventId}/comics")
-    fun getComicsForEvent(
-        @Path("eventId") storyId: Int,
-    ): Single<Response<BaseResponse<EventResult>>>
-
 
     @GET("events/{eventId}/characters")
     fun getCharactersByEventId(
@@ -147,5 +133,33 @@ interface MarvelService {
     fun getSpecificEventByEventId(
         @Path("eventId") eventId: Int,
     ): Single<Response<BaseResponse<EventResult>>>
+
+
+    @GET("stories")
+    fun getStories(
+        @Query("limit") limit: Int? = null,
+        @Query("offset") offset: Int? = null
+    ): Single<Response<BaseResponse<StoryResult>>>
+
+    @GET("stories/{storyId}")
+    fun getStoryById(
+        @Path("storyId") storyId: Int
+    ): Single<Response<BaseResponse<StoryResult>>>
+
+
+    @GET("stories/{storyId}/creators")
+    fun getCreatorsByStoryId(
+        @Path("storyId") storyId: Int
+    ): Single<Response<BaseResponse<ProfileResult>>>
+
+    @GET("stories/{storyId}/comics")
+    fun getComicsByStoryId(
+        @Path("storyId") storyId: Int
+    ): Single<Response<BaseResponse<ComicsResult>>>
+
+    @GET("stories/{storyId}/series")
+    fun getSeriesByStoryId(
+        @Path("storyId") storyId: Int
+    ): Single<Response<BaseResponse<SeriesResult>>>
 
 }

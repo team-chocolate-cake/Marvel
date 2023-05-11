@@ -3,7 +3,6 @@ package com.chocolatecake.marvel.ui.comic
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
@@ -34,9 +33,9 @@ class ComicsViewModel : BaseViewModel(), ComicListener {
             .add()
     }
 
-    private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-        status.toData()?.data?.results?.let {
-            _comics.postValue(Status.Success(it.filterNotNull()))
+    private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.let {
+            _comics.postValue(Status.Success(it))
         }
     }
 

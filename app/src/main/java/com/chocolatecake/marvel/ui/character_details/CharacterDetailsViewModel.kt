@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
@@ -39,8 +38,8 @@ class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
             .add()
     }
 
-    private fun onCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
-        status.toData()?.data?.results?.first().let {
+    private fun onCharacterSuccess(status: Status<List<ProfileResult>>) {
+        status.toData()?.first().let {
             _character.postValue(Status.Success(it!!))
         }
     }
@@ -52,9 +51,9 @@ class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
             .add()
     }
 
-    private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-        status.toData()?.data?.results?.let {
-            _comics.postValue(Status.Success(it.filterNotNull()))
+    private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.let {
+            _comics.postValue(Status.Success(it))
         }
     }
 

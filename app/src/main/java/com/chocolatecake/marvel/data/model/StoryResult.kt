@@ -14,5 +14,11 @@ data class StoryResult(
     @SerializedName("title")
     val title: String? = null,
     @SerializedName("type")
-    val type: String? = null
-)
+    val type: String? = null,
+    @SerializedName("modified")
+    val date: String? = null,
+){
+    fun getFormattedDate(): String?{
+        return date?.split("T")?.first()
+    }
+}

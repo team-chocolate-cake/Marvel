@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
@@ -48,8 +47,8 @@ class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
             .add()
     }
 
-    private fun onGetCurrentComicSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-        status.toData()?.data?.results?.first()?.let {
+    private fun onGetCurrentComicSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.first()?.let {
             itemsList.add(ComicDetailsItem.Header(it))
             _currentComic.postValue(Status.Success(it))
             
@@ -67,8 +66,8 @@ class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
             .add()
     }
 
-    private fun onGetCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
-        status.toData()?.data?.results?.filterNotNull()?.let {
+    private fun onGetCharacterSuccess(status: Status<List<ProfileResult>>) {
+        status.toData()?.let {
             itemsList.add(ComicDetailsItem.Characters(it))
             _characters.postValue(Status.Success(it))
             
@@ -87,8 +86,8 @@ class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
             .add()
     }
 
-    private fun onGetEventsOfComicSuccess(status:Status<BaseResponse<EventResult>?>){
-        status.toData()?.data?.results?.filterNotNull()?.let {list->
+    private fun onGetEventsOfComicSuccess(status:Status<List<EventResult>>){
+        status.toData()?.let {list->
             list.forEach {
                 itemsList.add(ComicDetailsItem.Events(it)) 
             }

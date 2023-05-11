@@ -33,8 +33,8 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
 
     private fun getCreator(id: Int) {
         repository.getCreatorById(id).subscribe({
-            it.toData()?.data?.results.let {
-                creator.postValue(Status.Success(it?.filterNotNull()))
+            it.toData()?.let {
+                creator.postValue(Status.Success(it))
             }
         }, {
             Log.d("nahed", it.toString())
@@ -43,8 +43,8 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
 
     private fun getSeries(id: Int) {
         repository.getSeriesForCreator(id).subscribe({
-            it.toData()?.data?.results.let {
-                seriesList.postValue(Status.Success(it?.filterNotNull()))
+            it.toData()?.let {
+                seriesList.postValue(Status.Success(it))
                 Log.d("nahed", it.toString())
 
             }
@@ -55,8 +55,8 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
 
     private fun getComics(id: Int) {
         repository.getComicsForCreator(id).subscribe({
-            it.toData()?.data?.results.let {
-                comicsList.postValue(Status.Success(it?.filterNotNull()))
+            it.toData()?.let {
+                comicsList.postValue(Status.Success(it))
                 Log.d("nahed", it.toString())
 
             }
