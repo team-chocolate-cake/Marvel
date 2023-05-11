@@ -7,16 +7,16 @@
 
     <item
         android:id="@+id/searchFragment"
-        android:icon="@drawable/icon_home"
+        android:icon="@drawable/icon_search"
         android:title="Search" />
 
     <item
-        android:id="@+id/comicsFragment"
-        android:icon="@drawable/icon_home"
-        android:title="Comics"/>
+        android:id="@+id/seriesDetailsFragment"
+        android:icon="@drawable/icon_tv"
+        android:title="Series"/>
 
     <item
-        android:id="@+id/seriesDetailsFragment"
-        android:icon="@drawable/icon_home"
-        android:title="Series"/>
+        android:id="@+id/storiesFragment"
+        android:icon="@drawable/icon_story"
+        android:title="Stories"/>
 </menu>
