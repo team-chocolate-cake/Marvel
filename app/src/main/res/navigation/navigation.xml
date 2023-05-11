@@ -99,7 +99,8 @@
         android:name="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsFragment"
         android:label="CreatorDetailsFragment"
         tools:layout="@layout/fragment_creator_details" >
-        <argument android:name="creatorId" />
+        <argument android:name="creatorId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/latestSeriesFragment"
