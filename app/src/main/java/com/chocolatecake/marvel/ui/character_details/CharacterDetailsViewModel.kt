@@ -5,21 +5,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.comic.ComicListener
+import com.chocolatecake.marvel.ui.core.listener.ComicListener
 
 class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
-    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
-    private val _character = MutableLiveData<Status<ProfileResult>>()
-    val comics: LiveData<Status<List<ComicsResult>>> get() = _comics
-    val character: LiveData<Status<ProfileResult>> get() = _character
 
-    val itemList = mutableListOf<CharacterDetailsItem>()
+    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
+    val comics: LiveData<Status<List<ComicsResult>>>
+        get() = _comics
+
+    private val _character = MutableLiveData<Status<ProfileResult>>()
+    val character: LiveData<Status<ProfileResult>>
+        get() = _character
 
     init {
         loadDetails()
@@ -37,9 +38,8 @@ class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
             .add()
     }
 
-    private fun onCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
-        status.toData()?.data?.results?.first().let {
-            itemList.add(CharacterDetailsItem.Header(it))
+    private fun onCharacterSuccess(status: Status<List<ProfileResult>>) {
+        status.toData()?.first().let {
             _character.postValue(Status.Success(it!!))
         }
     }
@@ -51,10 +51,9 @@ class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
             .add()
     }
 
-    private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-        status.toData()?.data?.results?.let {
-            itemList.add(CharacterDetailsItem.Comics(it))
-            _comics.postValue(Status.Success(it.filterNotNull()))
+    private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.let {
+            _comics.postValue(Status.Success(it))
         }
     }
 
@@ -63,8 +62,8 @@ class CharacterDetailsViewModel : BaseViewModel(), ComicListener {
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickComic(comicId: Int) {
-        Log.i("Clicked", comicId.toString())
+    override fun onClickComic(id: Int) {
+        Log.i("Clicked", id.toString())
     }
 
 }

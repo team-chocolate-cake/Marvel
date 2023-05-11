@@ -16,10 +16,8 @@ import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItemType
 class EventAdapter(
     private var eventDetailsItems: MutableList<EventDetailsItem>,
     private val eventDetailsListener: EventDetailsListener,
-) :
-    BaseAdapter<EventDetailsItem>(eventDetailsItems, eventDetailsListener) {
-    override val layoutId: Int
-        get() = 0
+) : BaseAdapter<EventDetailsItem>(eventDetailsItems, eventDetailsListener) {
+    override val layoutId = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {

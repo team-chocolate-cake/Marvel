@@ -6,7 +6,6 @@ import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
@@ -54,8 +53,8 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             .subscribe(::onEventSuccess, ::onFailure).add()
     }
 
-    private fun onEventSuccess(status: Status<BaseResponse<EventResult>?>) {
-        status.toData()?.data?.results?.first()?.let {
+    private fun onEventSuccess(status: Status<List<EventResult>>) {
+        status.toData()?.first()?.let {
             _event.postValue(Status.Success(it))
         }
     }
@@ -65,9 +64,9 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             .subscribe(::onCharactersSuccess, ::onFailure).add()
     }
 
-    private fun onCharactersSuccess(status: Status<BaseResponse<ProfileResult>?>) {
-        status.toData()?.data?.results?.let {
-            _characters.postValue(Status.Success(it.filterNotNull()))
+    private fun onCharactersSuccess(status: Status<List<ProfileResult>>) {
+        status.toData()?.let {
+            _characters.postValue(Status.Success(it))
         }
     }
 
@@ -76,9 +75,9 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
-    private fun onSeriesSuccess(status: Status<BaseResponse<SeriesResult>?>) {
-        status.toData()?.data?.results?.let {
-            _series.postValue(Status.Success(it.filterNotNull()))
+    private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
+        status.toData()?.let {
+            _series.postValue(Status.Success(it))
         }
     }
 
@@ -86,9 +85,9 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
         repository.getComicsByEventId(293).subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
-    private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-        status.toData()?.data?.results?.let {
-            _comics.postValue(Status.Success(it.filterNotNull()))
+    private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.let {
+            _comics.postValue(Status.Success(it))
         }
     }
 
@@ -99,15 +98,15 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickComics(comicsId: Int) {
-        _comicsId.postValue(comicsId)
+    override fun onClickComic(id: Int) {
+        _comicsId.postValue(id)
     }
 
-    override fun onClickCharacter(characterId: Int) {
-        _characterId.postValue(characterId)
+    override fun onClickCharacter(id: Int) {
+        _characterId.postValue(id)
     }
 
-    override fun onClickSeries(seriesId: Int) {
-        _seriesId.postValue(seriesId)
+    override fun onClickSeries(id: Int) {
+        _seriesId.postValue(id)
     }
 }

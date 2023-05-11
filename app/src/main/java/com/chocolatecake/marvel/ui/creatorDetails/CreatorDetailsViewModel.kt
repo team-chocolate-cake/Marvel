@@ -22,19 +22,19 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
     private val creatorId: Int? = null
 
     init {
-        loadData(creatorId ?: 1)
+        loadData()
     }
 
-    fun loadData(id: Int) {
-        getCreator(id)
-        getSeries(id)
-        getComics(id)
+    fun loadData() {
+        getCreator(creatorId ?: 1)
+        getSeries(creatorId ?: 1)
+        getComics(creatorId ?: 1)
     }
 
     private fun getCreator(id: Int) {
         repository.getCreatorById(id).subscribe({
-            it.toData()?.data?.results.let {
-                creator.postValue(Status.Success(it?.filterNotNull()))
+            it.toData()?.let {
+                creator.postValue(Status.Success(it))
             }
         }, {
             Log.d("nahed", it.toString())
@@ -43,8 +43,8 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
 
     private fun getSeries(id: Int) {
         repository.getSeriesForCreator(id).subscribe({
-            it.toData()?.data?.results.let {
-                seriesList.postValue(Status.Success(it?.filterNotNull()))
+            it.toData()?.let {
+                seriesList.postValue(Status.Success(it))
                 Log.d("nahed", it.toString())
 
             }
@@ -55,8 +55,8 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
 
     private fun getComics(id: Int) {
         repository.getComicsForCreator(id).subscribe({
-            it.toData()?.data?.results.let {
-                comicsList.postValue(Status.Success(it?.filterNotNull()))
+            it.toData()?.let {
+                comicsList.postValue(Status.Success(it))
                 Log.d("nahed", it.toString())
 
             }
@@ -65,11 +65,11 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
         }).add()
     }
 
-    override fun onClickSeries(seriesId: Int?) {
-        // TODO("Not yet implemented")
+    override fun onClickSeries(id: Int) {
+       // TODO("Not yet implemented")
     }
 
-    override fun onClickComics(comicsId: Int?) {
-        // TODO("Not yet implemented")
+    override fun onClickComic(id: Int) {
+        //TODO("Not yet implemented")
     }
 }

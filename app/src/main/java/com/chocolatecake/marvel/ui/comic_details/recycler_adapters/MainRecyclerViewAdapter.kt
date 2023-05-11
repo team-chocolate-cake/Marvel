@@ -35,7 +35,6 @@ class MainRecyclerViewAdapter(
             is ComicDetailsItem.Header -> HEADER
             is ComicDetailsItem.Characters -> CHARACTERS
             is ComicDetailsItem.Events -> EVENTS
-            else -> throw Exception("item type not found")
         }
     }
 
@@ -92,19 +91,18 @@ class MainRecyclerViewAdapter(
         val adapter =
             HorizontalCharacterAdapter(characterItem.list, listener)
         holder.binding.recyclerview.adapter = adapter
-        holder.binding.myItem = characterItem
+        holder.binding.item = characterItem
     }
 
     private fun bindHeader(holder: HeaderViewHolder, position: Int) {
         val headerItem = list[position] as ComicDetailsItem.Header
-        holder.binding.myItem = headerItem.comic
+        holder.binding.item = headerItem.comic
     }
 
     companion object {
         private const val HEADER = 121
         private const val CHARACTERS = 122
         private const val EVENTS = 123
-        private const val TAG = "MainRecyclerView"
     }
 
 }

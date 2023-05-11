@@ -14,7 +14,7 @@ data class SeriesResult(
     @SerializedName("startYear")
     val startYear: Int? = null,
     @SerializedName("thumbnail")
-    val thumbnail: ImageResponse?,
+    val thumbnail: ImageResponse? = null,
     @SerializedName("title")
     val title: String? = null,
 )

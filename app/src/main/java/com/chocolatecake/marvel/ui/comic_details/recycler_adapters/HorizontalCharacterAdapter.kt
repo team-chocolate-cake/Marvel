@@ -6,9 +6,9 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener
 
 class HorizontalCharacterAdapter(
-    items: List<ProfileResult?>,
+    items: List<ProfileResult>,
     listener: ComicInteractionListener
-) : BaseAdapter<ProfileResult?>(items,listener) {
+) : BaseAdapter<ProfileResult>(items,listener) {
 
     override val layoutId: Int = R.layout.character_item
 

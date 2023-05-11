@@ -10,4 +10,6 @@
     <color name="on_background_38">#61FFFFFF</color>
     <color name="bottom_nav_background_color">#1B1B1B</color>
     <color name="bottom_icon_color">#5E5E5E</color>
+
+    <color name="card_color">#404040</color>
 </resources>

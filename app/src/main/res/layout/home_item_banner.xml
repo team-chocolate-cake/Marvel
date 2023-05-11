@@ -10,7 +10,7 @@
 
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.home.view.HomeListener" />
+            type="com.chocolatecake.marvel.ui.core.listener.EventListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:onClick="@{() -> listener.onClickBanner(item.id)}"
+            android:onClick="@{() -> listener.onClickEvent(item.id)}"
             app:imageUrl="@{item.thumbnail}"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintTop_toTopOf="parent"

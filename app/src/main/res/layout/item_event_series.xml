@@ -9,7 +9,7 @@
             type="com.chocolatecake.marvel.data.model.SeriesResult" />
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.event_details.view.EventDetailsListener" />
+            type="com.chocolatecake.marvel.ui.core.listener.SeriesListener" />
     </data>
 
     <androidx.cardview.widget.CardView

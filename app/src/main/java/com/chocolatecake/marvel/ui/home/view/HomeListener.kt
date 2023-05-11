@@ -1,11 +1,10 @@
 package com.chocolatecake.marvel.ui.home.view
 
-import com.chocolatecake.marvel.ui.base.BaseAdapter
+import com.chocolatecake.marvel.ui.core.listener.ComicListener
+import com.chocolatecake.marvel.ui.core.listener.EventListener
+import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 
-interface HomeListener: BaseAdapter.BaseInteractionListener {
-    fun onClickBanner(eventId: Int?)
-    fun onClickSeries(seriesId: Int?)
-    fun onClickComic(comicId: Int?)
+interface HomeListener: EventListener, SeriesListener, ComicListener {
     fun onClickMoreComics()
     fun onClickMoreSeries()
 }

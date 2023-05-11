@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
@@ -55,9 +54,9 @@ class HomeViewModel : BaseViewModel(), HomeListener {
             .subscribe(::onEventSuccess, ::onFailure).add()
     }
 
-    private fun onEventSuccess(result: Status<BaseResponse<EventResult>?>) {
-        result.toData()?.data?.results?.let {
-            _events.postValue(Status.Success(it.filterNotNull()))
+    private fun onEventSuccess(result: Status<List<EventResult>>) {
+        result.toData()?.let {
+            _events.postValue(Status.Success(it))
         }
     }
 
@@ -69,19 +68,19 @@ class HomeViewModel : BaseViewModel(), HomeListener {
 
     private fun getCurrentComic(){
         _comics.postValue(Status.Loading)
-        marvelRepository.getComics(limit = 4, offset=(0..50).random())
+        marvelRepository.getComics(limit = 4, offset =(0..50).random())
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
-    private fun onSeriesSuccess(status: Status<BaseResponse<SeriesResult>?>) {
-        status.toData()?.data?.results?.let {
-            _series.postValue(Status.Success(it.filterNotNull()))
+    private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
+        status.toData()?.let {
+            _series.postValue(Status.Success(it))
         }
     }
 
-    private fun onComicsSuccess(status: Status<BaseResponse<ComicsResult>?>){
-        status.toData()?.data?.results?.let{
-            _comics.postValue(Status.Success(it.filterNotNull()))
+    private fun onComicsSuccess(status: Status<List<ComicsResult>>){
+        status.toData()?.let{
+            _comics.postValue(Status.Success(it))
         }
     }
 
@@ -91,16 +90,16 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    override fun onClickBanner(eventId: Int?) {
-        _eventId.postValue(eventId)
+    override fun onClickEvent(id: Int) {
+        _eventId.postValue(id)
     }
 
-    override fun onClickSeries(seriesId: Int?) {
-        _seriesId.postValue(seriesId)
+    override fun onClickSeries(id: Int) {
+        _seriesId.postValue(id)
     }
 
-    override fun onClickComic(comicId: Int?) {
-        _comicId.postValue(comicId)
+    override fun onClickComic(id: Int) {
+        _comicId.postValue(id)
     }
 
     override fun onClickMoreComics() {

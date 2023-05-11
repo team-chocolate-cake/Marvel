@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.home.view_model.HomeViewModel" />
@@ -25,9 +26,9 @@
             app:showWhenSuccess="@{viewModel.events}" />
 
         <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/primary"
             android:indeterminateTint="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,12 +36,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenLoading="@{viewModel.events}" />
 
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="@{()-> viewModel.loadData()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

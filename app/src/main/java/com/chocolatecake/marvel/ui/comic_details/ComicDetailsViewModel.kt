@@ -1,27 +1,21 @@
 package com.chocolatecake.marvel.ui.comic_details
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
-class ComicDetailsViewModel(
-
-) : BaseViewModel(), ComicInteractionListener {
+class ComicDetailsViewModel: BaseViewModel(), ComicInteractionListener {
 
     private val repository by lazy {
         MarvelRepositoryImpl()
     }
-
-    var currentComicId: Int = 1308
-
+    private var currentComicId: Int = 1308
     private val _currentComic = MutableLiveData<Status<ComicsResult?>>()
     val currentComic: LiveData<Status<ComicsResult?>>
         get() = _currentComic
@@ -36,29 +30,25 @@ class ComicDetailsViewModel(
 
     val itemsList = mutableListOf<ComicDetailsItem>()
 
-//    init {
-//        getCurrentComic()
-//        getCharactersOfComic()
-//        getEventsOfComic()
-//    }
-
-    fun loadData(id :Int){
-        getCurrentComic(id)
-        getCharactersOfComic(id)
-        getEventsOfComic(id)
+    init {
+       loadData()
     }
 
-    private fun getCurrentComic(currentComicId :Int) {
+    fun loadData(){
+        getCurrentComic()
+        getCharactersOfComic()
+        getEventsOfComic()
+    }
+
+    private fun getCurrentComic() {
         _currentComic.postValue(Status.Loading)
-        Log.i(TAG, "getCurrentComic: ")
         repository.getComicById(currentComicId)
             .subscribe(::onGetCurrentComicSuccess, ::onGetCurrentComicFailure)
             .add()
     }
 
-    private fun onGetCurrentComicSuccess(status: Status<BaseResponse<ComicsResult>?>) {
-        status.toData()?.data?.results?.first()?.let {
-            Log.i(TAG, "onGetCurrentComicSuccess: ${it.toString()}")
+    private fun onGetCurrentComicSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.first()?.let {
             itemsList.add(ComicDetailsItem.Header(it))
             _currentComic.postValue(Status.Success(it))
             
@@ -70,15 +60,14 @@ class ComicDetailsViewModel(
         _toastMessage.postValue(ERROR_OCCURRED)
     }
 
-    private fun getCharactersOfComic(currentComicId: Int) {
+    private fun getCharactersOfComic() {
         repository.getCharactersForSeries(currentComicId)
             .subscribe(::onGetCharacterSuccess, ::onGetCharacterFailure)
             .add()
     }
 
-    private fun onGetCharacterSuccess(status: Status<BaseResponse<ProfileResult>?>) {
-        status.toData()?.data?.results?.let {
-            Log.i(TAG, "onGetCharacterSuccess: ${it.toString()}")
+    private fun onGetCharacterSuccess(status: Status<List<ProfileResult>>) {
+        status.toData()?.let {
             itemsList.add(ComicDetailsItem.Characters(it))
             _characters.postValue(Status.Success(it))
             
@@ -90,36 +79,33 @@ class ComicDetailsViewModel(
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
-    private fun getEventsOfComic(currentComicId: Int) {
+    private fun getEventsOfComic() {
         repository
             .getEventByComicId(currentComicId)
             .subscribe(::onGetEventsOfComicSuccess,::onGetEventsOfComicFailure)
             .add()
     }
 
-    private fun onGetEventsOfComicSuccess(status:Status<BaseResponse<EventResult>?>){
-        status.toData()?.data?.results?.let {list->
-            Log.i(TAG, "onGetEventsOfComicSuccess: $list")
+    private fun onGetEventsOfComicSuccess(status:Status<List<EventResult>>){
+        status.toData()?.let {list->
             list.forEach {
                 itemsList.add(ComicDetailsItem.Events(it)) 
             }
         }
     }
     private fun onGetEventsOfComicFailure(throwable: Throwable){
-        _toastMessage.postValue(ERROR_OCCURRED)
+        _toastMessage.postValue(throwable.message)
     }
 
-    override fun onCharacterClick(characterId: Int?) {
-
+    override fun onClickCharacter(id: Int) {
+//        TODO("Not yet implemented")
     }
 
-    override fun onEventClick(eventId: Int?) {
-
+    override fun onClickEvent(id: Int) {
+//        TODO("Not yet implemented")
     }
 
     companion object {
         private const val ERROR_OCCURRED = "error occurred"
-        private const val DATA_FETCHED_SUCCESSFULLY = "data fetched successfully"
-        private const val TAG = "ComicDetailsViewModel"
     }
 }
