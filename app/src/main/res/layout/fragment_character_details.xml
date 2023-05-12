@@ -17,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_thumbnail"
@@ -32,6 +33,12 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <TextView
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/on_background_87"
+                style="@style/TextAppearance.Material3.TitleMedium"
+
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:id="@+id/text_view_character_full_name"
                 text="@{viewModel.character.toData().name}"
                 android:layout_width="match_parent"
@@ -42,6 +49,11 @@
                 tools:text="@tools:sample/full_names" />
 
             <TextView
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/on_background_60"
+                style="@style/TextAppearance.Material3.BodyMedium"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
                 android:id="@+id/text_view_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,13 +65,20 @@
                 tools:text="@tools:sample/lorem/random" />
 
             <TextView
+
                 android:id="@+id/text_view_comics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_medium"
-                android:text="@string/comics"
+                android:fontFamily="@font/roboto"
+                android:textColor="@color/on_background_87"
+                style="@style/TextAppearance.Material3.TitleMedium"
                 android:textSize="@dimen/text_giant"
-                app:layout_constraintTop_toBottomOf="@id/text_view_description" />
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_medium"
+                app:layout_constraintTop_toBottomOf="@id/text_view_description"
+                android:text="@string/comics"
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_comics"
@@ -68,7 +87,7 @@
                 android:layout_marginTop="@dimen/spacing_small"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/spacing_custom"
+                android:layout_marginStart="@dimen/spacing_medium"
                 app:items="@{viewModel.comics.toData()}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/text_view_comics"
@@ -127,6 +146,17 @@
                 android:layout_height="match_parent"
                 app:constraint_referenced_ids="text_view_comics, recycler_view_comics"
                 app:isVisible="@{viewModel.comics.toData().size() != 0}"/>
+
+            <include
+                android:id="@+id/back_button"
+                layout="@layout/layout_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_medium"
+                android:background="@drawable/icon_back_background"
+                android:onClick="@{()->viewModel.navigateBack()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
