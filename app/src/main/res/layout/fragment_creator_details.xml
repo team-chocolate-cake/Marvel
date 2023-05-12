@@ -15,10 +15,12 @@
         android:fillViewport="true"
         android:scrollbars="none">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:context=".ui.creatorDetails.CreatorDetailsFragment">
+
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_creator_image"
@@ -28,7 +30,7 @@
                 android:scaleType="centerCrop"
                 android:onClick="@{()->viewModel.navigateBack()}"
                 app:imageUrl="@{viewModel.creator.toData().get(0).thumbnail}"
-                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintDimensionRatio="16:9"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"
@@ -117,8 +119,10 @@
                 android:onClick="@{()-> viewModel.loadData()}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.258"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/error"
@@ -138,6 +142,16 @@
                 app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
                 app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
                 app:showWhenFailure="@{viewModel.comicsList}" />
+
+            <include
+                layout="@layout/layout_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_medium"
+                android:background="@drawable/icon_back_background"
+                android:onClick="@{()-> viewModel.navigateBack()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
