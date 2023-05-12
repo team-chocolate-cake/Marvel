@@ -56,12 +56,12 @@ fun <T> View.showWhenDoneLoadingAndListIsEmpty(searchDataHolder: SearchDataHolde
     }
 }
 
-@BindingAdapter("app:hideWhenListIsEmpty")
-fun View.hideWhenListIsEmpty(emptyList: Boolean?) {
-    visibility = if (emptyList == true) {
-        View.GONE
-    } else {
+@BindingAdapter("app:isInVisible")
+fun View.isInVisible(isInVisible: Boolean?) {
+    visibility = if (isInVisible == false) {
         View.VISIBLE
+    } else {
+        View.GONE
     }
 }
 

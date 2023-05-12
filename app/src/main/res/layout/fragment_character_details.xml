@@ -60,6 +60,7 @@
                 android:layout_marginTop="@dimen/spacing_medium"
                 android:text="@string/comics"
                 android:textSize="@dimen/text_giant"
+                app:isInVisible="@{viewModel.comics.toData().isEmpty}"
                 app:layout_constraintTop_toBottomOf="@id/text_view_description" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -70,6 +71,7 @@
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/spacing_custom"
+                app:isInVisible="@{viewModel.comics.toData().isEmpty}"
                 app:items="@{viewModel.comics.toData()}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/text_view_comics"
