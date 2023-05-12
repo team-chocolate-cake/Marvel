@@ -72,8 +72,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/character"
                 android:textSize="22sp"
-                app:showWhenSuccess="@{viewModel.currentComic}"
-                app:isInVisible="@{viewModel.characters.toData().size()==0}"
+                app:isInVisible="@{viewModel.characters.toData().isEmpty}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
