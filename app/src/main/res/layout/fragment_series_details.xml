@@ -64,6 +64,18 @@
             app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
             app:showWhenFailure="@{viewModel.comics}" />
 
+        <include
+            android:id="@+id/button_back"
+            layout="@layout/layout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_medium"
+            android:background="@drawable/icon_back_background"
+            android:onClick="@{()-> viewModel.navigateBack()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

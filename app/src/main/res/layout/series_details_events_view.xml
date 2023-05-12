@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.EventResult" />
+            type="com.chocolatecake.marvel.ui.series_details.SeriesDetailsItem.EventsItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,7 +21,8 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_medium"
             android:text="Events"
-            android:textSize="@dimen/text_large"
+            android:textColor="@color/on_background_87"
+            style="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,6 +38,12 @@
             app:layout_constraintTop_toBottomOf="@+id/series"
             app:spanCount="3"
             tools:listitem="@layout/series_details_event_item" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="recycler_view_events,series"
+            app:isVisible="@{item.eventResult.size() !=0}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -20,7 +20,9 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:text="@string/character"
-            android:textSize="@dimen/text_large"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/on_background_87"
+            style="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +30,6 @@
             android:id="@+id/recycler_view_characters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal"
             app:items="@{item.profileResult}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -37,6 +38,12 @@
             app:layout_constraintTop_toBottomOf="@+id/characters"
             app:spanCount="3"
             tools:listitem="@layout/item_character" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="recycler_view_characters,characters"
+            app:isVisible="@{item.profileResult.size() != 0}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

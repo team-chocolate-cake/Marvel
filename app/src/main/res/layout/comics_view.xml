@@ -20,7 +20,8 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:text="Comics"
-            android:textSize="@dimen/text_large"
+            android:textColor="@color/on_background_87"
+            style="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,6 +38,12 @@
             app:layout_constraintTop_toBottomOf="@+id/comics"
             app:spanCount="3"
             tools:listitem="@layout/item_event_comics" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="recycler_view_comics,comics"
+            app:isVisible="@{item.comicsResult.size() !=0}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
