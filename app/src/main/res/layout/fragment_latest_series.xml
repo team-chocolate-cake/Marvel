@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.latest_series.LatestSeriesViewModel" />
@@ -17,7 +18,8 @@
             android:id="@+id/recycler_view_series"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/spacing_small"
+            android:clipToPadding="false"
+            android:padding="@dimen/spacing_custom"
             app:items="@{viewModel.latestSeriesList.toData()}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
