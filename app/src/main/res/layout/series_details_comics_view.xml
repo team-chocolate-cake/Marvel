@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.ComicsResult" />
+            type="com.chocolatecake.marvel.ui.series_details.SeriesDetailsItem.ComicsItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,6 +37,12 @@
             app:layout_constraintTop_toBottomOf="@+id/comics"
             app:spanCount="3"
             tools:listitem="@layout/series_details_comics_item" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="recycler_view_comics,comics"
+            app:isVisible="@{item.comicsResult.size() !=0}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

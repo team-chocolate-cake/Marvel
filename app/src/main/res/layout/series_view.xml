@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem.Series" />
@@ -19,8 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="Series"
-            android:textSize="20sp"
+            android:text="@string/series"
+            android:textSize="@dimen/text_large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,14 +30,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="3"
-            app:items="@{item.seriesResult}"
             android:orientation="horizontal"
-            tools:listitem="@layout/item_event_series"
+            app:items="@{item.seriesResult}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/series" />
+            app:layout_constraintTop_toBottomOf="@+id/series"
+            app:spanCount="3"
+            tools:listitem="@layout/item_event_series" />
+
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="recycler_view_series,series"
+            app:isVisible="@{item.seriesResult.size() !=0}" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

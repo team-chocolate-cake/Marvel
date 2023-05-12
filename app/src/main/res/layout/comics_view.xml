@@ -38,5 +38,11 @@
             app:spanCount="3"
             tools:listitem="@layout/item_event_comics" />
 
+        <androidx.constraintlayout.widget.Group
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="recycler_view_comics,comics"
+            app:isVisible="@{item.comicsResult.size() !=0}" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
