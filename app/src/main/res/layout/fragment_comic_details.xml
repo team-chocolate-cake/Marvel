@@ -72,7 +72,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/character"
                 android:textSize="22sp"
-                app:isInVisible="@{viewModel.characters.toData().isEmpty}"
+                app:isVisible="@{viewModel.characters.toData().size() != 0}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -84,7 +84,7 @@
                 android:clipToPadding="true"
                 android:orientation="horizontal"
                 android:paddingHorizontal="8dp"
-                app:isInVisible="@{viewModel.characters.toData().size()==0}"
+                app:isVisible="@{viewModel.characters.toData().size()!=0}"
                 app:items="@{viewModel.characters.toData()}"
                 app:showWhenSuccess="@{viewModel.currentComic}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -56,15 +56,14 @@ fun <T> View.showWhenLoading(status: Status<T>?) {
     }
 }
 
-@BindingAdapter("app:isInVisible")
-fun View.isInVisible(isInVisible: Boolean?) {
-    visibility = if (isInVisible == false) {
+@BindingAdapter("app:isVisible")
+fun View.isVisible(isVisible: Boolean?) {
+    visibility = if (isVisible == true) {
         View.VISIBLE
     } else {
         View.GONE
     }
 }
-
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageResponse: ImageResponse?) {

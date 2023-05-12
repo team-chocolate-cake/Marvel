@@ -29,12 +29,6 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
     val toastMessage: LiveData<String>
         get() = _toastMessage
 
-    private val _event = MutableLiveData<Status<List<EventResult>?>>()
-    val event: LiveData<Status<List<EventResult>?>>
-        get() = _event
-
-    val itemsList = mutableListOf<ComicDetailsItem>()
-
 
     init {
         loadData()
@@ -43,7 +37,6 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
     fun loadData() {
         getCurrentComic()
         getCharactersOfComic()
-        getEventsOfComic()
     }
 
     //region Current Comic
@@ -58,9 +51,7 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
 
     private fun onGetCurrentComicSuccess(status: Status<List<ComicsResult>>) {
         status.toData()?.first()?.let {
-            itemsList.add(ComicDetailsItem.Header(it))
             _currentComic.postValue(Status.Success(it))
-
         }
     }
 
@@ -82,9 +73,7 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
 
     private fun onGetCharacterSuccess(status: Status<List<ProfileResult>>) {
         status.toData()?.let {
-            itemsList.add(ComicDetailsItem.Characters(it))
             _characters.postValue(Status.Success(it))
-
         }
     }
 
@@ -93,30 +82,6 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
     //endregion
-
-    //region Events of Comic
-    private fun getEventsOfComic() {
-        _event.postValue(Status.Loading)
-        disposeResponse(
-            response = repository.getEventByComicId(currentComicId),
-            onSuccess = ::onGetEventsOfComicSuccess,
-            onFailure = ::onGetEventsOfComicFailure,
-        )
-    }
-
-    private fun onGetEventsOfComicSuccess(status: Status<List<EventResult>>) {
-        status.toData()?.let { list ->
-            list.forEach {
-                itemsList.add(ComicDetailsItem.Events(it))
-            }
-        }
-    }
-
-    private fun onGetEventsOfComicFailure(throwable: Throwable) {
-        _toastMessage.postValue(throwable.message)
-    }
-    //endregion
-
 
     override fun onClickCharacter(id: Int) {
         navigate(

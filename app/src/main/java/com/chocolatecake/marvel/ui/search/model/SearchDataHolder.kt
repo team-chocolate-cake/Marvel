@@ -9,6 +9,8 @@ data class SearchDataHolder(
     val comics: List<ComicsResult> = emptyList(),
     val characters: List<ProfileResult> = emptyList(),
 ) {
+    fun isNotEmpty() = !isEmpty()
+
     fun isEmpty() = series.isEmpty() &&
             comics.isEmpty() &&
             characters.isEmpty()
