@@ -21,7 +21,7 @@ data class ComicsResult(
     val title: String? = null,
     @SerializedName("variants")
     val variants: List<ItemResponse>? = listOf(),
-){
+) {
     data class ItemResponse(
         @SerializedName("name")
         val name: String? = null,
@@ -31,4 +31,12 @@ data class ComicsResult(
         @SerializedName("text")
         val text: String? = null,
     )
+
+    fun getTextObject(): String? {
+        return if (textObjects?.isNotEmpty() == true) {
+            textObjects[0].text
+        } else {
+            null
+        }
+    }
 }

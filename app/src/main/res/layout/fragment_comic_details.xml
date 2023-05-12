@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="12dp"
-                android:text="@{viewModel.currentComic.toData().textObjects.get(0).text}"
+                android:text="@{viewModel.currentComic.toData().textObject}"
                 android:textSize="20sp"
                 app:showWhenSuccess="@{viewModel.currentComic}"
                 app:layout_constraintBottom_toBottomOf="parent"
