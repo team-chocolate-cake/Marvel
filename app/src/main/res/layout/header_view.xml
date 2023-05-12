@@ -15,7 +15,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
+            android:layout_height="@dimen/height_image"
             app:imageUrl="@{item.thumbnail}"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"

@@ -41,5 +41,6 @@
     <dimen name="height_tiny">4dp</dimen>
     <dimen name="height_giant">32dp</dimen>
     <dimen name="height_card">200dp</dimen>
+    <dimen name="height_image">240dp</dimen>
 
 </resources>
