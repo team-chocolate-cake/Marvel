@@ -19,9 +19,9 @@ fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, observer: (t: T) -> Un
     }
 }
 
-fun MutableList<ComicDetailsItem>.addSorted(comicDetailsItem: ComicDetailsItem) {
+fun MutableList<ComicDetailsItem>.addSorted(comicDetailsItem: ComicDetailsItem): List<ComicDetailsItem> {
     this.add(comicDetailsItem)
-    this.sortedBy {
+   return this.sortedBy {
         it.sortCondition
     }
 }
