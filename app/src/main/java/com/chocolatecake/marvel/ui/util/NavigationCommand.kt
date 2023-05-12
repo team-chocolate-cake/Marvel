@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.util
+package com.chocolatecake.marvel.ui.util
 
 import androidx.navigation.NavDirections
 

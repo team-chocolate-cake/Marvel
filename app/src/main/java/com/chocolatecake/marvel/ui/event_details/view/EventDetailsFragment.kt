@@ -14,6 +14,7 @@ import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
 import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem
 import com.chocolatecake.marvel.ui.event_details.view_model.EventDetailsViewModel
+import com.chocolatecake.marvel.util.observeNonNull
 
 class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
 
@@ -38,16 +39,16 @@ class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDeta
     }
 
     private fun updateItems() {
-        viewModel.event.observe(viewLifecycleOwner) { eventResult ->
+        viewModel.event.observeNonNull(viewLifecycleOwner) { eventResult ->
             eventResult.toData()?.let { adapter.setItem(EventDetailsItem.Header(it)) }
         }
-        viewModel.characters.observe(viewLifecycleOwner) { charactersResult ->
+        viewModel.characters.observeNonNull(viewLifecycleOwner) { charactersResult ->
             charactersResult.toData()?.let { adapter.setItem(EventDetailsItem.Character(it)) }
         }
-        viewModel.series.observe(viewLifecycleOwner) { seriesResult ->
+        viewModel.series.observeNonNull(viewLifecycleOwner) { seriesResult ->
             seriesResult.toData()?.let { adapter.setItem(EventDetailsItem.Series(it)) }
         }
-        viewModel.comics.observe(viewLifecycleOwner) { comicsResult ->
+        viewModel.comics.observeNonNull(viewLifecycleOwner) { comicsResult ->
             comicsResult.toData()?.let { adapter.setItem(EventDetailsItem.Comics(it)) }
         }
     }

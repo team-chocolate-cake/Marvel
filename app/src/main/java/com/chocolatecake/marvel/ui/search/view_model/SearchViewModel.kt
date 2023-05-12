@@ -19,12 +19,14 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel : BaseViewModel(), SearchInteractionListener {
+
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
     private val searchQuery = BehaviorSubject.createDefault(SearchQuery())
 
     private val _state = MutableLiveData<Status<SearchDataHolder>>()
     val state: LiveData<Status<SearchDataHolder>>
         get() = _state
+
 
     var searchText: String?
         get() = searchQuery.value?.query
@@ -63,22 +65,13 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
         }
     }
 
+    //region Series
     private fun getAllSeries() {
-        repository.getSeries(searchText)
-            .subscribe(::onSeriesSuccess, ::onFailure)
-            .add()
-    }
-
-    private fun getAllCharacters() {
-        repository.getCharacters(searchText)
-            .subscribe(::onCharactersSuccess, ::onFailure)
-            .add()
-    }
-
-    private fun getAllComics() {
-        repository.getComics(searchText)
-            .subscribe(::onComicsSuccess, ::onFailure)
-            .add()
+        disposeResponse(
+            response = repository.getSeries(searchText),
+            onSuccess = ::onSeriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onSeriesSuccess(seriesResult: Status<List<SeriesResult>>) {
@@ -87,12 +80,33 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
             _state.postValue(newState)
         }
     }
+    //endregion
+
+    //region Comics
+    private fun getAllComics() {
+        disposeResponse(
+            response = repository.getComics(searchText),
+            onSuccess = ::onComicsSuccess,
+            onFailure = ::onFailure,
+        )
+    }
 
     private fun onComicsSuccess(comicResult: Status<List<ComicsResult>>) {
         comicResult.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(comics = result))
             _state.postValue(newState)
         }
+    }
+    //endregion
+
+    //region Characters
+    private fun getAllCharacters() {
+        disposeResponse(
+            response = repository.getCharacters(searchText),
+            onSuccess = ::onCharactersSuccess,
+            onFailure = ::onFailure,
+
+        )
     }
 
     private fun onCharactersSuccess(characterResult: Status<List<ProfileResult>>) {
@@ -101,6 +115,7 @@ class SearchViewModel : BaseViewModel(), SearchInteractionListener {
             _state.postValue(newState)
         }
     }
+    //endregion
 
     private fun onFailure(throwable: Throwable) {
         _state.postValue(Status.Failure(throwable.message.toString()))

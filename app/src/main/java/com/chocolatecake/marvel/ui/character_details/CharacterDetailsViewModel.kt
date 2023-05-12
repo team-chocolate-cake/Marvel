@@ -11,7 +11,7 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 
 class CharacterDetailsViewModel(
-    private val characterId: Int
+    private val characterId: Int,
 ) : BaseViewModel(), ComicListener {
 
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
@@ -34,11 +34,14 @@ class CharacterDetailsViewModel(
         loadComics()
     }
 
+    //region Character
     private fun loadCharacter() {
         _character.postValue(Status.Loading)
-        repository.getCharacterById(characterId)
-            .subscribe(::onCharacterSuccess, ::onCharacterFailure)
-            .add()
+        disposeResponse(
+            response= repository.getCharacterById(characterId),
+            onSuccess = ::onCharacterSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onCharacterSuccess(status: Status<List<ProfileResult>>) {
@@ -46,13 +49,16 @@ class CharacterDetailsViewModel(
             _character.postValue(Status.Success(it!!))
         }
     }
+    //endregion
 
-
+    //region Comics
     private fun loadComics() {
         _comics.postValue(Status.Loading)
-        repository.getComicsForCharacter(characterId)
-            .subscribe(::onComicsSuccess, ::onCharacterFailure)
-            .add()
+        disposeResponse(
+            response= repository.getComicsForCharacter(characterId),
+            onSuccess = ::onComicsSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
@@ -60,9 +66,9 @@ class CharacterDetailsViewModel(
             _comics.postValue(Status.Success(it))
         }
     }
+    //endregion
 
-
-    private fun onCharacterFailure(throwable: Throwable) {
+    private fun onFailure(throwable: Throwable) {
         _character.postValue(Status.Failure(throwable.message.toString()))
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
@@ -75,5 +81,4 @@ class CharacterDetailsViewModel(
             )
         )
     }
-
 }

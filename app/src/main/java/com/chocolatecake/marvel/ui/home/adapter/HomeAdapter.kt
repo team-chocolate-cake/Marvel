@@ -27,6 +27,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
         setItems(newItems)
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return when (viewType) {
             VIEW_TYPE_HEADER -> {
@@ -39,6 +40,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                     )
                 )
             }
+
             VIEW_TYPE_SERIES -> {
                 SeriesViewHolder(
                     DataBindingUtil.inflate(
@@ -49,6 +51,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
                     )
                 )
             }
+
             VIEW_TYPE_COMIC ->{
                 ComicViewHolder(
                     DataBindingUtil.inflate(
@@ -62,6 +65,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
             else -> throw Exception("UNKNOWN VIEW TYPE")
         }
     }
+
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (itemsHome.isEmpty() || position == -1) {

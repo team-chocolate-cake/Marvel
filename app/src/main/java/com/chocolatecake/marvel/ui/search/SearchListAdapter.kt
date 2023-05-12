@@ -30,6 +30,7 @@ class SearchListAdapter(private val listener: SearchInteractionListener) :
         return getItem(position).searchItemType.ordinal
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseAdapter.BaseViewHolder {
         return when (SearchItemType.values()[viewType]) {
             SearchItemType.TYPE_SERIES -> {
@@ -93,5 +94,4 @@ class SearchListAdapter(private val listener: SearchInteractionListener) :
 
     class CharactersViewHolder(val binding: ItemCharacterBinding) :
         BaseAdapter.BaseViewHolder(binding)
-
 }

@@ -45,26 +45,6 @@ fun <T> View.showWhenFailure(status: Status<T>?) {
     }
 }
 
-@BindingAdapter("app:showWhenListEmpty")
-fun <T> View.showWhenDoneLoadingAndListIsEmpty(searchDataHolder: SearchDataHolder?) {
-    val transition = Fade()
-    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
-    visibility = if (searchDataHolder?.isEmpty() == true) {
-        View.VISIBLE
-    } else {
-        View.GONE
-    }
-}
-
-@BindingAdapter("app:hideWhenListIsEmpty")
-fun View.hideWhenListIsEmpty(emptyList: Boolean?) {
-    visibility = if (emptyList == true) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
-}
-
 @BindingAdapter(value = ["app:showWhenLoading"])
 fun <T> View.showWhenLoading(status: Status<T>?) {
     val transition = Fade()
@@ -75,6 +55,18 @@ fun <T> View.showWhenLoading(status: Status<T>?) {
         View.GONE
     }
 }
+
+@BindingAdapter("app:showWhenListEmpty")
+fun View.showWhenDoneLoadingAndListIsEmpty(searchDataHolder: SearchDataHolder?) {
+    val transition = Fade()
+    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
+    visibility = if (searchDataHolder?.isEmpty() == true) {
+        View.VISIBLE
+    } else {
+        View.GONE
+    }
+}
+
 
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageResponse: ImageResponse?) {

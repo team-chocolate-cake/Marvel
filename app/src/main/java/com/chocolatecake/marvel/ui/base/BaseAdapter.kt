@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.base
 
-
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,13 +9,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.chocolatecake.marvel.BR
-import com.chocolatecake.marvel.data.model.ProfileResult
+
 abstract class BaseAdapter<T>(
     private var items: List<T>,
-    private var listener: BaseInteractionListener
+    private var listener: BaseInteractionListener,
 ) : RecyclerView.Adapter<BaseAdapter.BaseViewHolder>() {
 
     abstract val layoutId: Int
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return ItemViewHolder(
             DataBindingUtil.inflate(
@@ -38,11 +38,11 @@ abstract class BaseAdapter<T>(
         }
     }
 
+
     open fun setItems(newItems: List<T>) {
         val diffUtil = DiffUtil.calculateDiff(DiffUtils(items, newItems))
         items = newItems
         diffUtil.dispatchUpdatesTo(this)
-        Log.d("123123123", "setItems: $items")
     }
 
     fun getItems() = items
@@ -54,8 +54,8 @@ abstract class BaseAdapter<T>(
 
     abstract class BaseViewHolder(itemView: ViewDataBinding) : ViewHolder(itemView.root)
 
-    inner class DiffUtils<T>(private val oldList: List<T>, private val newList: List<T>) :
-        DiffUtil.Callback() {
+    inner class DiffUtils<T>(private val oldList: List<T>, private val newList: List<T>)
+        : DiffUtil.Callback() {
         override fun getOldListSize() = oldList.size
         override fun getNewListSize() = newList.size
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
@@ -63,10 +63,7 @@ abstract class BaseAdapter<T>(
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
             val oldItem = oldList[oldItemPosition]
             val newItem = newList[newItemPosition]
-            // Compare the relevant fields for equality
             return oldItem == newItem
         }
-
     }
-
 }

@@ -7,7 +7,6 @@
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsViewModel" />
-
     </data>
 
     <ScrollView
@@ -140,5 +139,6 @@
                 app:showWhenFailure="@{viewModel.comicsList}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 </layout>

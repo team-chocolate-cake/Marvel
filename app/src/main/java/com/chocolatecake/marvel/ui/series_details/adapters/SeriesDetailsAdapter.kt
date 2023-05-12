@@ -84,7 +84,6 @@ class SeriesDetailsAdapter(
             is SeriesDetailsItem.CharactersItem -> bindCharacter(
                 holder as CharactersViewHolder, position
             )
-
             else -> {}
         }
     }

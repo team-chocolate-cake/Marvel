@@ -8,5 +8,6 @@ import com.chocolatecake.marvel.ui.core.listener.ComicListener
 class CharacterComicsAdapter(
     list: List<ComicsResult>, listener: ComicListener,
 ) : BaseAdapter<ComicsResult>(list, listener) {
+
     override val layoutId: Int = R.layout.comic_item
 }

@@ -4,11 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.latest_series.LatestSeriesViewModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +37,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenLoading="@{viewModel.latestSeriesList}" />
-
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"

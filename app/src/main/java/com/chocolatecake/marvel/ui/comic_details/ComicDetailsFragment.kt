@@ -11,6 +11,7 @@ import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.MainRecyclerViewAdapter
 import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
+import com.chocolatecake.marvel.util.observeNonNull
 
 
 class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDetailsViewModel>() {
@@ -36,7 +37,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun addCallBacks() {
-        viewModel.toastMessage.observe(requireActivity()){
+        viewModel.toastMessage.observeNonNull(requireActivity()){
             createToast(it.toString())
         }
     }

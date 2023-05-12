@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ProfileResult" />
@@ -12,7 +11,6 @@
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.core.listener.CharacterListener" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,8 +18,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:onClick="@{()-> listener.onClickCharacter(item.id)}"
-        android:layout_marginVertical="12dp"
-        >
+        android:layout_marginVertical="12dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
@@ -36,8 +33,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Full"
             app:srcCompat="@drawable/ic_image_not_found"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            />
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
