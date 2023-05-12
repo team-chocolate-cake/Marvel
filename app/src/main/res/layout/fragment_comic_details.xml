@@ -126,20 +126,19 @@
                 app:lottie_rawRes="@raw/error"
                 app:showWhenFailure="@{viewModel.currentComic}" />
 
-            <ImageView
+            <include
+                android:id="@+id/imageview_back"
+                layout="@layout/layout_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_back"
-                android:background="@drawable/icon_back_background"
                 android:layout_margin="@dimen/spacing_medium"
+                android:background="@drawable/icon_back_background"
                 android:onClick="@{()-> viewModel.navigateBack()}"
                 android:clickable="true"
                 android:elevation="@dimen/elevation_giant"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:focusable="true"
-                />
-
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/text_view_try_again"
