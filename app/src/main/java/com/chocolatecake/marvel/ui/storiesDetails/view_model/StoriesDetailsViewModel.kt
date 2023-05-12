@@ -72,6 +72,7 @@ class StoriesDetailsViewModel(
         }
     }
 
+
     private fun getSeriesByStoryId() {
         _creators.postValue(Status.Loading)
         repository.getSeriesByStoryId(storyId)
@@ -101,6 +102,7 @@ class StoriesDetailsViewModel(
         _comics.postValue(Status.Failure(throwable.message.toString()))
         _creators.postValue(Status.Failure(throwable.message.toString()))
     }
+
 
     override fun onClickComic(id: Int) {
         navigate(

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.chocolatecake.marvel.ui.event_details.view_model.EventDetailsViewModel" />
@@ -69,7 +68,6 @@
             app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
             app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
             app:showWhenFailure="@{viewModel.comics}" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

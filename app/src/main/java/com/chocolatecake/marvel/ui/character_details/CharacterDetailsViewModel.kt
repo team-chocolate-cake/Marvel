@@ -11,7 +11,7 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 
 class CharacterDetailsViewModel(
-    private val characterId: Int
+    private val characterId: Int,
 ) : BaseViewModel(), ComicListener {
 
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
@@ -75,5 +75,4 @@ class CharacterDetailsViewModel(
             )
         )
     }
-
 }

@@ -16,8 +16,7 @@
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/spacing_small"
         tools:ignore="MissingConstraints"
-        android:layout_marginBottom="@dimen/spacing_medium"
-        >
+        android:layout_marginBottom="@dimen/spacing_medium">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_thumbnail"

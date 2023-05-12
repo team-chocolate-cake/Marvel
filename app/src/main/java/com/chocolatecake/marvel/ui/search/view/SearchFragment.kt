@@ -12,6 +12,7 @@ import com.chocolatecake.marvel.ui.search.model.SearchItemType.*
 import com.chocolatecake.marvel.ui.search.model.SearchItems
 import com.chocolatecake.marvel.ui.search.SearchListAdapter
 import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
+import com.chocolatecake.marvel.util.observeNonNull
 
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
 
@@ -29,7 +30,7 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
     }
 
     private fun observeListItems() {
-        viewModel.state.observe(viewLifecycleOwner) {
+        viewModel.state.observeNonNull(viewLifecycleOwner) {
             if (it is Status.Success) {
                 when (viewModel.searchType) {
                     TYPE_SERIES -> adapter.submitList(it.data.series.map { series ->

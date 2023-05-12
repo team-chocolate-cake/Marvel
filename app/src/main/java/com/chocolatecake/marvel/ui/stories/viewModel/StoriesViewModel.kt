@@ -28,7 +28,7 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
 
     private fun getStories() {
         _stories.postValue(Status.Loading)
-        repository.getStories(limit = 30)
+        repository.getStories(limit = LIMIT)
             .subscribe(::onStoriesSuccess, ::onFailure).add()
     }
 
@@ -44,5 +44,9 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
 
     override fun onClickStory(id: Int) {
         navigate(StoriesFragmentDirections.actionStoriesFragmentToStoriesDetailsFragment(id))
+    }
+
+    private companion object{
+        const val LIMIT = 30
     }
 }

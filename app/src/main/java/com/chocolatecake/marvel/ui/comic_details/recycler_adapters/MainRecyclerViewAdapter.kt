@@ -13,9 +13,8 @@ import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
 class MainRecyclerViewAdapter(
     private val list: List<ComicDetailsItem>,
-    private val listener: ComicInteractionListener
+    private val listener: ComicInteractionListener,
 ) : BaseAdapter<ComicDetailsItem>(list, listener) {
-
 
     override val layoutId: Int
         get() = -1

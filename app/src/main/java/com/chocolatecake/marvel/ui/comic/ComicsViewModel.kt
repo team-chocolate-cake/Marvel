@@ -14,7 +14,8 @@ class ComicsViewModel : BaseViewModel(), ComicListener {
     private val repository: MarvelRepository = MarvelRepositoryImpl()
 
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
-    val comics: LiveData<Status<List<ComicsResult>>> get() = _comics
+    val comics: LiveData<Status<List<ComicsResult>>>
+        get() = _comics
 
 
     init {
@@ -25,7 +26,7 @@ class ComicsViewModel : BaseViewModel(), ComicListener {
         val offset = (0..5000).random()
         _comics.postValue(Status.Loading)
         repository.getComics(
-            limit = 100,
+            limit = LIMIT,
             offset = offset,
         )
             .subscribe(::onComicsSuccess, ::onComicsFailure)
@@ -42,8 +43,12 @@ class ComicsViewModel : BaseViewModel(), ComicListener {
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
-
     override fun onClickComic(id: Int) {
         navigate(ComicsFragmentDirections.actionComicsFragmentToComicsDetailsFragment(id))
+    }
+
+
+    private companion object {
+        const val LIMIT = 100
     }
 }

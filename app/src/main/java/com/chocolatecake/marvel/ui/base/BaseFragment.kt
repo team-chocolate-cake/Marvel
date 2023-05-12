@@ -9,7 +9,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.chocolatecake.marvel.BR
-import com.chocolatecake.marvel.util.NavigationCommand
+import com.chocolatecake.marvel.ui.util.NavigationCommand
 import com.chocolatecake.marvel.util.observeNonNull
 
 abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragment() {

@@ -37,7 +37,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:showWhenLoading="@{viewModel.currentComic}" />
 
-
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationView"
             android:layout_width="180dp"

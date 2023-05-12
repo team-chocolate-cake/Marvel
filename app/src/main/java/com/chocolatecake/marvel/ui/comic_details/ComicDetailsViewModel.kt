@@ -10,19 +10,19 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
-class ComicDetailsViewModel(private val currentComicId: Int):
+class ComicDetailsViewModel(private val currentComicId: Int) :
     BaseViewModel(), ComicInteractionListener {
 
     private val repository by lazy {
         MarvelRepositoryImpl()
     }
 
-    private val _currentComic = MutableLiveData<Status<ComicsResult?>>()
-    val currentComic: LiveData<Status<ComicsResult?>>
+    private val _currentComic = MutableLiveData<Status<ComicsResult>?>()
+    val currentComic: LiveData<Status<ComicsResult>?>
         get() = _currentComic
 
-    private val _characters = MutableLiveData<Status<List<ProfileResult?>>>()
-    val characters: LiveData<Status<List<ProfileResult?>>>
+    private val _characters = MutableLiveData<Status<List<ProfileResult>?>>()
+    val characters: LiveData<Status<List<ProfileResult>?>>
         get() = _characters
 
     private val _toastMessage = MutableLiveData<String>()
@@ -36,7 +36,7 @@ class ComicDetailsViewModel(private val currentComicId: Int):
         loadData()
     }
 
-    fun loadData(){
+    fun loadData() {
         getCurrentComic()
         getCharactersOfComic()
         getEventsOfComic()
@@ -53,7 +53,7 @@ class ComicDetailsViewModel(private val currentComicId: Int):
         status.toData()?.first()?.let {
             itemsList.add(ComicDetailsItem.Header(it))
             _currentComic.postValue(Status.Success(it))
-            
+
         }
     }
 
@@ -73,7 +73,7 @@ class ComicDetailsViewModel(private val currentComicId: Int):
         status.toData()?.let {
             itemsList.add(ComicDetailsItem.Characters(it))
             _characters.postValue(Status.Success(it))
-            
+
         }
     }
 
@@ -86,29 +86,37 @@ class ComicDetailsViewModel(private val currentComicId: Int):
     private fun getEventsOfComic() {
         repository
             .getEventByComicId(currentComicId)
-            .subscribe(::onGetEventsOfComicSuccess,::onGetEventsOfComicFailure)
+            .subscribe(::onGetEventsOfComicSuccess, ::onGetEventsOfComicFailure)
             .add()
     }
 
-    private fun onGetEventsOfComicSuccess(status:Status<List<EventResult>>){
-        status.toData()?.let {list->
+    private fun onGetEventsOfComicSuccess(status: Status<List<EventResult>>) {
+        status.toData()?.let { list ->
             list.forEach {
-                itemsList.add(ComicDetailsItem.Events(it)) 
+                itemsList.add(ComicDetailsItem.Events(it))
             }
         }
     }
 
-    private fun onGetEventsOfComicFailure(throwable: Throwable){
+    private fun onGetEventsOfComicFailure(throwable: Throwable) {
         _toastMessage.postValue(throwable.message)
     }
 
 
     override fun onClickCharacter(id: Int) {
-        navigate(ComicDetailsFragmentDirections.actionComicsDetailsFragmentToCharacterDetailsFragment(id))
+        navigate(
+            ComicDetailsFragmentDirections.actionComicsDetailsFragmentToCharacterDetailsFragment(
+                id
+            )
+        )
     }
 
     override fun onClickEvent(id: Int) {
-        navigate(ComicDetailsFragmentDirections.actionComicsDetailsFragmentToEventDetailsFragment(id))
+        navigate(
+            ComicDetailsFragmentDirections.actionComicsDetailsFragmentToEventDetailsFragment(
+                id
+            )
+        )
     }
 
 

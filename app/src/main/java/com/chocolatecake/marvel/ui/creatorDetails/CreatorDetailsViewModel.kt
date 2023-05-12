@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.ui.creatorDetails
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
@@ -13,9 +14,19 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 class CreatorDetailsViewModel(
     private val creatorId: Int,
 ) : BaseViewModel(), CreatorDetailsListener {
-    val comicsList = MutableLiveData<Status<List<ComicsResult>?>>()
-    val seriesList = MutableLiveData<Status<List<SeriesResult>?>>()
-    val creator = MutableLiveData<Status<List<ProfileResult>?>>()
+
+    private val _comicsList = MutableLiveData<Status<List<ComicsResult>?>>()
+    val comicsList: LiveData<Status<List<ComicsResult>?>>
+        get() = _comicsList
+
+    private val _seriesList = MutableLiveData<Status<List<SeriesResult>?>>()
+    val seriesList: LiveData<Status<List<SeriesResult>?>>
+        get() = _seriesList
+
+    private val _creator = MutableLiveData<Status<List<ProfileResult>?>>()
+    val creator: LiveData<Status<List<ProfileResult>?>>
+        get() = _creator
+
 
     private val repository: MarvelRepository by lazy {
         MarvelRepositoryImpl()
@@ -35,7 +46,7 @@ class CreatorDetailsViewModel(
     private fun getCreator() {
         repository.getCreatorById(creatorId).subscribe({
             it.toData()?.let {
-                creator.postValue(Status.Success(it))
+                _creator.postValue(Status.Success(it))
             }
         }, {
         }).add()
@@ -44,9 +55,7 @@ class CreatorDetailsViewModel(
     private fun getSeries() {
         repository.getSeriesForCreator(creatorId).subscribe({
             it.toData()?.let {
-                seriesList.postValue(Status.Success(it))
-                Log.d("nahed", it.toString())
-
+                _seriesList.postValue(Status.Success(it))
             }
         }, {
             Log.d("nahed", it.toString())
@@ -56,8 +65,7 @@ class CreatorDetailsViewModel(
     private fun getComics() {
         repository.getComicsForCreator(creatorId).subscribe({
             it.toData()?.let {
-                comicsList.postValue(Status.Success(it))
-                Log.d("nahed", it.toString())
+                _comicsList.postValue(Status.Success(it))
 
             }
         }, {

@@ -93,15 +93,28 @@ class EventDetailsViewModel(
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
+
     override fun onClickComic(id: Int) {
-        navigate(EventDetailsFragmentDirections.actionEventDetailsFragmentToComicsDetailsFragment(id))
+        navigate(
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToComicsDetailsFragment(
+                id
+            )
+        )
     }
 
     override fun onClickCharacter(id: Int) {
-        navigate(EventDetailsFragmentDirections.actionEventDetailsFragmentToCharacterDetailsFragment(id))
+        navigate(
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToCharacterDetailsFragment(
+                id
+            )
+        )
     }
 
     override fun onClickSeries(id: Int) {
-        navigate(EventDetailsFragmentDirections.actionEventDetailsFragmentToSeriesDetailsFragment(id))
+        navigate(
+            EventDetailsFragmentDirections.actionEventDetailsFragmentToSeriesDetailsFragment(
+                id
+            )
+        )
     }
 }

@@ -19,6 +19,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
 class SearchViewModel : BaseViewModel(), SearchInteractionListener {
+
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
     private val searchQuery = BehaviorSubject.createDefault(SearchQuery())
 

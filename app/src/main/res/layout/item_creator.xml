@@ -11,7 +11,6 @@
         <variable
             name="listener"
             type="com.chocolatecake.marvel.ui.core.listener.CreatorsListener" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,6 +47,7 @@
             app:layout_constraintStart_toStartOf="@+id/image_view_thumbnail"
             app:layout_constraintTop_toBottomOf="@id/image_view_thumbnail"
             tools:text="@tools:sample/lorem" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

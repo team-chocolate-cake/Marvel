@@ -69,6 +69,7 @@ class SeriesDetailsViewModel(
         }
     }
 
+
     fun getComicsForSeries() {
         repository.getComicsForSeries(seriesId)
             .subscribe(::onComicsSuccess, ::onFailure).add()
@@ -98,8 +99,13 @@ class SeriesDetailsViewModel(
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
 
+
     override fun onClickEvent(id: Int) {
-      navigate(SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToEventDetailsFragment(id))
+        navigate(
+            SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToEventDetailsFragment(
+                id
+            )
+        )
     }
 
     override fun onClickComic(id: Int) {
@@ -111,7 +117,10 @@ class SeriesDetailsViewModel(
     }
 
     override fun onClickCharacter(id: Int) {
-        navigate(SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToCharacterDetailsFragment(id))
-
+        navigate(
+            SeriesDetailsFragmentDirections.actionSeriesDetailsFragmentToCharacterDetailsFragment(
+                id
+            )
+        )
     }
 }

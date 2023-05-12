@@ -7,6 +7,6 @@ import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 
 class ComicsAdapter (comicList: List<ComicsResult>, listener: SeriesListener) :
     BaseAdapter<ComicsResult?>(comicList, listener) {
-    override val layoutId = R.layout.comic_item
 
+    override val layoutId = R.layout.comic_item
 }
