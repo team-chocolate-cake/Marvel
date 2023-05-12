@@ -75,6 +75,7 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:textColor="@color/on_background_87"
                 android:textSize="@dimen/text_giant"
+                app:showWhenSuccess="@{viewModel.currentComic}"
                 app:isVisible="@{viewModel.characters.toData().size() != 0}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_description" />
@@ -83,7 +84,6 @@
                 android:id="@+id/recyclerview_characters"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:clipToPadding="true"
                 android:orientation="horizontal"
                 android:paddingHorizontal="@dimen/spacing_small"
