@@ -11,7 +11,7 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener
 import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
-class MainRecyclerViewAdapter(
+class ComicDetailsAdapter(
     private val list: List<ComicDetailsItem>,
     private val listener: ComicInteractionListener
 ) : BaseAdapter<ComicDetailsItem>(list, listener) {
@@ -89,7 +89,7 @@ class MainRecyclerViewAdapter(
     private fun bindCharacter(holder: CharacterViewHolder, position: Int) {
         val characterItem = list[position] as ComicDetailsItem.Characters
         val adapter =
-            HorizontalCharacterAdapter(characterItem.list, listener)
+            CharactersAdapter(characterItem.list, listener)
         holder.binding.recyclerview.adapter = adapter
         holder.binding.item = characterItem
     }

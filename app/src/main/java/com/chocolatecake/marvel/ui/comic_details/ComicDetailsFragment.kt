@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.MainRecyclerViewAdapter
+import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.ComicDetailsAdapter
 import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 
 
@@ -31,7 +31,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
             override fun isAutoMeasureEnabled() = true
         }
         binding.recyclerview.layoutManager = layoutManager
-        val adapter = MainRecyclerViewAdapter(viewModel.itemsList, viewModel)
+        val adapter = ComicDetailsAdapter(viewModel.itemsList, viewModel)
         binding.recyclerview.adapter = adapter
     }
 
