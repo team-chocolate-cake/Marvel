@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.chocolatecake.marvel.ui.home.view.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_latestSeriesFragment"
+            app:destination="@id/latestSeriesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_comicsFragment"
+            app:destination="@id/comicsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.chocolatecake.marvel.ui.search.view.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_seacrh" >
+        <action
+            android:id="@+id/action_searchFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/seriesDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragment"
+        android:label="SeriesFragment"
+        tools:layout="@layout/fragment_latest_series">
+        <action
+            android:id="@+id/action_seriesFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment"
+            app:popUpTo="@id/comicsDetailsFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="seriesId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_seriesDetailsFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+        <action
+            android:id="@+id/action_seriesDetailsFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comicsFragment"
+        android:name="com.chocolatecake.marvel.ui.comic.ComicsFragment"
+        android:label="ComicsFragment"
+        tools:layout="@layout/fragment_comics">
+
+        <action
+            android:id="@+id/action_comicsFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/comicsDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.comic_details.ComicDetailsFragment"
+        android:label="ComicsDetailsFragment"
+        tools:layout="@layout/fragment_comic_details">
+        <argument
+            android:name="comicId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_comicsDetailsFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+        <action
+            android:id="@+id/action_comicsDetailsFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storiesFragment"
+        android:name="com.chocolatecake.marvel.ui.stories.view.StoriesFragment"
+        android:label="StoriesFragment"
+        tools:layout="@layout/fragment_stories" >
+        <action
+            android:id="@+id/action_storiesFragment_to_storiesDetailsFragment"
+            app:destination="@id/storiesDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storiesDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.storiesDetails.view.StoriesDetailsFragment"
+        android:label="StoriesDetailsFragment"
+        tools:layout="@layout/fragment_stories_details" >
+        <argument
+            android:name="storyId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_storiesDetailsFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+        <action
+            android:id="@+id/action_storiesDetailsFragment_to_creatorDetailsFragment"
+            app:destination="@id/creatorDetailsFragment" />
+        <action
+            android:id="@+id/action_storiesDetailsFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragment"
+        android:label="CharacterDetailsFragment"
+        tools:layout="@layout/fragment_character_details" >
+        <argument
+            android:name="charactarId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_characterDetailsFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.event_details.view.EventDetailsFragment"
+        android:label="EventDetailsFragment"
+        tools:layout="@layout/fragment_event_details" >
+        <argument
+            android:name="eventId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/creatorDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsFragment"
+        android:label="CreatorDetailsFragment"
+        tools:layout="@layout/fragment_creator_details" >
+        <argument android:name="creatorId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_creatorDetailsFragment_to_comicsDetailsFragment"
+            app:destination="@id/comicsDetailsFragment" />
+        <action
+            android:id="@+id/action_creatorDetailsFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/latestSeriesFragment"
+        android:name="com.chocolatecake.marvel.ui.latest_series.LatestSeriesFragment"
+        android:label="LatestSeriesFragment"
+        tools:layout="@layout/fragment_latest_series" >
+        <action
+            android:id="@+id/action_latestSeriesFragment_to_seriesDetailsFragment"
+            app:destination="@id/seriesDetailsFragment" />
+    </fragment>
+</navigation>

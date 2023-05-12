@@ -13,10 +13,10 @@ import com.chocolatecake.marvel.ui.home.model.HomeItem
 import com.chocolatecake.marvel.ui.home.view_model.HomeViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
-    lateinit var adapter: HomeAdapter
-    override val viewModel: HomeViewModel by viewModels()
 
+    lateinit var adapter: HomeAdapter
     override val layoutIdFragment: Int = R.layout.fragment_home
+    override val viewModel: HomeViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

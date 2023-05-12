@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
 
         <variable
             name="listener"
-            type="com.chocolatecake.marvel.ui.seriesDetails.view.SeriesDetailsListener" />
+            type="com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener" />
     </data>
 
     <androidx.cardview.widget.CardView

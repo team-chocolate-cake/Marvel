@@ -8,6 +8,4 @@ sealed class CreatorDetailsItem(val Priority: Int) {
     data class CreatorItem(val creatorResult: ProfileResult?):CreatorDetailsItem(0)
     data class SeriesItem(val seriesResult: List<SeriesResult?>):CreatorDetailsItem(1)
     data class ComicItem(val comicResult: List<ComicsResult?>):CreatorDetailsItem(2)
-
-
 }

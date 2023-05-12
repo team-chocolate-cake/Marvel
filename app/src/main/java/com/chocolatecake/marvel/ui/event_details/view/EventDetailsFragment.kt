@@ -4,20 +4,22 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
+import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
 import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem
 import com.chocolatecake.marvel.ui.event_details.view_model.EventDetailsViewModel
 
-class EventDetailsFragment :
-    BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
+class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
 
     private lateinit var adapter: EventAdapter
-
-    override val viewModel: EventDetailsViewModel by viewModels()
+    private val args: EventDetailsFragmentArgs by navArgs()
+    override val viewModel: EventDetailsViewModel by viewModels{ ViewModeFactory(args.eventId)}
     override val layoutIdFragment: Int = R.layout.fragment_event_details
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,7 +35,6 @@ class EventDetailsFragment :
         )
         binding.recyclerViewEventDetails.adapter = adapter
         updateItems()
-        handleNavigation()
     }
 
     private fun updateItems() {
@@ -50,23 +51,4 @@ class EventDetailsFragment :
             comicsResult.toData()?.let { adapter.setItem(EventDetailsItem.Comics(it)) }
         }
     }
-
-    private fun handleNavigation() {
-        viewModel.characterId.observe(viewLifecycleOwner) { characterId ->
-            characterId?.let {
-                Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.seriesId.observe(viewLifecycleOwner) { seriesId ->
-            seriesId?.let {
-                Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-        viewModel.comicsId.observe(viewLifecycleOwner) { comicsId ->
-            comicsId?.let {
-                Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-
 }

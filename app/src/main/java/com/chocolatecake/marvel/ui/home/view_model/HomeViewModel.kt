@@ -9,6 +9,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.home.view.HomeFragmentDirections
 import com.chocolatecake.marvel.ui.home.view.HomeListener
 
 class HomeViewModel : BaseViewModel(), HomeListener {
@@ -30,13 +31,13 @@ class HomeViewModel : BaseViewModel(), HomeListener {
     val seriesId: LiveData<Int?> get() = _seriesId
 
     private val _comicId = MutableLiveData<Int?>()
-    val comicId : LiveData<Int?> get()= _comicId
+    val comicId: LiveData<Int?> get() = _comicId
 
     private val _navigateToSeries = MutableLiveData(false)
     val navigateToSeries: LiveData<Boolean> get() = _navigateToSeries
 
     private val _navigateToComic = MutableLiveData(false)
-    val navigateToComic : LiveData<Boolean> get() = _navigateToComic
+    val navigateToComic: LiveData<Boolean> get() = _navigateToComic
 
     init {
         loadData()
@@ -66,9 +67,9 @@ class HomeViewModel : BaseViewModel(), HomeListener {
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
-    private fun getCurrentComic(){
+    private fun getCurrentComic() {
         _comics.postValue(Status.Loading)
-        marvelRepository.getComics(limit = 4, offset =(0..50).random())
+        marvelRepository.getComics(limit = 4, offset = (0..50).random())
             .subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
@@ -78,8 +79,8 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         }
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicsResult>>){
-        status.toData()?.let{
+    private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.let {
             _comics.postValue(Status.Success(it))
         }
     }
@@ -91,23 +92,23 @@ class HomeViewModel : BaseViewModel(), HomeListener {
     }
 
     override fun onClickEvent(id: Int) {
-        _eventId.postValue(id)
+        navigate(HomeFragmentDirections.actionHomeFragmentToEventDetailsFragment(id))
     }
 
     override fun onClickSeries(id: Int) {
-        _seriesId.postValue(id)
+        navigate(HomeFragmentDirections.actionHomeFragmentToSeriesDetailsFragment(id))
     }
 
     override fun onClickComic(id: Int) {
-        _comicId.postValue(id)
+        navigate(HomeFragmentDirections.actionHomeFragmentToComicsDetailsFragment(id))
     }
 
     override fun onClickMoreComics() {
-        _navigateToComic.postValue(true)
+        navigate(HomeFragmentDirections.actionHomeFragmentToComicsFragment())
     }
 
     override fun onClickMoreSeries() {
-        _navigateToSeries.postValue(true)
+        navigate(HomeFragmentDirections.actionHomeFragmentToLatestSeriesFragment())
     }
 
 }

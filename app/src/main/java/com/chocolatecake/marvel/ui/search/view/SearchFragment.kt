@@ -14,6 +14,7 @@ import com.chocolatecake.marvel.ui.search.SearchListAdapter
 import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
 
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
+
     override val viewModel: SearchViewModel by viewModels()
     override val layoutIdFragment: Int
         get() = R.layout.fragment_seacrh
@@ -25,32 +26,6 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         adapter = SearchListAdapter(viewModel)
         binding.recyclerView.adapter = adapter
         observeListItems()
-        handleNavigation()
-    }
-
-    private fun handleNavigation() {
-        viewModel.searchItemId.observe(viewLifecycleOwner) {
-            if (it != null) {
-                Toast.makeText(requireContext(), "nav $it", Toast.LENGTH_SHORT).show()
-                when (viewModel.searchType) {
-                    TYPE_SERIES -> navigateToSeriesDetails(it)
-                    TYPE_COMICS -> navigateToComicDetails(it)
-                    TYPE_CHARACTER -> navigateToCharacterDetails(it)
-                }
-            }
-        }
-    }
-
-    private fun navigateToCharacterDetails(id: Int) {
-        // TODO("Not yet implemented")
-    }
-
-    private fun navigateToComicDetails(id: Int) {
-        // TODO("Not yet implemented")
-    }
-
-    private fun navigateToSeriesDetails(id: Int) {
-        // TODO("Not yet implemented")
     }
 
     private fun observeListItems() {

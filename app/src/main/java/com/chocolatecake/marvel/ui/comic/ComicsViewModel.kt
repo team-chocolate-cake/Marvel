@@ -10,13 +10,12 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 
 class ComicsViewModel : BaseViewModel(), ComicListener {
+
     private val repository: MarvelRepository = MarvelRepositoryImpl()
 
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     val comics: LiveData<Status<List<ComicsResult>>> get() = _comics
 
-    private val _navigateToDetailsScreen = MutableLiveData<Int?>()
-    val navigateToDetailsScreen: LiveData<Int?> get() = _navigateToDetailsScreen
 
     init {
         loadComics()
@@ -43,7 +42,8 @@ class ComicsViewModel : BaseViewModel(), ComicListener {
         _comics.postValue(Status.Failure(throwable.message.toString()))
     }
 
+
     override fun onClickComic(id: Int) {
-        _navigateToDetailsScreen.postValue(id)
+        navigate(ComicsFragmentDirections.actionComicsFragmentToComicsDetailsFragment(id))
     }
 }

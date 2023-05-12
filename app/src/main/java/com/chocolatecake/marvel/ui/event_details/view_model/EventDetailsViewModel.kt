@@ -10,9 +10,12 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.event_details.view.EventDetailsFragmentDirections
 import com.chocolatecake.marvel.ui.event_details.view.EventDetailsListener
 
-class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
+class EventDetailsViewModel(
+    private val eventId: Int,
+) : BaseViewModel(), EventDetailsListener {
 
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
@@ -28,14 +31,6 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     val comics: MutableLiveData<Status<List<ComicsResult>>> get() = _comics
 
-    private val _characterId = MutableLiveData<Int?>()
-    val characterId: MutableLiveData<Int?> get() = _characterId
-
-    private val _seriesId = MutableLiveData<Int?>()
-    val seriesId: MutableLiveData<Int?> get() = _seriesId
-
-    private val _comicsId = MutableLiveData<Int?>()
-    val comicsId: MutableLiveData<Int?> get() = _comicsId
 
     init {
         reLoadData()
@@ -49,7 +44,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     }
 
     private fun getEventDetails() {
-        repository.getSpecificEventByEventId(293)
+        repository.getSpecificEventByEventId(eventId)
             .subscribe(::onEventSuccess, ::onFailure).add()
     }
 
@@ -60,7 +55,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     }
 
     private fun getCharactersByEventId() {
-        repository.getCharactersByEventId(293)
+        repository.getCharactersByEventId(eventId)
             .subscribe(::onCharactersSuccess, ::onFailure).add()
     }
 
@@ -71,7 +66,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     }
 
     private fun getSeriesByEventId() {
-        repository.getSeriesByEventId(293)
+        repository.getSeriesByEventId(eventId)
             .subscribe(::onSeriesSuccess, ::onFailure).add()
     }
 
@@ -82,7 +77,7 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     }
 
     private fun getComicsByEventId() {
-        repository.getComicsByEventId(293).subscribe(::onComicsSuccess, ::onFailure).add()
+        repository.getComicsByEventId(eventId).subscribe(::onComicsSuccess, ::onFailure).add()
     }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
@@ -99,14 +94,14 @@ class EventDetailsViewModel : BaseViewModel(), EventDetailsListener {
     }
 
     override fun onClickComic(id: Int) {
-        _comicsId.postValue(id)
+        navigate(EventDetailsFragmentDirections.actionEventDetailsFragmentToComicsDetailsFragment(id))
     }
 
     override fun onClickCharacter(id: Int) {
-        _characterId.postValue(id)
+        navigate(EventDetailsFragmentDirections.actionEventDetailsFragmentToCharacterDetailsFragment(id))
     }
 
     override fun onClickSeries(id: Int) {
-        _seriesId.postValue(id)
+        navigate(EventDetailsFragmentDirections.actionEventDetailsFragmentToSeriesDetailsFragment(id))
     }
 }

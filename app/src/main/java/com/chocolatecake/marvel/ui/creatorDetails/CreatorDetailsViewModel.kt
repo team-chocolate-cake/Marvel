@@ -10,39 +10,39 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 
-class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
+class CreatorDetailsViewModel(
+    private val creatorId: Int,
+) : BaseViewModel(), CreatorDetailsListener {
     val comicsList = MutableLiveData<Status<List<ComicsResult>?>>()
     val seriesList = MutableLiveData<Status<List<SeriesResult>?>>()
     val creator = MutableLiveData<Status<List<ProfileResult>?>>()
 
-
     private val repository: MarvelRepository by lazy {
         MarvelRepositoryImpl()
     }
-    private val creatorId: Int? = null
+
 
     init {
         loadData()
     }
 
     fun loadData() {
-        getCreator(creatorId ?: 1)
-        getSeries(creatorId ?: 1)
-        getComics(creatorId ?: 1)
+        getCreator()
+        getSeries()
+        getComics()
     }
 
-    private fun getCreator(id: Int) {
-        repository.getCreatorById(id).subscribe({
+    private fun getCreator() {
+        repository.getCreatorById(creatorId).subscribe({
             it.toData()?.let {
                 creator.postValue(Status.Success(it))
             }
         }, {
-            Log.d("nahed", it.toString())
         }).add()
     }
 
-    private fun getSeries(id: Int) {
-        repository.getSeriesForCreator(id).subscribe({
+    private fun getSeries() {
+        repository.getSeriesForCreator(creatorId).subscribe({
             it.toData()?.let {
                 seriesList.postValue(Status.Success(it))
                 Log.d("nahed", it.toString())
@@ -53,8 +53,8 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
         }).add()
     }
 
-    private fun getComics(id: Int) {
-        repository.getComicsForCreator(id).subscribe({
+    private fun getComics() {
+        repository.getComicsForCreator(creatorId).subscribe({
             it.toData()?.let {
                 comicsList.postValue(Status.Success(it))
                 Log.d("nahed", it.toString())
@@ -66,10 +66,10 @@ class CreatorDetailsViewModel : BaseViewModel(), CreatorDetailsListener {
     }
 
     override fun onClickSeries(id: Int) {
-       // TODO("Not yet implemented")
+        navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToSeriesDetailsFragment(id))
     }
 
     override fun onClickComic(id: Int) {
-        //TODO("Not yet implemented")
+        navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToComicsDetailsFragment(id))
     }
 }

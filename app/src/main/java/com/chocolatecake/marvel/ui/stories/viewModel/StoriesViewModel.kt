@@ -8,6 +8,8 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.StoryListener
+import com.chocolatecake.marvel.ui.search.view.SearchFragmentDirections
+import com.chocolatecake.marvel.ui.stories.view.StoriesFragmentDirections
 
 class StoriesViewModel : BaseViewModel(), StoryListener {
 
@@ -16,8 +18,6 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
     val stories: LiveData<Status<List<StoryResult>>>
         get() = _stories
 
-    private val _storiesId = MutableLiveData<Int?>()
-    val seriesId: LiveData<Int?> get() = _storiesId
     init {
         loadData()
     }
@@ -43,6 +43,6 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
     }
 
     override fun onClickStory(id: Int) {
-        _storiesId.postValue(id)
+        navigate(StoriesFragmentDirections.actionStoriesFragmentToStoriesDetailsFragment(id))
     }
 }

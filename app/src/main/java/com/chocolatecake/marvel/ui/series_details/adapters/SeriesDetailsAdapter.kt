@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.seriesDetails.adapters
+package com.chocolatecake.marvel.ui.series_details.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,9 +9,9 @@ import com.chocolatecake.marvel.databinding.SeriesDetailsComicsViewBinding
 import com.chocolatecake.marvel.databinding.SeriesDetailsEventsViewBinding
 import com.chocolatecake.marvel.databinding.SeriesDetailsHeaderViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
-import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItem
-import com.chocolatecake.marvel.ui.seriesDetails.SeriesDetailsItemType
-import com.chocolatecake.marvel.ui.seriesDetails.view.SeriesDetailsListener
+import com.chocolatecake.marvel.ui.series_details.SeriesDetailsItem
+import com.chocolatecake.marvel.ui.series_details.SeriesDetailsItemType
+import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener
 
 class SeriesDetailsAdapter(
     private var itemsSeriesDetails: MutableList<SeriesDetailsItem>,

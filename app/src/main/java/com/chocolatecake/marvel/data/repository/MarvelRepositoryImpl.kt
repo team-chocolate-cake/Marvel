@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 
 class MarvelRepositoryImpl : MarvelRepository {
+
     private val apiService by lazy { MarvelApi().apiService }
 
     override fun getComics(
@@ -27,10 +28,10 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getEventByComicId(comicId))
     }
 
-
     override fun getComicById(comicId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicById(comicId))
     }
+
 
     override fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileResult>>> {
         return wrapperToState(apiService.getCharactersForComic(comicId))
@@ -55,6 +56,7 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getSeriesForCharacter(characterId))
     }
 
+
     override fun getCreators(
         firstName: String?,
         middleName: String?,
@@ -75,6 +77,7 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getSeriesForCreator(creatorId))
     }
 
+
     override fun getSeries(
         title: String?,
         offset: Int?,
@@ -94,6 +97,7 @@ class MarvelRepositoryImpl : MarvelRepository {
     override fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicsResult>>> {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
+
 
     override fun getEvents(
         limit: Int?,
