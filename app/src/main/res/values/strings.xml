@@ -16,4 +16,5 @@
     <string name="stories">Stories</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
+    <string name="comic_not_available">comic not available</string>
 </resources>

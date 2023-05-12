@@ -56,11 +56,9 @@ fun <T> View.showWhenLoading(status: Status<T>?) {
     }
 }
 
-@BindingAdapter("app:showWhenListEmpty")
-fun View.showWhenDoneLoadingAndListIsEmpty(searchDataHolder: SearchDataHolder?) {
-    val transition = Fade()
-    TransitionManager.beginDelayedTransition(parent as ViewGroup, transition)
-    visibility = if (searchDataHolder?.isEmpty() == true) {
+@BindingAdapter("app:isInVisible")
+fun View.isInVisible(isInVisible: Boolean?) {
+    visibility = if (isInVisible == false) {
         View.VISIBLE
     } else {
         View.GONE

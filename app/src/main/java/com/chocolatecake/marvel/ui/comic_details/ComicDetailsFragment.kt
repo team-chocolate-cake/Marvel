@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.MainRecyclerViewAdapter
+import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.CharactersAdapter
 import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.util.observeNonNull
 
@@ -28,12 +28,7 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun setup() {
-        val layoutManager = object : GridLayoutManager(context, 1) {
-            override fun isAutoMeasureEnabled() = true
-        }
-        binding.recyclerview.layoutManager = layoutManager
-        val adapter = MainRecyclerViewAdapter(viewModel.itemsList, viewModel)
-        binding.recyclerview.adapter = adapter
+        binding.recyclerview.adapter = CharactersAdapter(mutableListOf(), viewModel)
     }
 
     private fun addCallBacks() {

@@ -105,7 +105,6 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
         itemsHome = newItems.sortedBy { it.priority }.toMutableList()
         super.setItems(newItems)
     }
-
     override fun getItemViewType(position: Int): Int {
         if (itemsHome.isNotEmpty()) {
             return (itemsHome[position].priority)
