@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.ComicsResult" />
@@ -16,9 +18,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_tiny"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        android:backgroundTint="@color/black"
-        android:onClick="@{()-> listener.onClickComic(item.id)}">
+        android:layout_marginVertical="@dimen/spacing_tiny"
+        android:backgroundTint="@color/background"
+        android:onClick="@{()-> listener.onClickComic(item.id)}"
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,26 +30,32 @@
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image_view_comic_image_card"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="0dp"
+                android:background="@color/cardview_dark_background"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{item.thumbnail}"
-                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-                android:background="@color/cardview_dark_background"
+                app:layout_constraintDimensionRatio="3:4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
 
             <TextView
                 android:id="@+id/textView"
-                style="@style/Base.CardView"
+                style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginHorizontal="@dimen/spacing_small"
+                android:layout_marginVertical="@dimen/spacing_small"
+                android:ellipsize="end"
                 android:fontFamily="@font/roboto"
+                android:textColor="@color/on_background_60"
+                android:maxLines="2"
+                android:textAlignment="center"
                 android:text="@{item.title.toString()}"
-                android:textSize="@dimen/text_medium"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_view_comic_image_card" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_view_comic_image_card"
+                tools:text="@tools:sample/lorem/random" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

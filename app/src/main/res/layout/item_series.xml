@@ -23,13 +23,11 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_thumbnail"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/height_card"
             android:layout_gravity="top"
             android:scaleType="centerCrop"
             app:imageUrl="@{item.thumbnail}"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="9:16"
-            app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
