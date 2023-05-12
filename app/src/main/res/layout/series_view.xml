@@ -21,7 +21,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="@string/series"
-            android:textSize="@dimen/text_large"
+            android:textColor="@color/on_background_87"
+            style="@style/TextAppearance.Material3.TitleMedium"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

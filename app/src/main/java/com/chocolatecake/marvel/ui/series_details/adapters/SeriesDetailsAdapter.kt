@@ -39,15 +39,21 @@ class SeriesDetailsAdapter(
             SeriesDetailsItemType.HEADER.ordinal -> {
                 HeaderViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.series_details_header_view, parent, false
+                        LayoutInflater.from(parent.context),
+                        R.layout.series_details_header_view,
+                        parent,
+                        false
                     )
                 )
             }
 
-           SeriesDetailsItemType.CHARACTERS.ordinal -> {
+            SeriesDetailsItemType.CHARACTERS.ordinal -> {
                 CharactersViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.series_details_character_view, parent, false
+                        LayoutInflater.from(parent.context),
+                        R.layout.series_details_character_view,
+                        parent,
+                        false
                     )
                 )
             }
@@ -55,15 +61,21 @@ class SeriesDetailsAdapter(
             SeriesDetailsItemType.EVENTS.ordinal -> {
                 EventViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.series_details_events_view, parent, false
+                        LayoutInflater.from(parent.context),
+                        R.layout.series_details_events_view,
+                        parent,
+                        false
                     )
                 )
             }
 
-            SeriesDetailsItemType.COMICS.ordinal-> {
+            SeriesDetailsItemType.COMICS.ordinal -> {
                 ComicViewHolder(
                     DataBindingUtil.inflate(
-                        LayoutInflater.from(parent.context), R.layout.series_details_comics_view, parent, false
+                        LayoutInflater.from(parent.context),
+                        R.layout.series_details_comics_view,
+                        parent,
+                        false
                     )
                 )
             }
@@ -84,6 +96,7 @@ class SeriesDetailsAdapter(
             is SeriesDetailsItem.CharactersItem -> bindCharacter(
                 holder as CharactersViewHolder, position
             )
+
             else -> {}
         }
     }
@@ -93,6 +106,7 @@ class SeriesDetailsAdapter(
 
         val adapter = CharactersAdapter(currentCharacter.charactersResult, listener)
         charactersViewHolder.binding.recyclerViewCharacters.adapter = adapter
+        charactersViewHolder.binding.item = currentCharacter
 
     }
 
@@ -101,6 +115,7 @@ class SeriesDetailsAdapter(
 
         val adapter = ComicsAdapter(currentComic.comicsResult, listener)
         comicViewHolder.binding.recyclerViewComics.adapter = adapter
+        comicViewHolder.binding.item = currentComic
     }
 
     private fun bindEvents(eventViewHolder: EventViewHolder, position: Int) {
@@ -108,6 +123,7 @@ class SeriesDetailsAdapter(
 
         val adapter = EventsAdapter(currentEvent.eventResult, listener)
         eventViewHolder.binding.recyclerViewEvents.adapter = adapter
+        eventViewHolder.binding.item = currentEvent
     }
 
     private fun bindHeader(headerViewHolder: HeaderViewHolder, position: Int) {
@@ -119,7 +135,9 @@ class SeriesDetailsAdapter(
     override fun getItemViewType(position: Int): Int = itemsSeriesDetails[position].type.ordinal
 
     class HeaderViewHolder(val binding: SeriesDetailsHeaderViewBinding) : BaseViewHolder(binding)
-    class CharactersViewHolder(val binding: SeriesDetailsCharacterViewBinding) : BaseViewHolder(binding)
+    class CharactersViewHolder(val binding: SeriesDetailsCharacterViewBinding) :
+        BaseViewHolder(binding)
+
     class ComicViewHolder(val binding: SeriesDetailsComicsViewBinding) : BaseViewHolder(binding)
     class EventViewHolder(val binding: SeriesDetailsEventsViewBinding) : BaseViewHolder(binding)
 

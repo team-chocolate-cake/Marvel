@@ -29,10 +29,10 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             tools:text="@string/series_title"
+            style="@style/TextAppearance.Material3.TitleMedium"
             android:fontFamily="@font/roboto"
             android:textColor="@color/on_background_87"
             android:text="@{item.title}"
-            android:textSize="@dimen/text_giant"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_view_shapeable" />
 
@@ -44,11 +44,11 @@
             android:layout_marginTop="@dimen/spacing_small"
             android:layout_marginEnd="@dimen/spacing_medium"
             android:text="@{item.description}"
-            tools:text="@string/text_view_description"
             android:textSize="@dimen/text_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_title" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_title"
+            tools:text="@string/text_view_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

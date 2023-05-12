@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.EventResult" />
@@ -32,7 +31,6 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:layout_marginTop="@dimen/spacing_small"
             android:fontFamily="@font/roboto"
-            android:textSize="@dimen/text_giant"
             android:text="@{item.title}"
             android:textColor="@color/on_background_87"
             app:layout_constraintStart_toStartOf="parent"
