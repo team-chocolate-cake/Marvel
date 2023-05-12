@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="item"
             type="com.chocolatecake.marvel.data.model.SeriesResult" />
@@ -14,7 +13,6 @@
             type="com.chocolatecake.marvel.ui.core.listener.SeriesListener" />
     </data>
 
-<!--   SearchInteractionListener -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -47,5 +45,6 @@
             android:textAlignment="center"
             app:layout_constraintTop_toBottomOf="@id/image_view_thumbnail"
             tools:text="@tools:sample/lorem/random" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

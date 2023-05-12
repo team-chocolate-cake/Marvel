@@ -40,6 +40,7 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
         observeNavigation()
     }
 
+
     private fun observeNavigation() {
         viewModel.navigation.observeNonNull(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let { navigationCommand ->
@@ -47,16 +48,6 @@ abstract class BaseFragment<VDB : ViewDataBinding, VM : BaseViewModel> : Fragmen
             }
         }
     }
-
-//    class EventObserve<T>(private val onEventUnhandledContent:(T) ->Unit)
-//        : Observer<Event<T>> {
-//        override fun onChanged(value: Event<T>) {
-//            value?.getContentIfNotHandled()?.let {
-//                onEventUnhandledContent(it)
-//            }
-//        }
-//    }
-
 
     private fun handleNavigation(navCommand: NavigationCommand) {
         when (navCommand) {
