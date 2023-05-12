@@ -149,7 +149,8 @@ class MarvelRepositoryImpl : MarvelRepository {
     }
 
 
-    private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>): Single<Status<List<T>>> {
+    private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
+            Single<Status<List<T>>> {
         return response.map { baseResponse ->
             if (baseResponse.isSuccessful) {
                 Status.Success(

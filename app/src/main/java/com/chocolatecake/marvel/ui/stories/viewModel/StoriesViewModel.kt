@@ -14,9 +14,11 @@ import com.chocolatecake.marvel.ui.stories.view.StoriesFragmentDirections
 class StoriesViewModel : BaseViewModel(), StoryListener {
 
     val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
+
     private val _stories = MutableLiveData<Status<List<StoryResult>>>()
     val stories: LiveData<Status<List<StoryResult>>>
         get() = _stories
+
 
     init {
         loadData()
@@ -26,10 +28,14 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
         getStories()
     }
 
+    //region Stories
     private fun getStories() {
         _stories.postValue(Status.Loading)
-        repository.getStories(limit = LIMIT)
-            .subscribe(::onStoriesSuccess, ::onFailure).add()
+        disposeResponse(
+            response = repository.getStories(limit = LIMIT),
+            onSuccess = ::onStoriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onStoriesSuccess(status: Status<List<StoryResult>>) {
@@ -41,12 +47,14 @@ class StoriesViewModel : BaseViewModel(), StoryListener {
     private fun onFailure(throwable: Throwable) {
         _stories.postValue(Status.Failure(throwable.message.toString()))
     }
+    //endregion
 
     override fun onClickStory(id: Int) {
         navigate(StoriesFragmentDirections.actionStoriesFragmentToStoriesDetailsFragment(id))
     }
 
-    private companion object{
+
+    private companion object {
         const val LIMIT = 30
     }
 }

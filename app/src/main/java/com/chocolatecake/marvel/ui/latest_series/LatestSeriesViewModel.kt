@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.ui.latest_series
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
@@ -24,23 +25,35 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
     }
 
     fun loadData() {
-        repository.getSeries(limit = LIMIT).subscribe({
-            it.toData()?.let { result ->
-                _latestSeriesList.postValue(
-                    Status.Success(
-                        result.sortedByDescending { it.startYear })
-                )
-            }
-        }, {
-            _latestSeriesList.postValue(Status.Failure(it.message.toString()))
-        }).add()
+        _latestSeriesList.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getSeries(limit = LIMIT),
+            onSuccess = ::onLatestSeriesSuccess,
+            onFailure = ::onLatestSeriesFailure,
+        )
     }
+
+    private fun onLatestSeriesSuccess(status: Status<List<SeriesResult>>) {
+        status.toData()?.let { result ->
+            _latestSeriesList.postValue(
+                Status.Success(
+                    result.sortedByDescending { it.startYear }
+                )
+            )
+        }
+    }
+
+    private fun onLatestSeriesFailure(throwable: Throwable) {
+        _latestSeriesList.postValue(Status.Failure(throwable.message.toString()))
+    }
+
 
     override fun onClickSeries(id: Int) {
         navigate(LatestSeriesFragmentDirections.actionLatestSeriesFragmentToSeriesDetailsFragment(id))
     }
 
-    private companion object{
+
+    private companion object {
         const val LIMIT = 100
     }
 }

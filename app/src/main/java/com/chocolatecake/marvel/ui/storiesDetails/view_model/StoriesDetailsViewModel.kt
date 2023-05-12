@@ -47,10 +47,14 @@ class StoriesDetailsViewModel(
         getStoryById()
     }
 
+    //region Story
     private fun getStoryById() {
-        _creators.postValue(Status.Loading)
-        repository.getStoryById(storyId)
-            .subscribe(::onStorySuccess, ::onFailure).add()
+        _story.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getStoryById(storyId),
+            onSuccess = ::onStorySuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onStorySuccess(status: Status<List<StoryResult>>) {
@@ -58,12 +62,16 @@ class StoriesDetailsViewModel(
             _story.postValue(Status.Success(it))
         }
     }
+    //endregion
 
-
+    //region Creators
     private fun getCreatorsByStoryId() {
         _creators.postValue(Status.Loading)
-        repository.getCreatorsByStoryId(storyId)
-            .subscribe(::onCreatorsSuccess, ::onFailure).add()
+        disposeResponse(
+            response = repository.getCreatorsByStoryId(storyId),
+            onSuccess = ::onCreatorsSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onCreatorsSuccess(status: Status<List<ProfileResult>>) {
@@ -71,12 +79,16 @@ class StoriesDetailsViewModel(
             _creators.postValue(Status.Success(it))
         }
     }
+    //endregion
 
-
+    //region Series
     private fun getSeriesByStoryId() {
-        _creators.postValue(Status.Loading)
-        repository.getSeriesByStoryId(storyId)
-            .subscribe(::onSeriesSuccess, ::onFailure).add()
+        _series.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getSeriesByStoryId(storyId),
+            onSuccess = ::onSeriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
@@ -84,11 +96,16 @@ class StoriesDetailsViewModel(
             _series.postValue(Status.Success(it))
         }
     }
+    //endregion
 
+    //region Comics
     private fun getComicsByStoryId() {
-        _creators.postValue(Status.Loading)
-        repository.getComicsByStoryId(storyId)
-            .subscribe(::onComicsSuccess, ::onFailure).add()
+        _comics.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getComicsByStoryId(storyId),
+            onSuccess = ::onComicsSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
@@ -96,6 +113,7 @@ class StoriesDetailsViewModel(
             _comics.postValue(Status.Success(it))
         }
     }
+    //endregion
 
     private fun onFailure(throwable: Throwable) {
         _series.postValue(Status.Failure(throwable.message.toString()))

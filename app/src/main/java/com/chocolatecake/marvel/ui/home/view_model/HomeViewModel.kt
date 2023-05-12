@@ -51,10 +51,14 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         getCurrentComic()
     }
 
+    //region Event
     private fun getCurrentEvent() {
         _events.postValue(Status.Loading)
-        marvelRepository.getEvents(limit = 10, offset = (0..50).random())
-            .subscribe(::onEventSuccess, ::onFailure).add()
+        disposeResponse(
+            response = marvelRepository.getEvents(limit = LIMIT_EVENT, offset = (0..50).random()),
+            onSuccess = ::onEventSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onEventSuccess(result: Status<List<EventResult>>) {
@@ -62,17 +66,16 @@ class HomeViewModel : BaseViewModel(), HomeListener {
             _events.postValue(Status.Success(it))
         }
     }
+    //endregion
 
+    //region Series
     private fun getCurrentSeries() {
         _series.postValue(Status.Loading)
-        marvelRepository.getSeries(limit = LIMIT, offset = (0..50).random())
-            .subscribe(::onSeriesSuccess, ::onFailure).add()
-    }
-
-    private fun getCurrentComic() {
-        _comics.postValue(Status.Loading)
-        marvelRepository.getComics(limit = LIMIT, offset = (0..50).random())
-            .subscribe(::onComicsSuccess, ::onFailure).add()
+        disposeResponse(
+            response = marvelRepository.getSeries(limit = LIMIT, offset = (0..50).random()),
+            onSuccess = ::onSeriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
@@ -80,12 +83,24 @@ class HomeViewModel : BaseViewModel(), HomeListener {
             _series.postValue(Status.Success(it))
         }
     }
+    //endregion
+
+    //region Comic
+    private fun getCurrentComic() {
+        _comics.postValue(Status.Loading)
+        disposeResponse(
+            response = marvelRepository.getComics(limit = LIMIT, offset = (0..50).random()),
+            onSuccess = ::onComicsSuccess,
+            onFailure = ::onFailure,
+        )
+    }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
         }
     }
+    //endregion
 
     private fun onFailure(throwable: Throwable) {
         _events.postValue(Status.Failure(throwable.message.toString()))
@@ -114,7 +129,9 @@ class HomeViewModel : BaseViewModel(), HomeListener {
         navigate(HomeFragmentDirections.actionHomeFragmentToLatestSeriesFragment())
     }
 
+
     private companion object {
         const val LIMIT = 4
+        const val LIMIT_EVENT = 10
     }
 }

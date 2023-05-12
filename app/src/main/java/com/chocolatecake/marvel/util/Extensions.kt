@@ -11,9 +11,5 @@ fun <T : Any> Single<T>.observeOnMainThread(): Single<T> {
 }
 
 fun <T> LiveData<T>.observeNonNull(owner: LifecycleOwner, observer: (t: T) -> Unit) {
-    this.observe(
-        owner
-    ) {
-        it?.let(observer)
-    }
+    this.observe(owner) { it?.let(observer) }
 }

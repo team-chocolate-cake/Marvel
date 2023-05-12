@@ -29,6 +29,10 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
     val toastMessage: LiveData<String>
         get() = _toastMessage
 
+    private val _event = MutableLiveData<Status<List<EventResult>?>>()
+    val event: LiveData<Status<List<EventResult>?>>
+        get() = _event
+
     val itemsList = mutableListOf<ComicDetailsItem>()
 
 
@@ -42,11 +46,14 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         getEventsOfComic()
     }
 
+    //region Current Comic
     private fun getCurrentComic() {
         _currentComic.postValue(Status.Loading)
-        repository.getComicById(currentComicId)
-            .subscribe(::onGetCurrentComicSuccess, ::onGetCurrentComicFailure)
-            .add()
+        disposeResponse(
+            response = repository.getComicById(currentComicId),
+            onSuccess = :: onGetCurrentComicSuccess,
+            onFailure = :: onGetCurrentComicFailure,
+        )
     }
 
     private fun onGetCurrentComicSuccess(status: Status<List<ComicsResult>>) {
@@ -61,12 +68,16 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         _currentComic.postValue(Status.Failure(throwable.message.toString()))
         _toastMessage.postValue(ERROR_OCCURRED)
     }
+    //endregion
 
-
+    //region Characters of Comic
     private fun getCharactersOfComic() {
-        repository.getCharactersForSeries(currentComicId)
-            .subscribe(::onGetCharacterSuccess, ::onGetCharacterFailure)
-            .add()
+        _characters.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getCharactersForSeries(currentComicId),
+            onSuccess = :: onGetCharacterSuccess,
+            onFailure = :: onGetCharacterFailure,
+        )
     }
 
     private fun onGetCharacterSuccess(status: Status<List<ProfileResult>>) {
@@ -81,13 +92,16 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         _toastMessage.postValue(ERROR_OCCURRED)
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
+    //endregion
 
-
+    //region Events of Comic
     private fun getEventsOfComic() {
-        repository
-            .getEventByComicId(currentComicId)
-            .subscribe(::onGetEventsOfComicSuccess, ::onGetEventsOfComicFailure)
-            .add()
+        _event.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getEventByComicId(currentComicId),
+            onSuccess = ::onGetEventsOfComicSuccess,
+            onFailure = ::onGetEventsOfComicFailure,
+        )
     }
 
     private fun onGetEventsOfComicSuccess(status: Status<List<EventResult>>) {
@@ -101,6 +115,7 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
     private fun onGetEventsOfComicFailure(throwable: Throwable) {
         _toastMessage.postValue(throwable.message)
     }
+    //endregion
 
 
     override fun onClickCharacter(id: Int) {

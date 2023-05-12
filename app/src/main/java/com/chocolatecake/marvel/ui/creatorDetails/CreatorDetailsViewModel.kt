@@ -10,6 +10,9 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.comic_details.ComicDetailsViewModel
+import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
+import io.reactivex.rxjava3.core.Single
 
 class CreatorDetailsViewModel(
     private val creatorId: Int,
@@ -43,35 +46,57 @@ class CreatorDetailsViewModel(
         getComics()
     }
 
+    //region Creator
     private fun getCreator() {
-        repository.getCreatorById(creatorId).subscribe({
-            it.toData()?.let {
-                _creator.postValue(Status.Success(it))
-            }
-        }, {
-        }).add()
+        _creator.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getCreatorById(creatorId),
+            onSuccess = ::onGetCreatorSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
+    private fun onGetCreatorSuccess(status: Status<List<ProfileResult>>) {
+        status.toData()?.let { _creator.postValue(Status.Success(it)) }
+    }
+    //endregion
+
+    //region Series
     private fun getSeries() {
-        repository.getSeriesForCreator(creatorId).subscribe({
-            it.toData()?.let {
-                _seriesList.postValue(Status.Success(it))
-            }
-        }, {
-            Log.d("nahed", it.toString())
-        }).add()
+        _seriesList.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getSeriesForCreator(creatorId),
+            onSuccess = ::onGetSeriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
+    private fun onGetSeriesSuccess(status: Status<List<SeriesResult>>) {
+        status.toData()?.let { _seriesList.postValue(Status.Success(it)) }
+    }
+    //endregion
+
+    //region Comics
     private fun getComics() {
-        repository.getComicsForCreator(creatorId).subscribe({
-            it.toData()?.let {
-                _comicsList.postValue(Status.Success(it))
-
-            }
-        }, {
-            Log.d("nahed", it.toString())
-        }).add()
+        _comicsList.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getComicsForCreator(creatorId),
+            onSuccess = ::onGetComicsSuccess,
+            onFailure = ::onFailure,
+        )
     }
+
+    private fun onGetComicsSuccess(status: Status<List<ComicsResult>>) {
+        status.toData()?.let { _comicsList.postValue(Status.Success(it)) }
+    }
+    //endregion
+
+    private fun onFailure(throwable: Throwable) {
+        _creator.postValue(Status.Failure(throwable.message.toString()))
+        _seriesList.postValue(Status.Failure(throwable.message.toString()))
+        _comicsList.postValue(Status.Failure(throwable.message.toString()))
+    }
+
 
     override fun onClickSeries(id: Int) {
         navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToSeriesDetailsFragment(id))

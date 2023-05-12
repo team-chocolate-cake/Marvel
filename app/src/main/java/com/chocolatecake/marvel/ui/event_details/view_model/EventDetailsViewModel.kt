@@ -20,16 +20,20 @@ class EventDetailsViewModel(
     private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
 
     private val _event = MutableLiveData<Status<EventResult>>()
-    val event: LiveData<Status<EventResult>> get() = _event
+    val event: LiveData<Status<EventResult>>
+        get() = _event
 
     private val _characters = MutableLiveData<Status<List<ProfileResult>>>()
-    val characters: MutableLiveData<Status<List<ProfileResult>>> get() = _characters
+    val characters: MutableLiveData<Status<List<ProfileResult>>>
+        get() = _characters
 
     private val _series = MutableLiveData<Status<List<SeriesResult>>>()
-    val series: MutableLiveData<Status<List<SeriesResult>>> get() = _series
+    val series: MutableLiveData<Status<List<SeriesResult>>>
+        get() = _series
 
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
-    val comics: MutableLiveData<Status<List<ComicsResult>>> get() = _comics
+    val comics: MutableLiveData<Status<List<ComicsResult>>>
+        get() = _comics
 
 
     init {
@@ -43,9 +47,14 @@ class EventDetailsViewModel(
         getSeriesByEventId()
     }
 
+    //region Event
     private fun getEventDetails() {
-        repository.getSpecificEventByEventId(eventId)
-            .subscribe(::onEventSuccess, ::onFailure).add()
+        _event.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getSpecificEventByEventId(eventId),
+            onSuccess = ::onEventSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onEventSuccess(status: Status<List<EventResult>>) {
@@ -53,10 +62,16 @@ class EventDetailsViewModel(
             _event.postValue(Status.Success(it))
         }
     }
+    //endregion
 
+    //region Characters
     private fun getCharactersByEventId() {
-        repository.getCharactersByEventId(eventId)
-            .subscribe(::onCharactersSuccess, ::onFailure).add()
+        _characters.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getCharactersByEventId(eventId),
+            onSuccess = ::onCharactersSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onCharactersSuccess(status: Status<List<ProfileResult>>) {
@@ -64,10 +79,16 @@ class EventDetailsViewModel(
             _characters.postValue(Status.Success(it))
         }
     }
+    //endregion
 
+    //region Series
     private fun getSeriesByEventId() {
-        repository.getSeriesByEventId(eventId)
-            .subscribe(::onSeriesSuccess, ::onFailure).add()
+        _series.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getSeriesByEventId(eventId),
+            onSuccess = ::onSeriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
@@ -75,9 +96,16 @@ class EventDetailsViewModel(
             _series.postValue(Status.Success(it))
         }
     }
+    //endregion
 
+    //region Comics
     private fun getComicsByEventId() {
-        repository.getComicsByEventId(eventId).subscribe(::onComicsSuccess, ::onFailure).add()
+        _comics.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getComicsByEventId(eventId),
+            onSuccess = ::onComicsSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
@@ -85,6 +113,7 @@ class EventDetailsViewModel(
             _comics.postValue(Status.Success(it))
         }
     }
+    //endregion
 
     private fun onFailure(throwable: Throwable) {
         _event.postValue(Status.Failure(throwable.message.toString()))

@@ -47,9 +47,14 @@ class SeriesDetailsViewModel(
         getEventsForSeries()
     }
 
-    fun getSeriesById() {
-        repository.getSeriesById(seriesId)
-            .subscribe(::onSeriesSuccess, ::onFailure).add()
+    //region Series
+    private fun getSeriesById() {
+        _series.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getSeriesById(seriesId),
+            onSuccess = ::onSeriesSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
@@ -57,10 +62,16 @@ class SeriesDetailsViewModel(
             _series.postValue(Status.Success(it))
         }
     }
+    //endregion
 
-    fun getCharactersForSeries() {
-        repository.getCharactersForSeries(seriesId)
-            .subscribe(::onCharactersSuccess, ::onFailure).add()
+    //region Characters
+    private fun getCharactersForSeries() {
+        _characters.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getCharactersForSeries(seriesId),
+            onSuccess = ::onCharactersSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onCharactersSuccess(status: Status<List<ProfileResult>>) {
@@ -68,11 +79,16 @@ class SeriesDetailsViewModel(
             _characters.postValue(Status.Success(it))
         }
     }
+    //endregion
 
-
-    fun getComicsForSeries() {
-        repository.getComicsForSeries(seriesId)
-            .subscribe(::onComicsSuccess, ::onFailure).add()
+    //region Comics
+    private fun getComicsForSeries() {
+        _comics.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getComicsForSeries(seriesId),
+            onSuccess = ::onComicsSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
@@ -80,10 +96,16 @@ class SeriesDetailsViewModel(
             _comics.postValue(Status.Success(it))
         }
     }
+    //endregion
 
-    fun getEventsForSeries() {
-        repository.getEventsForSeries(seriesId)
-            .subscribe(::onEventsSuccess, ::onFailure).add()
+    //region Event
+    private fun getEventsForSeries() {
+        _events.postValue(Status.Loading)
+        disposeResponse(
+            response = repository.getEventsForSeries(seriesId),
+            onSuccess = ::onEventsSuccess,
+            onFailure = ::onFailure,
+        )
     }
 
     private fun onEventsSuccess(status: Status<List<EventResult>>) {
@@ -91,6 +113,7 @@ class SeriesDetailsViewModel(
             _events.postValue(Status.Success(it))
         }
     }
+    //endregion
 
     private fun onFailure(throwable: Throwable) {
         _events.postValue(Status.Failure(throwable.message.toString()))
@@ -111,7 +134,7 @@ class SeriesDetailsViewModel(
     override fun onClickComic(id: Int) {
         navigate(
             SeriesDetailsFragmentDirections.actionSeriesFragmentToComicsDetailsFragment(
-                comicId = id
+                id
             )
         )
     }
