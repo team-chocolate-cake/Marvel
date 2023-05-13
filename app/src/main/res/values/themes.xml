@@ -39,7 +39,7 @@
     </style>
 
     <style name="BottomNavigationBarIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">#E1020C</item>
+        <item name="android:color">@color/bottom_navigation_bar_indicator_color</item>
     </style>
 
 </resources>
