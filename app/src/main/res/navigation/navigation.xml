@@ -162,7 +162,7 @@
     </fragment>
     <fragment
         android:id="@+id/storiesDetailsFragment"
-        android:name="com.chocolatecake.marvel.ui.storiesDetails.StoriesDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.stories_details.StoriesDetailsFragment"
         android:label="StoriesDetailsFragment"
         tools:layout="@layout/fragment_stories_details">
         <argument
@@ -238,7 +238,7 @@
     </fragment>
     <fragment
         android:id="@+id/creatorDetailsFragment"
-        android:name="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.creator_details.CreatorDetailsFragment"
         android:label="CreatorDetailsFragment"
         tools:layout="@layout/fragment_creator_details">
         <argument

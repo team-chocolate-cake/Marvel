@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.creatorDetails
+package com.chocolatecake.marvel.ui.creator_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.creatorDetails.adapter.CreatorDetailsListener
+import com.chocolatecake.marvel.ui.creator_details.adapter.CreatorDetailsListener
 
 class CreatorDetailsViewModel(
     private val creatorId: Int,

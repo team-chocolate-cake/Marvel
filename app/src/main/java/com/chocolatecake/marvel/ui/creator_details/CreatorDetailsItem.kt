@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.creatorDetails
+package com.chocolatecake.marvel.ui.creator_details
 
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult

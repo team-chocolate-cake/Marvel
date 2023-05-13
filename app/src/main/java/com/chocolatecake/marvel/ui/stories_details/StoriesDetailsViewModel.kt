@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.storiesDetails
+package com.chocolatecake.marvel.ui.stories_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

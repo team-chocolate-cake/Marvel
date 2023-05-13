@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsViewModel" />
+            type="com.chocolatecake.marvel.ui.creator_details.CreatorDetailsViewModel" />
     </data>
 
     <ScrollView
@@ -20,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.creatorDetails.CreatorDetailsFragment">
+            tools:context=".ui.creator_details.CreatorDetailsFragment">
 
 
             <com.google.android.material.imageview.ShapeableImageView

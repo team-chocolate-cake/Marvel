@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.chocolatecake.marvel.ui.storiesDetails.StoriesDetailsViewModel" />
+            type="com.chocolatecake.marvel.ui.stories_details.StoriesDetailsViewModel" />
 
         <variable
             name="item"
