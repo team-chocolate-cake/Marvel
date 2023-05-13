@@ -28,12 +28,12 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun setup() {
-        binding.recyclerview.adapter = CharactersAdapter(mutableListOf(), viewModel)
+        binding.recyclerviewCharacters.adapter = CharactersAdapter(mutableListOf(), viewModel)
     }
 
     private fun addCallBacks() {
         viewModel.toastMessage.observeNonNull(requireActivity()){
-            createToast(it.toString())
+            createToast(it)
         }
     }
 
