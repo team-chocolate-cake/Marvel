@@ -9,9 +9,7 @@ import com.chocolatecake.marvel.databinding.HomeItemBannerListBinding
 import com.chocolatecake.marvel.databinding.HomeItemComicBinding
 import com.chocolatecake.marvel.databinding.HomeItemSeriesListBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
-import com.chocolatecake.marvel.ui.home.model.HomeItem
-import com.chocolatecake.marvel.ui.home.view.HomeListener
-import com.chocolatecake.marvel.ui.home.view.HomeViewPagerLayoutManager
+import com.chocolatecake.marvel.ui.home.HomeItem
 
 class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val listener: HomeListener) :
     BaseAdapter<HomeItem>(itemsHome, listener) {

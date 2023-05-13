@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.home.view_model
+package com.chocolatecake.marvel.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,8 +9,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.home.view.HomeFragmentDirections
-import com.chocolatecake.marvel.ui.home.view.HomeListener
+import com.chocolatecake.marvel.ui.home.adapter.HomeListener
 
 class HomeViewModel : BaseViewModel(), HomeListener {
 

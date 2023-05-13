@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.series_details.viewModel
+package com.chocolatecake.marvel.ui.series_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +10,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
-import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener
+import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsListener
 
 class SeriesDetailsViewModel(
     private val seriesId: Int,

@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.creatorDetails
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
@@ -10,9 +9,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.comic_details.ComicDetailsViewModel
-import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
-import io.reactivex.rxjava3.core.Single
+import com.chocolatecake.marvel.ui.creatorDetails.adapter.CreatorDetailsListener
 
 class CreatorDetailsViewModel(
     private val creatorId: Int,

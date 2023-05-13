@@ -11,7 +11,6 @@ import com.chocolatecake.marvel.databinding.SeriesDetailsHeaderViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.series_details.SeriesDetailsItem
 import com.chocolatecake.marvel.ui.series_details.SeriesDetailsItemType
-import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsListener
 
 class SeriesDetailsAdapter(
     private var itemsSeriesDetails: MutableList<SeriesDetailsItem>,
@@ -96,8 +95,6 @@ class SeriesDetailsAdapter(
             is SeriesDetailsItem.CharactersItem -> bindCharacter(
                 holder as CharactersViewHolder, position
             )
-
-            else -> {}
         }
     }
 

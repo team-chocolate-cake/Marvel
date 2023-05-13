@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.storiesDetails.view_model
+package com.chocolatecake.marvel.ui.storiesDetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,6 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
-import com.chocolatecake.marvel.ui.storiesDetails.view.StoriesDetailsFragmentDirections
 
 class StoriesDetailsViewModel(
     private val storyId: Int,

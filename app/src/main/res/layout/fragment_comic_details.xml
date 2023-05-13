@@ -75,7 +75,7 @@
                 android:layout_marginTop="@dimen/spacing_large"
                 android:textColor="@color/on_background_87"
                 style="@style/TextAppearance.Material3.TitleMedium"
-                app:showWhenSuccess="@{viewModel.currentComic}"
+                android:visibility="gone"
                 app:isVisible="@{viewModel.characters.toData().size() != 0}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_description" />

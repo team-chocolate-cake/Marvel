@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.stories.viewModel
+package com.chocolatecake.marvel.ui.stories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,8 +8,6 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.StoryListener
-import com.chocolatecake.marvel.ui.search.view.SearchFragmentDirections
-import com.chocolatecake.marvel.ui.stories.view.StoriesFragmentDirections
 
 class StoriesViewModel : BaseViewModel(), StoryListener {
 

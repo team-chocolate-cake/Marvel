@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem.Character" />
+            type="com.chocolatecake.marvel.ui.event_details.EventDetailsItem.Character" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

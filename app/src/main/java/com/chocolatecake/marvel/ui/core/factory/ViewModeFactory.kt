@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.chocolatecake.marvel.ui.character_details.CharacterDetailsViewModel
 import com.chocolatecake.marvel.ui.comic_details.ComicDetailsViewModel
 import com.chocolatecake.marvel.ui.creatorDetails.CreatorDetailsViewModel
-import com.chocolatecake.marvel.ui.event_details.view_model.EventDetailsViewModel
-import com.chocolatecake.marvel.ui.series_details.viewModel.SeriesDetailsViewModel
-import com.chocolatecake.marvel.ui.storiesDetails.view_model.StoriesDetailsViewModel
+import com.chocolatecake.marvel.ui.event_details.EventDetailsViewModel
+import com.chocolatecake.marvel.ui.series_details.SeriesDetailsViewModel
+import com.chocolatecake.marvel.ui.storiesDetails.StoriesDetailsViewModel
 
 class ViewModeFactory(private val id: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

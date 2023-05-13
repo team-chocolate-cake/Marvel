@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.stories.adapter
+package com.chocolatecake.marvel.ui.stories
 
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.StoryResult

@@ -1,9 +1,8 @@
-package com.chocolatecake.marvel.ui.comic_details.recycler_adapters
+package com.chocolatecake.marvel.ui.comic_details
 
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.ui.base.BaseAdapter
-import com.chocolatecake.marvel.ui.comic_details.ComicInteractionListener
 
 class CharactersAdapter(
     items: List<ProfileResult>,
