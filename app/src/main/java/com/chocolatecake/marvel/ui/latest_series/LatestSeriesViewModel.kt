@@ -2,14 +2,12 @@ package com.chocolatecake.marvel.ui.latest_series
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
-import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
 
 class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
 
@@ -27,7 +25,7 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
     fun loadData() {
         _latestSeriesList.postValue(Status.Loading)
         disposeResponse(
-            response = repository.getSeries(limit = LIMIT),
+            response = repository.getSeries(limit = LIMIT, orderBy = ORDER_BY),
             onSuccess = ::onLatestSeriesSuccess,
             onFailure = ::onLatestSeriesFailure,
         )
@@ -37,7 +35,7 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
         status.toData()?.let { result ->
             _latestSeriesList.postValue(
                 Status.Success(
-                    result.sortedByDescending { it.startYear }
+                    result
                 )
             )
         }
@@ -55,5 +53,6 @@ class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
 
     private companion object {
         const val LIMIT = 100
+        var ORDER_BY = "-startYear"
     }
 }

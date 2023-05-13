@@ -1,11 +1,11 @@
 package com.chocolatecake.marvel.data.remote.service
 
-import com.chocolatecake.marvel.data.model.base.BaseResponse
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoryResult
+import com.chocolatecake.marvel.data.model.base.BaseResponse
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import retrofit2.http.GET
@@ -83,7 +83,8 @@ interface MarvelService {
     fun getSeries(
         @Query("titleStartsWith") title: String? = null,
         @Query("offset") offset: Int? = null,
-        @Query("limit") limit: Int? = null
+        @Query("limit") limit: Int? = null,
+        @Query("orderBy") orderBy: String? = null
     ): Single<Response<BaseResponse<SeriesResult>>>
 
     @GET("series/{seriesId}")

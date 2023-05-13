@@ -77,11 +77,11 @@ class MarvelRepositoryImpl : MarvelRepository {
         return wrapperToState(apiService.getSeriesForCreator(creatorId))
     }
 
-
     override fun getSeries(
         title: String?,
         offset: Int?,
-        limit: Int?
+        limit: Int?,
+        orderBy : String?
     ): Single<Status<List<SeriesResult>>> {
         return wrapperToState(apiService.getSeries(title, offset, limit))
     }

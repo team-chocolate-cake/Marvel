@@ -1,9 +1,9 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.model.ComicsResult
+import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
-import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.StoryResult
 import com.chocolatecake.marvel.data.util.Status
 import io.reactivex.rxjava3.core.Single
@@ -34,7 +34,8 @@ interface MarvelRepository {
     fun getSeries(
         title: String? = null,
         offset: Int? = null,
-        limit: Int? = null
+        limit: Int? = null,
+        orderBy: String? = null
     ): Single<Status<List<SeriesResult>>>
 
     fun getSeriesById(seriesId: Int): Single<Status<List<SeriesResult>>>
@@ -56,6 +57,7 @@ interface MarvelRepository {
         limit: Int? = null,
         offset: Int? = null
     ): Single<Status<List<StoryResult>>>
+
     fun getStoryById(storyId: Int): Single<Status<List<StoryResult>>>
     fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileResult>>>
     fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicsResult>>>
