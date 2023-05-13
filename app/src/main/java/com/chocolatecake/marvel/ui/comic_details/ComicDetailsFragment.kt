@@ -5,11 +5,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.comic_details.recycler_adapters.CharactersAdapter
 import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.util.observeNonNull
 

@@ -9,9 +9,8 @@ import com.chocolatecake.marvel.databinding.ComicsViewBinding
 import com.chocolatecake.marvel.databinding.HeaderViewBinding
 import com.chocolatecake.marvel.databinding.SeriesViewBinding
 import com.chocolatecake.marvel.ui.base.BaseAdapter
-import com.chocolatecake.marvel.ui.event_details.view.EventDetailsListener
-import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem
-import com.chocolatecake.marvel.ui.event_details.model.EventDetailsItemType
+import com.chocolatecake.marvel.ui.event_details.EventDetailsItem
+import com.chocolatecake.marvel.ui.event_details.EventDetailsItemType
 
 class EventAdapter(
     private var eventDetailsItems: MutableList<EventDetailsItem>,

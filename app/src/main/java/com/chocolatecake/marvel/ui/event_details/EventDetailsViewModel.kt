@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.event_details.view_model
+package com.chocolatecake.marvel.ui.event_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +10,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.event_details.view.EventDetailsFragmentDirections
-import com.chocolatecake.marvel.ui.event_details.view.EventDetailsListener
+import com.chocolatecake.marvel.ui.event_details.adapters.EventDetailsListener
 
 class EventDetailsViewModel(
     private val eventId: Int,

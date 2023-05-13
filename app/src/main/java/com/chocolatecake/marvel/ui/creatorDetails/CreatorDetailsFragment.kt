@@ -7,7 +7,6 @@ import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentCreatorDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragmentArgs
 import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.creatorDetails.adapter.ComicAdapter
 import com.chocolatecake.marvel.ui.creatorDetails.adapter.SeriesAdapter

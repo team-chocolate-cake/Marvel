@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.stories.view
+package com.chocolatecake.marvel.ui.stories
 
 import android.os.Bundle
 import android.view.View
@@ -6,8 +6,6 @@ import androidx.fragment.app.viewModels
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentStoriesBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.stories.viewModel.StoriesViewModel
-import com.chocolatecake.marvel.ui.stories.adapter.StoriesAdapter
 
 class StoriesFragment : BaseFragment<FragmentStoriesBinding, StoriesViewModel>() {
 

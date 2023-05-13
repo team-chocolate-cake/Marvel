@@ -3,12 +3,10 @@ package com.chocolatecake.marvel.ui.comic_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.comic_details.data.ComicDetailsItem
 
 class ComicDetailsViewModel(private val currentComicId: Int) :
     BaseViewModel(), ComicInteractionListener {

@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.series_details.view
+package com.chocolatecake.marvel.ui.series_details
 
 import android.os.Bundle
 import android.view.View
@@ -9,8 +9,6 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentSeriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
-import com.chocolatecake.marvel.ui.series_details.SeriesDetailsItem
-import com.chocolatecake.marvel.ui.series_details.viewModel.SeriesDetailsViewModel
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsAdapter
 import com.chocolatecake.marvel.util.observeNonNull
 

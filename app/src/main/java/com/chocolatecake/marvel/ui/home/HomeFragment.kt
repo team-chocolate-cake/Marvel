@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.home.view
+package com.chocolatecake.marvel.ui.home
 
 import android.os.Bundle
 import android.view.View
@@ -8,8 +8,6 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentHomeBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.home.adapter.HomeAdapter
-import com.chocolatecake.marvel.ui.home.model.HomeItem
-import com.chocolatecake.marvel.ui.home.view_model.HomeViewModel
 import com.chocolatecake.marvel.util.observeNonNull
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {

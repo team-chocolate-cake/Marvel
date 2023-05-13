@@ -14,7 +14,6 @@ import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.chocolatecake.marvel.ui.search.model.SearchQuery
 import com.chocolatecake.marvel.ui.search.view.SearchFragmentDirections
 import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
-import com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragmentDirections
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 

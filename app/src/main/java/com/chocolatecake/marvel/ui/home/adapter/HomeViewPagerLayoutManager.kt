@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.home.view
+package com.chocolatecake.marvel.ui.home.adapter
 
 import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,8 +24,8 @@ class HomeViewPagerLayoutManager(context: Context) :
             val childMidpoint = (getDecoratedRight(child!!) + getDecoratedLeft(child)) / 2f
             val d = maxDistance.coerceAtMost(abs(midpoint - childMidpoint))
             val scale = maxScale + (minScale - maxScale) * (d - initialDistance) / (maxDistance - initialDistance)
-            child?.scaleX = scale
-            child?.scaleY = scale
+            child.scaleX = scale
+            child.scaleY = scale
         }
         return scrolled
     }

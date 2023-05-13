@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.marvel.ui.event_details.model.EventDetailsItem.Series" />
+            type="com.chocolatecake.marvel.ui.event_details.EventDetailsItem.Series" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

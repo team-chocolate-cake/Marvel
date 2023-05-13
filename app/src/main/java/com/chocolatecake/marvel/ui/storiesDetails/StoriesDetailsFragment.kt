@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.storiesDetails.view
+package com.chocolatecake.marvel.ui.storiesDetails
 
 import android.os.Bundle
 import android.view.View
@@ -11,7 +11,6 @@ import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.storiesDetails.adapter.ComicsAdapter
 import com.chocolatecake.marvel.ui.storiesDetails.adapter.CreatorsAdapter
 import com.chocolatecake.marvel.ui.storiesDetails.adapter.SeriesAdapter
-import com.chocolatecake.marvel.ui.storiesDetails.view_model.StoriesDetailsViewModel
 
 class StoriesDetailsFragment :
     BaseFragment<FragmentStoriesDetailsBinding, StoriesDetailsViewModel>() {

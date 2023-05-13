@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.chocolatecake.marvel.ui.home.view.HomeFragment"
+        android:name="com.chocolatecake.marvel.ui.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -74,7 +74,7 @@
     </fragment>
     <fragment
         android:id="@+id/seriesDetailsFragment"
-        android:name="com.chocolatecake.marvel.ui.series_details.view.SeriesDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.series_details.SeriesDetailsFragment"
         android:label="SeriesFragment"
         tools:layout="@layout/fragment_latest_series">
         <action
@@ -149,7 +149,7 @@
     </fragment>
     <fragment
         android:id="@+id/storiesFragment"
-        android:name="com.chocolatecake.marvel.ui.stories.view.StoriesFragment"
+        android:name="com.chocolatecake.marvel.ui.stories.StoriesFragment"
         android:label="StoriesFragment"
         tools:layout="@layout/fragment_stories">
         <action
@@ -162,7 +162,7 @@
     </fragment>
     <fragment
         android:id="@+id/storiesDetailsFragment"
-        android:name="com.chocolatecake.marvel.ui.storiesDetails.view.StoriesDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.storiesDetails.StoriesDetailsFragment"
         android:label="StoriesDetailsFragment"
         tools:layout="@layout/fragment_stories_details">
         <argument
@@ -208,7 +208,7 @@
     </fragment>
     <fragment
         android:id="@+id/eventDetailsFragment"
-        android:name="com.chocolatecake.marvel.ui.event_details.view.EventDetailsFragment"
+        android:name="com.chocolatecake.marvel.ui.event_details.EventDetailsFragment"
         android:label="EventDetailsFragment"
         tools:layout="@layout/fragment_event_details">
         <argument

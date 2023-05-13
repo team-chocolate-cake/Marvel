@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.ui.home.model
+package com.chocolatecake.marvel.ui.home
 
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.EventResult
