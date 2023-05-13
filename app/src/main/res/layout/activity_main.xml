@@ -25,6 +25,7 @@
             android:background="@color/bottom_nav_background_color"
             app:itemIconTint="@color/bottom_nav_icon_tint"
             app:itemTextColor="@color/white"
+            app:itemActiveIndicatorStyle="@style/BottomNavigationBarIndicator"
             app:labelVisibilityMode="selected"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
