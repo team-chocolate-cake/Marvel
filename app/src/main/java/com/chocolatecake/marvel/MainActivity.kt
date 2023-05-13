@@ -1,8 +1,8 @@
 package com.chocolatecake.marvel
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.chocolatecake.marvel.databinding.ActivityMainBinding
@@ -20,5 +20,38 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         val navController = findNavController(R.id.fragment_host)
         binding.mainBottomNavigation.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.searchFragment,
+                R.id.homeFragment,
+                R.id.storiesFragment,
+                R.id.latestSeriesFragment -> showBottomNav()
+                else -> hideBottomNav()
+            }
+        }
     }
+
+    private fun showBottomNav() {
+        binding.mainBottomNavigation.apply {
+            visibility = View.VISIBLE
+            animate()
+                .translationY(0f)
+                .setDuration(500)
+                .start()
+        }
+    }
+
+    private fun hideBottomNav() {
+        binding.mainBottomNavigation.apply {
+            animate()
+                .translationY(height.toFloat())
+                .setDuration(500)
+                .withEndAction {
+                    visibility = View.GONE
+                }
+                .start()
+        }
+    }
+
 }

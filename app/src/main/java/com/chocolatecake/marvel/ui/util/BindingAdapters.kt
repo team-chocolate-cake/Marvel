@@ -17,11 +17,14 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.google.android.material.chip.Chip
 
+//region recycler
 @BindingAdapter(value = ["app:items"])
 fun <T> RecyclerView.setRecyclerItems(items: List<T>?) {
     (adapter as BaseAdapter<T>).setItems(items ?: emptyList())
 }
+//endregion
 
+//region visibility
 @BindingAdapter(value = ["app:showWhenSuccess"])
 fun <T> View.showWhenSuccess(status: Status<T>?) {
     val transition = Fade()
@@ -63,7 +66,9 @@ fun View.isVisible(isVisible: Boolean?) {
         View.GONE
     }
 }
+//endregion
 
+//region image
 @BindingAdapter(value = ["app:imageUrl"])
 fun ImageView.loadImage(imageResponse: ImageResponse?) {
     Glide.with(context)
@@ -73,7 +78,9 @@ fun ImageView.loadImage(imageResponse: ImageResponse?) {
         .centerCrop()
         .into(this)
 }
+//endregion
 
+//region custom 2 way data binding
 @BindingAdapter("selectedType")
 fun Chip.setSelectedEnum(selectedEnum: SearchItemType) {
     isChecked = ("TYPE_" + text.toString().uppercase() == selectedEnum.toString())
@@ -88,3 +95,4 @@ fun Chip.setSelectedEnumListener(listener: InverseBindingListener?) {
 fun Chip.getSelectedEnum(): SearchItemType {
     return enumValueOf("TYPE_" + text.toString().uppercase())
 }
+//endregion
