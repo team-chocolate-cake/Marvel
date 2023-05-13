@@ -31,7 +31,7 @@
                 android:onClick="@{()->viewModel.navigateBack()}"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.creator.toData().get(0).thumbnail}"
-                app:layout_constraintDimensionRatio="16:9"
+                app:layout_constraintDimensionRatio="16:8"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
                 app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"

@@ -26,7 +26,7 @@
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
                 app:imageUrl="@{viewModel.character.toData().thumbnail}"
-                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintDimensionRatio="16:8"
                 app:layout_constraintTop_toTopOf="parent"
                 app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
