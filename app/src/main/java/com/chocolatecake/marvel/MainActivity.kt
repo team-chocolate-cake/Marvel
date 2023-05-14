@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             visibility = View.VISIBLE
             animate()
                 .translationY(0f)
-                .setDuration(500)
+                .setDuration(300)
                 .start()
         }
     }
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainBottomNavigation.apply {
             animate()
                 .translationY(height.toFloat())
-                .setDuration(500)
+                .setDuration(300)
                 .withEndAction {
                     visibility = View.GONE
                 }
