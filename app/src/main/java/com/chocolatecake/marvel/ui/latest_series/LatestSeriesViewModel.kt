@@ -8,10 +8,13 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class LatestSeriesViewModel : BaseViewModel(), SeriesListener {
-
-    private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
+@HiltViewModel
+class LatestSeriesViewModel @Inject constructor(
+    private val repository: MarvelRepository
+) : BaseViewModel(), SeriesListener {
 
     private val _latestSeriesList = MutableLiveData<Status<List<SeriesResult>>>()
     val latestSeriesList: LiveData<Status<List<SeriesResult>>>

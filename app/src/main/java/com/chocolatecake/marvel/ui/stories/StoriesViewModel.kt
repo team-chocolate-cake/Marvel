@@ -8,10 +8,13 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.StoryListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class StoriesViewModel : BaseViewModel(), StoryListener {
-
-    val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
+@HiltViewModel
+class StoriesViewModel @Inject constructor(
+    private val repository: MarvelRepository
+) : BaseViewModel(), StoryListener {
 
     private val _stories = MutableLiveData<Status<List<StoryResult>>>()
     val stories: LiveData<Status<List<StoryResult>>>

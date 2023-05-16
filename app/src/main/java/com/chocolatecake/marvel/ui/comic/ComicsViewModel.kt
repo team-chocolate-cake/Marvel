@@ -8,10 +8,13 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ComicsViewModel : BaseViewModel(), ComicListener {
-
-    private val repository: MarvelRepository = MarvelRepositoryImpl()
+@HiltViewModel
+class ComicsViewModel @Inject constructor(
+    private val repository: MarvelRepository
+) : BaseViewModel(), ComicListener {
 
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     val comics: LiveData<Status<List<ComicsResult>>>

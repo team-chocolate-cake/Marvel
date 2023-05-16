@@ -8,19 +8,22 @@ import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.model.EventResult
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
 import com.chocolatecake.marvel.util.observeNonNull
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDetailsViewModel>() {
 
     private lateinit var adapter: EventAdapter
     private val args: EventDetailsFragmentArgs by navArgs()
-    override val viewModel: EventDetailsViewModel by viewModels{ ViewModeFactory(args.eventId)}
+    override val viewModel: EventDetailsViewModel by viewModels()
     override val layoutIdFragment: Int = R.layout.fragment_event_details
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.eventId = args.eventId
+        viewModel.reLoadData()
 
         adapter = EventAdapter(
             mutableListOf(

@@ -9,7 +9,9 @@ import com.chocolatecake.marvel.databinding.FragmentHomeBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.home.adapter.HomeAdapter
 import com.chocolatecake.marvel.util.observeNonNull
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
 
     lateinit var adapter: HomeAdapter

@@ -10,10 +10,13 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.home.adapter.HomeListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel : BaseViewModel(), HomeListener {
-
-    private val marvelRepository: MarvelRepository by lazy { MarvelRepositoryImpl() }
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val marvelRepository: MarvelRepository
+) : BaseViewModel(), HomeListener {
 
     private val _events = MutableLiveData<Status<List<EventResult>>>()
     val events: LiveData<Status<List<EventResult>>>

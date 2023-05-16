@@ -13,14 +13,16 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class StoriesDetailsViewModel(
-    private val storyId: Int,
+@HiltViewModel
+class StoriesDetailsViewModel @Inject constructor(
+    private val repository: MarvelRepository
 ) : BaseViewModel(), CreatorsListener, ComicListener, SeriesListener {
 
-    private val repository: MarvelRepository by lazy {
-        MarvelRepositoryImpl()
-    }
+    var storyId by Delegates.notNull<Int>()
 
     private val _story = MutableLiveData<Status<StoryResult?>>()
     val story: LiveData<Status<StoryResult?>>
@@ -35,9 +37,6 @@ class StoriesDetailsViewModel(
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     val comics: MutableLiveData<Status<List<ComicsResult>>> get() = _comics
 
-    init {
-        loadData()
-    }
 
     fun loadData() {
         getComicsByStoryId()

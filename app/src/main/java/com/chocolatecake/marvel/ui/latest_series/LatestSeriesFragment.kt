@@ -6,7 +6,9 @@ import androidx.fragment.app.viewModels
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentLatestSeriesBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LatestSeriesFragment : BaseFragment<FragmentLatestSeriesBinding, LatestSeriesViewModel>() {
 
     override val viewModel: LatestSeriesViewModel by viewModels()

@@ -6,15 +6,16 @@ import com.chocolatecake.marvel.data.model.ProfileResult
 import com.chocolatecake.marvel.data.model.SeriesResult
 import com.chocolatecake.marvel.data.model.StoryResult
 import com.chocolatecake.marvel.data.model.base.BaseResponse
-import com.chocolatecake.marvel.data.remote.service.MarvelApi
+import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
+import javax.inject.Inject
 
-class MarvelRepositoryImpl : MarvelRepository {
-
-    private val apiService by lazy { MarvelApi().apiService }
+class MarvelRepositoryImpl @Inject constructor(
+    private val apiService: MarvelService
+) : MarvelRepository {
 
     override fun getComics(
         title: String?,

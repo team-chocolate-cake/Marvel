@@ -15,7 +15,9 @@ import com.chocolatecake.marvel.ui.search.model.SearchItemType.TYPE_SERIES
 import com.chocolatecake.marvel.ui.search.model.SearchItems
 import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
 import com.chocolatecake.marvel.util.observeNonNull
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
 
     override val viewModel: SearchViewModel by viewModels()

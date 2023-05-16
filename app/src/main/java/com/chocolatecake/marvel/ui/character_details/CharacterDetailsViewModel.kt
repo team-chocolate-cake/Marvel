@@ -9,12 +9,17 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class CharacterDetailsViewModel(
-    private val characterId: Int,
+
+@HiltViewModel
+class CharacterDetailsViewModel @Inject constructor(
+    private val repository: MarvelRepository
 ) : BaseViewModel(), ComicListener {
 
-    private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
+   var characterId by Delegates.notNull<Int>()
 
     private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
     val comics: LiveData<Status<List<ComicsResult>>>
@@ -24,10 +29,6 @@ class CharacterDetailsViewModel(
     val character: LiveData<Status<ProfileResult>>
         get() = _character
 
-
-    init {
-        loadDetails()
-    }
 
     fun loadDetails() {
         loadCharacter()

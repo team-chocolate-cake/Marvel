@@ -10,10 +10,16 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.creator_details.adapter.CreatorDetailsListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class CreatorDetailsViewModel(
-    private val creatorId: Int,
+@HiltViewModel
+class CreatorDetailsViewModel @Inject constructor(
+    private val repository: MarvelRepository
 ) : BaseViewModel(), CreatorDetailsListener {
+
+    var creatorId by Delegates.notNull<Int>()
 
     private val _comicsList = MutableLiveData<Status<List<ComicsResult>?>>()
     val comicsList: LiveData<Status<List<ComicsResult>?>>
@@ -27,15 +33,6 @@ class CreatorDetailsViewModel(
     val creator: LiveData<Status<List<ProfileResult>?>>
         get() = _creator
 
-
-    private val repository: MarvelRepository by lazy {
-        MarvelRepositoryImpl()
-    }
-
-
-    init {
-        loadData()
-    }
 
     fun loadData() {
         getCreator()

@@ -11,12 +11,16 @@ import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.event_details.adapters.EventDetailsListener
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class EventDetailsViewModel(
-    private val eventId: Int,
+@HiltViewModel
+class EventDetailsViewModel @Inject constructor(
+    private val repository: MarvelRepository
 ) : BaseViewModel(), EventDetailsListener {
 
-    private val repository: MarvelRepository by lazy { MarvelRepositoryImpl() }
+    var eventId by Delegates.notNull<Int>()
 
     private val _event = MutableLiveData<Status<EventResult>>()
     val event: LiveData<Status<EventResult>>
@@ -34,10 +38,6 @@ class EventDetailsViewModel(
     val comics: MutableLiveData<Status<List<ComicsResult>>>
         get() = _comics
 
-
-    init {
-        reLoadData()
-    }
 
     fun reLoadData() {
         getEventDetails()

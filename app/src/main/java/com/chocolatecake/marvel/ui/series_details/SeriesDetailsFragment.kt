@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentSeriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsAdapter
 import com.chocolatecake.marvel.util.observeNonNull
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesDetailsViewModel>() {
 
     private val args: SeriesDetailsFragmentArgs by navArgs()
-    override val viewModel: SeriesDetailsViewModel by viewModels { ViewModeFactory(args.seriesId) }
+    override val viewModel: SeriesDetailsViewModel by viewModels()
 
     override val layoutIdFragment: Int
         get() = R.layout.fragment_series_details
@@ -23,6 +24,8 @@ class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.seriesId = args.seriesId
+        viewModel.loadData()
         setAdapter()
         updateItems()
     }

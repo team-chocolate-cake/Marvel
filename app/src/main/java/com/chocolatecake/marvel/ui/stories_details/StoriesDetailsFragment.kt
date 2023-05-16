@@ -7,22 +7,26 @@ import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentStoriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
-import com.chocolatecake.marvel.ui.core.factory.ViewModeFactory
 import com.chocolatecake.marvel.ui.stories_details.adapter.ComicsAdapter
 import com.chocolatecake.marvel.ui.stories_details.adapter.CreatorsAdapter
 import com.chocolatecake.marvel.ui.stories_details.adapter.SeriesAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class StoriesDetailsFragment :
     BaseFragment<FragmentStoriesDetailsBinding, StoriesDetailsViewModel>() {
 
     private val args: StoriesDetailsFragmentArgs by navArgs()
-    override val viewModel: StoriesDetailsViewModel by viewModels { ViewModeFactory(args.storyId) }
+    override val viewModel: StoriesDetailsViewModel by viewModels()
 
     override val layoutIdFragment: Int
         get() = R.layout.fragment_stories_details
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.storyId = args.storyId
+        viewModel.loadData()
+
         val creatorsAdapter = CreatorsAdapter(mutableListOf(), viewModel)
         binding.recyclerViewCreators.adapter = creatorsAdapter
 

@@ -4,16 +4,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.model.ComicsResult
 import com.chocolatecake.marvel.data.model.ProfileResult
+import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.properties.Delegates
 
-class ComicDetailsViewModel(private val currentComicId: Int) :
-    BaseViewModel(), ComicInteractionListener {
+@HiltViewModel
+class ComicDetailsViewModel @Inject constructor(
+    private val repository: MarvelRepository,
+    ) : BaseViewModel(), ComicInteractionListener {
 
-    private val repository by lazy {
-        MarvelRepositoryImpl()
-    }
+    var currentComicId by Delegates.notNull<Int>()
 
     private val _currentComic = MutableLiveData<Status<ComicsResult>?>()
     val currentComic: LiveData<Status<ComicsResult>?>
@@ -28,10 +32,6 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         get() = _toastMessage
 
 
-    init {
-        loadData()
-    }
-
     fun loadData() {
         getCurrentComic()
         getCharactersOfComic()
@@ -42,8 +42,8 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         _currentComic.postValue(Status.Loading)
         disposeResponse(
             response = repository.getComicById(currentComicId),
-            onSuccess = :: onGetCurrentComicSuccess,
-            onFailure = :: onGetCurrentComicFailure,
+            onSuccess = ::onGetCurrentComicSuccess,
+            onFailure = ::onGetCurrentComicFailure,
         )
     }
 
@@ -64,8 +64,8 @@ class ComicDetailsViewModel(private val currentComicId: Int) :
         _characters.postValue(Status.Loading)
         disposeResponse(
             response = repository.getCharactersForSeries(currentComicId),
-            onSuccess = :: onGetCharacterSuccess,
-            onFailure = :: onGetCharacterFailure,
+            onSuccess = ::onGetCharacterSuccess,
+            onFailure = ::onGetCharacterFailure,
         )
     }
 
