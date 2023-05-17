@@ -1,6 +1,6 @@
 package com.chocolatecake.marvel.domain.mapper.comic
 
-import com.chocolatecake.marvel.data.local.model.ComicsEntity
+import com.chocolatecake.marvel.data.local.entities.ComicsEntity
 import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.model.Comic
 

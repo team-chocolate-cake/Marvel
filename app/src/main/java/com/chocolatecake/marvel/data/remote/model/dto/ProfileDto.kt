@@ -1,5 +1,6 @@
-package com.chocolatecake.marvel.data.remote.model
+package com.chocolatecake.marvel.data.remote.model.dto
 
+import com.chocolatecake.marvel.data.remote.model.ImageResponse
 import com.google.gson.annotations.SerializedName
 
 data class ProfileDto(

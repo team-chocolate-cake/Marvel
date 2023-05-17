@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.data.remote.model.EventDto
+import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter

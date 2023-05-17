@@ -1,8 +1,7 @@
 package com.chocolatecake.marvel.domain.mapper.event
 
-import com.chocolatecake.marvel.data.local.model.EventEntity
+import com.chocolatecake.marvel.data.local.entities.EventEntity
 import com.chocolatecake.marvel.domain.mapper.Mapper
-import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
 
 class EventUIMapper : Mapper<EventEntity, Event> {

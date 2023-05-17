@@ -1,8 +1,8 @@
 package com.chocolatecake.marvel.ui.search.model
 
-import com.chocolatecake.marvel.data.remote.model.ComicDto
-import com.chocolatecake.marvel.data.remote.model.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.SeriesDto
+import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
+import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
+import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 
 sealed class SearchItems(val searchItemType: SearchItemType) {
     data class SeriesItem(val series: SeriesDto?) : SearchItems(SearchItemType.TYPE_SERIES)

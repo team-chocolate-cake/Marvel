@@ -1,7 +1,7 @@
 package com.chocolatecake.marvel.domain.mapper.character
 
-import com.chocolatecake.marvel.data.local.model.CharacterEntity
-import com.chocolatecake.marvel.data.remote.model.ProfileDto
+import com.chocolatecake.marvel.data.local.entities.CharacterEntity
+import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.domain.mapper.Mapper
 
 class CharacterMapper : Mapper<ProfileDto, CharacterEntity> {

@@ -2,7 +2,7 @@ package com.chocolatecake.marvel.ui.latest_series
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.remote.model.SeriesDto
+import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel

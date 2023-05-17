@@ -6,7 +6,7 @@
     <data>
         <variable
             name="eventResult"
-            type="com.chocolatecake.marvel.data.remote.model.EventDto" />
+            type="com.chocolatecake.marvel.data.remote.model.dto.EventDto" />
     </data>
 
     <androidx.cardview.widget.CardView

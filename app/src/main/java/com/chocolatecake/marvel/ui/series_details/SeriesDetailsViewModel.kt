@@ -2,10 +2,10 @@ package com.chocolatecake.marvel.ui.series_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.remote.model.ComicDto
-import com.chocolatecake.marvel.data.remote.model.EventDto
-import com.chocolatecake.marvel.data.remote.model.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.SeriesDto
+import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
+import com.chocolatecake.marvel.data.remote.model.dto.EventDto
+import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
+import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel

@@ -1,9 +1,9 @@
 package com.chocolatecake.marvel.ui.event_details
 
-import com.chocolatecake.marvel.data.remote.model.ComicDto
-import com.chocolatecake.marvel.data.remote.model.EventDto
-import com.chocolatecake.marvel.data.remote.model.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.SeriesDto
+import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
+import com.chocolatecake.marvel.data.remote.model.dto.EventDto
+import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
+import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 
 sealed class EventDetailsItem(val type: EventDetailsItemType) {
     data class Header(val eventDto: EventDto) :

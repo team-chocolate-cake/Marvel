@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.remote.model.SeriesDto" />
+            type="com.chocolatecake.marvel.data.remote.model.dto.SeriesDto" />
 
         <variable
             name="listener"

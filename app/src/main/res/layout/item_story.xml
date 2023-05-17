@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.remote.model.StoryDto" />
+            type="com.chocolatecake.marvel.data.remote.model.dto.StoryDto" />
 
         <variable
             name="listener"

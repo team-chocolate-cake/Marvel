@@ -1,7 +1,7 @@
 package com.chocolatecake.marvel.domain.mapper.event
 
-import com.chocolatecake.marvel.data.local.model.EventEntity
-import com.chocolatecake.marvel.data.remote.model.EventDto
+import com.chocolatecake.marvel.data.local.entities.EventEntity
+import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.domain.mapper.Mapper
 
 class EventMapper : Mapper<EventDto, EventEntity> {

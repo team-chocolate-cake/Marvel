@@ -1,7 +1,7 @@
 package com.chocolatecake.marvel.ui.stories_details.adapter
 
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.data.remote.model.ProfileDto
+import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
 

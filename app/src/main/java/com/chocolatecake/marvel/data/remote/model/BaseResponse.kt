@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.data.remote.model.base
+package com.chocolatecake.marvel.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

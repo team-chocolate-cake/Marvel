@@ -1,7 +1,7 @@
 package com.chocolatecake.marvel.domain.mapper.comic
 
-import com.chocolatecake.marvel.data.local.model.ComicsEntity
-import com.chocolatecake.marvel.data.remote.model.ComicDto
+import com.chocolatecake.marvel.data.local.entities.ComicsEntity
+import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.domain.mapper.Mapper
 
 class ComicMapper : Mapper<ComicDto, ComicsEntity> {
