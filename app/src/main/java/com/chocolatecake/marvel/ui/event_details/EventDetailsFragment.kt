@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.data.model.EventResult
+import com.chocolatecake.marvel.data.remote.model.EventDto
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
@@ -27,7 +27,7 @@ class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDeta
 
         adapter = EventAdapter(
             mutableListOf(
-                EventDetailsItem.Header(EventResult()),
+                EventDetailsItem.Header(EventDto()),
                 EventDetailsItem.Character(emptyList()),
                 EventDetailsItem.Series(emptyList()),
                 EventDetailsItem.Comics(emptyList())

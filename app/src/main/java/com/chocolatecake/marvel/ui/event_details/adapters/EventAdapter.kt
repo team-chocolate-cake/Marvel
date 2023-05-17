@@ -71,12 +71,12 @@ class EventAdapter(
 
     private fun bindHeader(holder: HeaderViewHolder, position: Int) {
         val header = eventDetailsItems[position] as EventDetailsItem.Header
-        holder.binding.item = header.eventResult
+        holder.binding.item = header.eventDto
     }
 
     private fun bindCharacters(holder: CharacterViewHolder, position: Int) {
         val character = eventDetailsItems[position] as EventDetailsItem.Character
-        val adapter = CharactersAdapter(character.profileResult, eventDetailsListener)
+        val adapter = CharactersAdapter(character.profileDto, eventDetailsListener)
         holder.binding.recyclerViewCharacters.adapter = adapter
         holder.binding.item = character
     }
@@ -96,14 +96,14 @@ class EventAdapter(
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = eventDetailsItems[position] as EventDetailsItem.Series
-        val adapter = SeriesAdapter(series.seriesResult, eventDetailsListener)
+        val adapter = SeriesAdapter(series.seriesDto, eventDetailsListener)
         holder.binding.recyclerViewSeries.adapter = adapter
         holder.binding.item = series
     }
 
     private fun bindComics(holder: ComicsViewHolder, position: Int) {
         val comics = eventDetailsItems[position] as EventDetailsItem.Comics
-        val adapter = ComicsAdapter(comics.comicsResult, eventDetailsListener)
+        val adapter = ComicsAdapter(comics.comicDto, eventDetailsListener)
         holder.binding.recyclerViewComics.adapter = adapter
         holder.binding.item = comics
     }

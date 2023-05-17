@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.model.StoryResult" />
+            type="com.chocolatecake.marvel.data.remote.model.StoryDto" />
     </data>
 
     <ScrollView

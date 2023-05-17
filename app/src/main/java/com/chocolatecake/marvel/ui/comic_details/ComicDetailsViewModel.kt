@@ -2,10 +2,9 @@ package com.chocolatecake.marvel.ui.comic_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.ProfileResult
+import com.chocolatecake.marvel.data.remote.model.ComicDto
+import com.chocolatecake.marvel.data.remote.model.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
-import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,12 +18,12 @@ class ComicDetailsViewModel @Inject constructor(
 
     var currentComicId by Delegates.notNull<Int>()
 
-    private val _currentComic = MutableLiveData<Status<ComicsResult>?>()
-    val currentComic: LiveData<Status<ComicsResult>?>
+    private val _currentComic = MutableLiveData<Status<ComicDto>?>()
+    val currentComic: LiveData<Status<ComicDto>?>
         get() = _currentComic
 
-    private val _characters = MutableLiveData<Status<List<ProfileResult>?>>()
-    val characters: LiveData<Status<List<ProfileResult>?>>
+    private val _characters = MutableLiveData<Status<List<ProfileDto>?>>()
+    val characters: LiveData<Status<List<ProfileDto>?>>
         get() = _characters
 
     private val _toastMessage = MutableLiveData<String>()
@@ -47,7 +46,7 @@ class ComicDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetCurrentComicSuccess(status: Status<List<ComicsResult>>) {
+    private fun onGetCurrentComicSuccess(status: Status<List<ComicDto>>) {
         status.toData()?.first()?.let {
             _currentComic.postValue(Status.Success(it))
         }
@@ -69,7 +68,7 @@ class ComicDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetCharacterSuccess(status: Status<List<ProfileResult>>) {
+    private fun onGetCharacterSuccess(status: Status<List<ProfileDto>>) {
         status.toData()?.let {
             _characters.postValue(Status.Success(it))
         }

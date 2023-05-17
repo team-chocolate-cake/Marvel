@@ -2,9 +2,8 @@ package com.chocolatecake.marvel.ui.latest_series
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.remote.model.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
-import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
@@ -16,8 +15,8 @@ class LatestSeriesViewModel @Inject constructor(
     private val repository: MarvelRepository
 ) : BaseViewModel(), SeriesListener {
 
-    private val _latestSeriesList = MutableLiveData<Status<List<SeriesResult>>>()
-    val latestSeriesList: LiveData<Status<List<SeriesResult>>>
+    private val _latestSeriesList = MutableLiveData<Status<List<SeriesDto>>>()
+    val latestSeriesList: LiveData<Status<List<SeriesDto>>>
         get() = _latestSeriesList
 
 
@@ -34,7 +33,7 @@ class LatestSeriesViewModel @Inject constructor(
         )
     }
 
-    private fun onLatestSeriesSuccess(status: Status<List<SeriesResult>>) {
+    private fun onLatestSeriesSuccess(status: Status<List<SeriesDto>>) {
         status.toData()?.let { result ->
             _latestSeriesList.postValue(
                 Status.Success(

@@ -78,7 +78,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
 
     private fun bindHeader(holder: HeaderViewHolder, position: Int) {
         val events = itemsHome[position] as HomeItem.EventsItem
-        val adapter = HomeBannerAdapter(events.eventResult, listener)
+        val adapter = HomeBannerAdapter(events.eventDto, listener)
         holder.binding.recyclerViewBanner.adapter = adapter
         holder.binding.recyclerViewBanner.onFlingListener = null
         val snapHelper = PagerSnapHelper()
@@ -89,7 +89,7 @@ class HomeAdapter(private var itemsHome: MutableList<HomeItem>, private val list
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = itemsHome[position] as HomeItem.SeriesItem
-        val adapter = HomeSeriesAdapter(series.seriesResult, listener)
+        val adapter = HomeSeriesAdapter(series.seriesDto, listener)
         holder.binding.recyclerViewSeries.adapter = adapter
         holder.binding.listener = listener
     }

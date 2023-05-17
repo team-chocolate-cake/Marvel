@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_small"
             android:orientation="horizontal"
-            app:items="@{item.comicsResult}"
+            app:items="@{item.comicDto}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:constraint_referenced_ids="recycler_view_comics,comics"
-            app:isVisible="@{item.comicsResult.size() !=0}" />
+            app:isVisible="@{item.comicDto.size() !=0}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

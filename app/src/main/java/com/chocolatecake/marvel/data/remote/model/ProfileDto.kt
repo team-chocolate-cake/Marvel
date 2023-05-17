@@ -1,10 +1,8 @@
-package com.chocolatecake.marvel.data.model
+package com.chocolatecake.marvel.data.remote.model
 
-import com.chocolatecake.marvel.data.model.*
-import com.chocolatecake.marvel.data.model.base.*
 import com.google.gson.annotations.SerializedName
 
-data class ProfileResult(
+data class ProfileDto(
     @SerializedName("id")
     val id: Int? = null,
     @SerializedName("name")

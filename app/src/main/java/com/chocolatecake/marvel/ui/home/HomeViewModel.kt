@@ -2,11 +2,10 @@ package com.chocolatecake.marvel.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.EventResult
-import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.remote.model.ComicDto
+import com.chocolatecake.marvel.data.remote.model.EventDto
+import com.chocolatecake.marvel.data.remote.model.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
-import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.home.adapter.HomeListener
@@ -18,16 +17,16 @@ class HomeViewModel @Inject constructor(
     private val marvelRepository: MarvelRepository
 ) : BaseViewModel(), HomeListener {
 
-    private val _events = MutableLiveData<Status<List<EventResult>>>()
-    val events: LiveData<Status<List<EventResult>>>
+    private val _events = MutableLiveData<Status<List<EventDto>>>()
+    val events: LiveData<Status<List<EventDto>>>
         get() = _events
 
-    private val _series = MutableLiveData<Status<List<SeriesResult>>>()
-    val series: LiveData<Status<List<SeriesResult>>>
+    private val _series = MutableLiveData<Status<List<SeriesDto>>>()
+    val series: LiveData<Status<List<SeriesDto>>>
         get() = _series
 
-    private val _comics = MutableLiveData<Status<List<ComicsResult>>>()
-    val comics: LiveData<Status<List<ComicsResult>>>
+    private val _comics = MutableLiveData<Status<List<ComicDto>>>()
+    val comics: LiveData<Status<List<ComicDto>>>
         get() = _comics
 
     private val _eventId = MutableLiveData<Int?>()
@@ -63,7 +62,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onEventSuccess(result: Status<List<EventResult>>) {
+    private fun onEventSuccess(result: Status<List<EventDto>>) {
         result.toData()?.let {
             _events.postValue(Status.Success(it))
         }
@@ -80,7 +79,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onSeriesSuccess(status: Status<List<SeriesResult>>) {
+    private fun onSeriesSuccess(status: Status<List<SeriesDto>>) {
         status.toData()?.let {
             _series.postValue(Status.Success(it))
         }
@@ -97,7 +96,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicsResult>>) {
+    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
         }

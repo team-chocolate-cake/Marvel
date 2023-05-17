@@ -2,9 +2,8 @@ package com.chocolatecake.marvel.ui.stories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.model.StoryResult
+import com.chocolatecake.marvel.data.remote.model.StoryDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
-import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.StoryListener
@@ -16,8 +15,8 @@ class StoriesViewModel @Inject constructor(
     private val repository: MarvelRepository
 ) : BaseViewModel(), StoryListener {
 
-    private val _stories = MutableLiveData<Status<List<StoryResult>>>()
-    val stories: LiveData<Status<List<StoryResult>>>
+    private val _stories = MutableLiveData<Status<List<StoryDto>>>()
+    val stories: LiveData<Status<List<StoryDto>>>
         get() = _stories
 
 
@@ -39,7 +38,7 @@ class StoriesViewModel @Inject constructor(
         )
     }
 
-    private fun onStoriesSuccess(status: Status<List<StoryResult>>) {
+    private fun onStoriesSuccess(status: Status<List<StoryDto>>) {
         status.toData()?.let {
             _stories.postValue(Status.Success(it))
         }

@@ -1,10 +1,8 @@
-package com.chocolatecake.marvel.data.model
+package com.chocolatecake.marvel.data.remote.model
 
-import com.chocolatecake.marvel.data.model.*
-import com.chocolatecake.marvel.data.model.base.*
 import com.google.gson.annotations.SerializedName
 
-data class SeriesResult(
+data class SeriesDto(
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("endYear")

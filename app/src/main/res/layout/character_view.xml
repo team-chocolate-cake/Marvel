@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:items="@{item.profileResult}"
+            app:items="@{item.profileDto}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:constraint_referenced_ids="recycler_view_characters,characters"
-            app:isVisible="@{item.profileResult.size() != 0}"/>
+            app:isVisible="@{item.profileDto.size() != 0}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,8 +1,8 @@
-package com.chocolatecake.marvel.data.model
+package com.chocolatecake.marvel.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class EventResult(
+data class EventDto(
     @SerializedName("description")
     val description: String? = null,
     @SerializedName("id")

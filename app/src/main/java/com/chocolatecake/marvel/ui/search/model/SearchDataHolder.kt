@@ -1,13 +1,13 @@
 package com.chocolatecake.marvel.ui.search.model
 
-import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.ProfileResult
-import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.remote.model.ComicDto
+import com.chocolatecake.marvel.data.remote.model.ProfileDto
+import com.chocolatecake.marvel.data.remote.model.SeriesDto
 
 data class SearchDataHolder(
-    val series: List<SeriesResult> = emptyList(),
-    val comics: List<ComicsResult> = emptyList(),
-    val characters: List<ProfileResult> = emptyList(),
+    val series: List<SeriesDto> = emptyList(),
+    val comics: List<ComicDto> = emptyList(),
+    val characters: List<ProfileDto> = emptyList(),
 ) {
     fun isNotEmpty() = !isEmpty()
 

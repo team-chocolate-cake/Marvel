@@ -110,7 +110,7 @@ class SeriesDetailsAdapter(
     private fun bindComic(comicViewHolder: ComicViewHolder, position: Int) {
         val currentComic = itemsSeriesDetails[position] as SeriesDetailsItem.ComicsItem
 
-        val adapter = ComicsAdapter(currentComic.comicsResult, listener)
+        val adapter = ComicsAdapter(currentComic.comicDto, listener)
         comicViewHolder.binding.recyclerViewComics.adapter = adapter
         comicViewHolder.binding.item = currentComic
     }
@@ -118,7 +118,7 @@ class SeriesDetailsAdapter(
     private fun bindEvents(eventViewHolder: EventViewHolder, position: Int) {
         val currentEvent = itemsSeriesDetails[position] as SeriesDetailsItem.EventsItem
 
-        val adapter = EventsAdapter(currentEvent.eventResult, listener)
+        val adapter = EventsAdapter(currentEvent.eventDto, listener)
         eventViewHolder.binding.recyclerViewEvents.adapter = adapter
         eventViewHolder.binding.item = currentEvent
     }
@@ -126,7 +126,7 @@ class SeriesDetailsAdapter(
     private fun bindHeader(headerViewHolder: HeaderViewHolder, position: Int) {
         val currentItem = itemsSeriesDetails[position] as SeriesDetailsItem.SeriesItem
 
-        headerViewHolder.binding.item = currentItem.seriesResult
+        headerViewHolder.binding.item = currentItem.seriesDto
     }
 
     override fun getItemViewType(position: Int): Int = itemsSeriesDetails[position].type.ordinal

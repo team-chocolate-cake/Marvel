@@ -2,11 +2,10 @@ package com.chocolatecake.marvel.ui.creator_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.model.ComicsResult
-import com.chocolatecake.marvel.data.model.ProfileResult
-import com.chocolatecake.marvel.data.model.SeriesResult
+import com.chocolatecake.marvel.data.remote.model.ComicDto
+import com.chocolatecake.marvel.data.remote.model.ProfileDto
+import com.chocolatecake.marvel.data.remote.model.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
-import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.creator_details.adapter.CreatorDetailsListener
@@ -21,16 +20,16 @@ class CreatorDetailsViewModel @Inject constructor(
 
     var creatorId by Delegates.notNull<Int>()
 
-    private val _comicsList = MutableLiveData<Status<List<ComicsResult>?>>()
-    val comicsList: LiveData<Status<List<ComicsResult>?>>
+    private val _comicsList = MutableLiveData<Status<List<ComicDto>?>>()
+    val comicsList: LiveData<Status<List<ComicDto>?>>
         get() = _comicsList
 
-    private val _seriesList = MutableLiveData<Status<List<SeriesResult>?>>()
-    val seriesList: LiveData<Status<List<SeriesResult>?>>
+    private val _seriesList = MutableLiveData<Status<List<SeriesDto>?>>()
+    val seriesList: LiveData<Status<List<SeriesDto>?>>
         get() = _seriesList
 
-    private val _creator = MutableLiveData<Status<List<ProfileResult>?>>()
-    val creator: LiveData<Status<List<ProfileResult>?>>
+    private val _creator = MutableLiveData<Status<List<ProfileDto>?>>()
+    val creator: LiveData<Status<List<ProfileDto>?>>
         get() = _creator
 
 
@@ -50,7 +49,7 @@ class CreatorDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetCreatorSuccess(status: Status<List<ProfileResult>>) {
+    private fun onGetCreatorSuccess(status: Status<List<ProfileDto>>) {
         status.toData()?.let { _creator.postValue(Status.Success(it)) }
     }
     //endregion
@@ -65,7 +64,7 @@ class CreatorDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetSeriesSuccess(status: Status<List<SeriesResult>>) {
+    private fun onGetSeriesSuccess(status: Status<List<SeriesDto>>) {
         status.toData()?.let { _seriesList.postValue(Status.Success(it)) }
     }
     //endregion
@@ -80,7 +79,7 @@ class CreatorDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetComicsSuccess(status: Status<List<ComicsResult>>) {
+    private fun onGetComicsSuccess(status: Status<List<ComicDto>>) {
         status.toData()?.let { _comicsList.postValue(Status.Success(it)) }
     }
     //endregion

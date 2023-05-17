@@ -12,7 +12,7 @@ import androidx.transition.TransitionManager
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.bumptech.glide.Glide
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.data.model.ImageResponse
+import com.chocolatecake.marvel.data.remote.model.ImageResponse
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.google.android.material.chip.Chip

@@ -1,11 +1,11 @@
 package com.chocolatecake.marvel.ui.event_details.adapters
 
 import com.chocolatecake.marvel.R
-import com.chocolatecake.marvel.data.model.ProfileResult
+import com.chocolatecake.marvel.data.remote.model.ProfileDto
 import com.chocolatecake.marvel.ui.base.BaseAdapter
 
-class CharactersAdapter(list: List<ProfileResult>, listener: EventDetailsListener) :
-    BaseAdapter<ProfileResult>(list, listener) {
+class CharactersAdapter(list: List<ProfileDto>, listener: EventDetailsListener) :
+    BaseAdapter<ProfileDto>(list, listener) {
 
     override val layoutId = R.layout.item_character
 }
