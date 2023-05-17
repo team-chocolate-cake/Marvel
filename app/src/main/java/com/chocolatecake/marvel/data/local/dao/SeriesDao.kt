@@ -8,5 +8,6 @@ import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface SeriesDao{
-
+    @Query("SELECT * FROM SeriesEntity")
+    fun getAllSeries(): Single<List<SeriesEntity>>
 }
