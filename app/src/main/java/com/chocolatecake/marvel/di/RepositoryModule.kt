@@ -1,8 +1,9 @@
 package com.chocolatecake.marvel.di
 
-import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.repository.MarvelRepositoryImpl
+import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
+import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -16,6 +17,46 @@ abstract class RepositoryModule {
 
     @Binds
     @ViewModelScoped
-    abstract fun provideRepository(marvelRepositoryImpl: MarvelRepositoryImpl): MarvelRepository
+    abstract fun bindRepository(marvelRepositoryImpl: MarvelRepositoryImpl): MarvelRepository
+
+
+    @Module
+    @InstallIn(ViewModelComponent::class)
+    object MappersModule {
+
+        /// region character
+        @Provides
+        @ViewModelScoped
+        fun provideCharacterMapper(): CharacterMapper {
+            return CharacterMapper()
+        }
+
+        @Provides
+        @ViewModelScoped
+        fun provideCharacterUIMapper(): CharacterUIMapper {
+            return CharacterUIMapper()
+        }
+        /// endregion
+
+
+        /// region comic
+
+        /// endregion
+
+
+        /// region event
+
+        /// endregion
+
+
+        /// region series
+
+        /// endregion
+
+
+        /// region story
+
+        /// endregion
+    }
 
 }

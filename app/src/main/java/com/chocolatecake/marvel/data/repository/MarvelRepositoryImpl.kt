@@ -1,22 +1,29 @@
 package com.chocolatecake.marvel.data.repository
 
+import com.chocolatecake.marvel.data.local.MarvelDataBase
+import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
-import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
+import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.core.Single
 import retrofit2.Response
 import javax.inject.Inject
 
 class MarvelRepositoryImpl @Inject constructor(
-    private val apiService: MarvelService
+    private val apiService: MarvelService,
+    private val database: MarvelDataBase,
+    private val characterMapper: CharacterMapper,
+    private val characterUIMapper: CharacterUIMapper,
 ) : MarvelRepository {
 
+    /// region comics
     override fun getComics(
         title: String?,
         limit: Int?,
@@ -33,11 +40,13 @@ class MarvelRepositoryImpl @Inject constructor(
         return wrapperToState(apiService.getComicById(comicId))
     }
 
-
     override fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileDto>>> {
         return wrapperToState(apiService.getCharactersForComic(comicId))
     }
+    /// endregion
 
+
+    /// region characters
     override fun getCharacters(
         name: String?,
         limit: Int?
@@ -56,8 +65,10 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getCharacterSeries(characterId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesForCharacter(characterId))
     }
+    /// endregion
 
 
+    /// region creators
     override fun getCreators(
         firstName: String?,
         middleName: String?,
@@ -77,12 +88,15 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getSeriesForCreator(creatorId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesForCreator(creatorId))
     }
+    /// endregion
 
+
+    /// region series
     override fun getSeries(
         title: String?,
         offset: Int?,
         limit: Int?,
-        orderBy : String?
+        orderBy: String?
     ): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeries(title, offset, limit))
     }
@@ -98,20 +112,10 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicDto>>> {
         return wrapperToState(apiService.getComicsForSeries(seriesId))
     }
+    /// endregion
 
 
-    override fun getEvents(
-        limit: Int?,
-        offset: Int?
-    ): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getEvents(limit, offset))
-    }
-
-    override fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getEventsForSeries(seriesId))
-    }
-
-
+    /// region stories
     override fun getStories(limit: Int?, offset: Int?): Single<Status<List<StoryDto>>> {
         return wrapperToState(apiService.getStories(limit, offset))
     }
@@ -131,7 +135,16 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getSeriesByStoryId(storyId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesByStoryId(storyId))
     }
+    /// endregion
 
+
+    /// region events
+    override fun getEvents(
+        limit: Int?,
+        offset: Int?
+    ): Single<Status<List<EventDto>>> {
+        return wrapperToState(apiService.getEvents(limit, offset))
+    }
 
     override fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>> {
         return wrapperToState(apiService.getCharactersByEventId(eventId))
@@ -148,6 +161,11 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>> {
         return wrapperToState(apiService.getSpecificEventByEventId(eventId))
     }
+
+    override fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>> {
+        return wrapperToState(apiService.getEventsForSeries(seriesId))
+    }
+    /// endregion
 
 
     private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
