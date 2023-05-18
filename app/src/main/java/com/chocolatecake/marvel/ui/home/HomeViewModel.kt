@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
     private fun onEventSuccess(result: Status<List<Event>>) {
         result.toData()?.let {
             _events.postValue(Status.Success(it))
-        }
+        } ?: _events.postValue(Status.Failure("No Data"))
     }
     //endregion
 
@@ -74,7 +74,7 @@ class HomeViewModel @Inject constructor(
     private fun onSeriesSuccess(status: Status<List<Series>>) {
         status.toData()?.let {
             _series.postValue(Status.Success(it))
-        }
+        } ?: _series.postValue(Status.Failure("No Data"))
     }
     //endregion
 
@@ -93,7 +93,7 @@ class HomeViewModel @Inject constructor(
     private fun onComicsSuccess(status: Status<List<Comic>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
-        }
+        } ?: _comics.postValue(Status.Failure("No Data"))
     }
     //endregion
 
