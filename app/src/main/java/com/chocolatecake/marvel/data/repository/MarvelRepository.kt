@@ -6,6 +6,9 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Series
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface MarvelRepository {
@@ -60,7 +63,9 @@ interface MarvelRepository {
         offset: Int? = null,
         limit: Int? = null,
         orderBy: String? = null
-    ): Single<Status<List<SeriesDto>>>
+    ): Observable<Status<List<Series>>>
+
+    fun refreshSeries(limit: Int?= null,offset: Int?= null) : Completable
 
     fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>>
 

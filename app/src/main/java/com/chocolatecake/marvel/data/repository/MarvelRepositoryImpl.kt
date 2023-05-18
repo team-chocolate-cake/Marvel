@@ -14,8 +14,11 @@ import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.util.observeOnMainThread
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
@@ -26,10 +29,10 @@ class MarvelRepositoryImpl @Inject constructor(
     private val database: MarvelDataBase,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
-    private val seriesMapper : SeriesMapper,
+    private val seriesMapper: SeriesMapper,
     private val seriesUiMapper: SeriesUIMapper
 
-    ) : MarvelRepository {
+) : MarvelRepository {
 
     /// region comics
     override fun getComics(
@@ -107,30 +110,33 @@ class MarvelRepositoryImpl @Inject constructor(
         offset: Int?,
         limit: Int?,
         orderBy: String?
-    ): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeries(title, offset, limit))
-    }
-
-    fun refreshSeriesData() : Completable {
-        return refreshData(
-            response = apiService.getSeries(),
-            mapper = seriesMapper,
-            saveToDb = {database.seriesDao.insertSeries(it)}
+    ): Observable<Status<List<Series>>> {
+        return wrapToState(
+            dbCall = database.seriesDao.getAllSeries(),
+            uiMapper = seriesUiMapper
         )
     }
 
-    private fun <I : Any, O: Any> refreshData(
+    override fun refreshSeries(limit: Int?, offset: Int?): Completable {
+        return refreshData(
+            response = apiService.getSeries(),
+            mapper = seriesMapper,
+            saveToDb = { database.seriesDao.insertSeries(it) }
+        )
+    }
+
+    private fun <I : Any, O : Any> refreshData(
         response: Single<Response<BaseResponse<I>>>,
-        mapper : Mapper<I, O>,
-        saveToDb : (List<O>)-> Completable
-    ) : Completable{
+        mapper: Mapper<I, O>,
+        saveToDb: (List<O>) -> Completable
+    ): Completable {
         return response.concatMapCompletable {
             Completable.create { emitter ->
                 response.doOnSuccess { baseResponse ->
                     if (baseResponse.isSuccessful) {
                         val filteredList = baseResponse.body()?.data?.results?.filterNotNull()
-                        val mappedItem = filteredList?.map {mapper.map(it)}
-                        mappedItem?.let{ items ->
+                        val mappedItem = filteredList?.map { mapper.map(it) }
+                        mappedItem?.let { items ->
                             saveToDb(items)
                                 .observeOn(Schedulers.io())
                                 .subscribe({
@@ -139,14 +145,15 @@ class MarvelRepositoryImpl @Inject constructor(
                                     { throwable ->
                                         emitter.onError(throwable)
                                     })
-                        } ?: Completable.error(Exception("elgohary and hasan here (this both is big error)"))
+                        }
+                            ?: Completable.error(Exception("elgohary and hasan here (this both is big error)"))
                     }
                 }.observeOnMainThread()
             }
         }
     }
 
-            override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
+    override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesById(seriesId))
     }
 
@@ -225,4 +232,17 @@ class MarvelRepositoryImpl @Inject constructor(
             }
         }.observeOnMainThread()
     }
+
+    private fun <I : Any, O : Any> wrapToState(
+        dbCall: Observable<List<I>>,
+        uiMapper: Mapper<I, O>
+    ): Observable<Status<List<O>>> {
+        return dbCall.map {
+            if (it.isEmpty()) {
+                return@map Status.Failure("No Result")
+            }
+            Status.Success(it.map { item -> uiMapper.map(item) })
+        }.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
+    }
+
 }

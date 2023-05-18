@@ -78,6 +78,17 @@ fun ImageView.loadImage(imageResponse: ImageResponse?) {
         .centerCrop()
         .into(this)
 }
+
+@BindingAdapter(value = ["app:loadImage"])
+fun ImageView.loadImageUrl(imageUrl: String?) {
+    Glide.with(context)
+        .load(imageUrl)
+        .thumbnail(Glide.with(context).load(R.raw.loading))
+        .fitCenter()
+        .centerCrop()
+        .into(this)
+}
+
 //endregion
 
 //region custom 2 way data binding

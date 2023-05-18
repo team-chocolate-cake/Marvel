@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.marvel.data.local.entities.SeriesEntity
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 @Dao
@@ -14,8 +15,8 @@ interface SeriesDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSeries(series : List<SeriesEntity>) : Completable
 
-    @Query("SELECT * FROM SeriesEntity LIMIT :limit")
-    fun getAllSeries(limit : Int): Single<List<SeriesEntity>>
+    @Query("SELECT * FROM SeriesEntity")
+    fun getAllSeries(): Observable<List<SeriesEntity>>
 
     @Query("DELETE FROM SeriesEntity")
     fun deleteAllSeries() : Completable
