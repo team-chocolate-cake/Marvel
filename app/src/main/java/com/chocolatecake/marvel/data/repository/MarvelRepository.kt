@@ -1,11 +1,15 @@
 package com.chocolatecake.marvel.data.repository
 
+import com.chocolatecake.marvel.data.local.dao.CharacterDao
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Character
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface MarvelRepository {
@@ -26,10 +30,15 @@ interface MarvelRepository {
 
 
     /// region characters
-    fun getCharacters(
+    fun refreshCharacters(
         name: String? = null,
         limit: Int? = null
-    ): Single<Status<List<ProfileDto>>>
+    ): Completable
+
+    fun getCharacters(
+        name: String = "",
+        limit: Int? = null
+    ): Observable<Status<List<Character>>>
 
     fun getCharacterById(characterId: Int): Single<Status<List<ProfileDto>>>
 

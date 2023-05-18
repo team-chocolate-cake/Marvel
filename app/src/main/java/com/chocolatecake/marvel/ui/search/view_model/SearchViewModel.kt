@@ -7,6 +7,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
@@ -103,15 +104,15 @@ class SearchViewModel @Inject constructor(
 
     //region Characters
     private fun getAllCharacters() {
-        disposeResponse(
-            response = repository.getCharacters(searchText),
+        repository.refreshCharacters(name = searchText).subscribe().add()
+        disposeObservableResponse(
+            response = repository.getCharacters(searchText ?: ""),
             onSuccess = ::onCharactersSuccess,
             onFailure = ::onFailure,
-
         )
     }
 
-    private fun onCharactersSuccess(characterResult: Status<List<ProfileDto>>) {
+    private fun onCharactersSuccess(characterResult: Status<List<Character>>) {
         characterResult.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(characters = result))
             _state.postValue(newState)
