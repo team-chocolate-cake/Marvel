@@ -2,7 +2,6 @@ package com.chocolatecake.marvel.ui.latest_series
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Series
@@ -33,7 +32,7 @@ class LatestSeriesViewModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({},{}).add()
         disposeObservableResponse(
-            response = repository.getSeries(),
+            response = repository.getSeries(limit = LIMIT),
             onSuccess = ::onLatestSeriesSuccess,
             onFailure = ::onLatestSeriesFailure,
         )
@@ -61,6 +60,5 @@ class LatestSeriesViewModel @Inject constructor(
 
     private companion object {
         const val LIMIT = 100
-        var ORDER_BY = "-startYear"
     }
 }
