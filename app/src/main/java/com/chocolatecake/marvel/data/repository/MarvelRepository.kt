@@ -9,6 +9,7 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.Story
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -92,7 +93,9 @@ interface MarvelRepository {
     fun getStories(
         limit: Int? = null,
         offset: Int? = null
-    ): Single<Status<List<StoryDto>>>
+    ): Observable<Status<List<Story>>>
+
+    fun refreshStories(limit: Int?= null,offset: Int?= null) : Completable
 
     fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>>
 
