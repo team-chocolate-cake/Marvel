@@ -46,7 +46,7 @@ class StoriesViewModel @Inject constructor(
     private fun onStoriesSuccess(status: Status<List<Story>>) {
         status.toData()?.let {
             _stories.postValue(Status.Success(it))
-        }
+        } ?: _stories.postValue(Status.Failure("No Cashed Data"))
     }
 
     private fun onFailure(throwable: Throwable) {

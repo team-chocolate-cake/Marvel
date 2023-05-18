@@ -189,19 +189,7 @@ class MarvelRepositoryImpl @Inject constructor(
     /// endregion
 
 
-    private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
-            Single<Status<List<T>>> {
-        return response.map { baseResponse ->
-            if (baseResponse.isSuccessful) {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList<T>()
-                )
-            } else {
-                Status.Failure(baseResponse.message())
-            }
-        }.observeOnMainThread()
-    }
-
+    /// region helpers
     private fun <I : Any, O : Any> wrapToState(
         dbCall: Observable<List<I>>,
         uiMapper: Mapper<I, O>
@@ -219,22 +207,34 @@ class MarvelRepositoryImpl @Inject constructor(
         mapper: Mapper<T, O>,
         saveToDb: (List<O>) -> Completable,
     ): Completable {
-        return response.concatMapCompletable { baseResponse ->
-            Completable.create { emitter ->
-                if (baseResponse.isSuccessful) {
-                    val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
-                    val mappedItems = filteredItems?.map { mapper.map(it) }
+        return response.flatMapCompletable { baseResponse ->
+            if (baseResponse.isSuccessful) {
+                val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
+                val mappedItems = filteredItems?.map { mapper.map(it) }
 
-                    mappedItems?.let { items ->
-                        saveToDb(items).observeOn(Schedulers.io()).subscribe({
-                            emitter.onComplete()
-                        }, { throwable ->
-                            emitter.onError(throwable)
-                        })
-                    }
-                }
-
-            }.observeOn(Schedulers.io())
+                mappedItems?.let { items ->
+                    saveToDb(items)
+                } ?: Completable.error(Exception("Mapping error"))
+            } else {
+                Completable.error(Exception("API Error: ${baseResponse.code()}"))
+            }
+        }.onErrorResumeNext { error ->
+            Completable.complete()
         }
     }
+
+    private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
+            Single<Status<List<T>>> {
+        return response.map { baseResponse ->
+            if (baseResponse.isSuccessful) {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList<T>()
+                )
+            } else {
+                Status.Failure(baseResponse.message())
+
+            }
+        }.observeOnMainThread()
+    }
+    /// endregion
 }
