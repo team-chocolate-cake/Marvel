@@ -3,7 +3,6 @@ package com.chocolatecake.marvel.ui.stories_details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentStoriesDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
@@ -16,7 +15,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class StoriesDetailsFragment :
     BaseFragment<FragmentStoriesDetailsBinding, StoriesDetailsViewModel>() {
 
-    private val args: StoriesDetailsFragmentArgs by navArgs()
     override val viewModel: StoriesDetailsViewModel by viewModels()
 
     override val layoutIdFragment: Int
@@ -24,8 +22,6 @@ class StoriesDetailsFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.storyId = args.storyId
-        viewModel.loadData()
 
         val creatorsAdapter = CreatorsAdapter(mutableListOf(), viewModel)
         binding.recyclerViewCreators.adapter = creatorsAdapter

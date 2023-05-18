@@ -26,8 +26,11 @@
             android:layout_height="@dimen/height_card"
             android:layout_gravity="top"
             android:scaleType="centerCrop"
-            app:loadImage="@{item.imageURL}"
             app:layout_constraintDimensionRatio="9:16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:imageUrlWithUrl="@{item.imageURL}"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
