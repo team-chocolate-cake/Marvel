@@ -2,14 +2,14 @@ package com.chocolatecake.marvel.di
 
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
-import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
-import com.chocolatecake.marvel.domain.mapper.story.StoryUIMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
+import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
+import com.chocolatecake.marvel.domain.mapper.story.StoryUIMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
