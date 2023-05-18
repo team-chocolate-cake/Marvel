@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.ui.comic_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
@@ -9,27 +10,27 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class ComicDetailsViewModel @Inject constructor(
     private val repository: MarvelRepository,
-    ) : BaseViewModel(), ComicInteractionListener {
+    savedStateHandle: SavedStateHandle
+) : BaseViewModel(), ComicInteractionListener {
 
-    var currentComicId by Delegates.notNull<Int>()
+    private val currentComicId: Int = savedStateHandle[COMIC_ID] ?: 0
 
     private val _currentComic = MutableLiveData<Status<ComicDto>?>()
-    val currentComic: LiveData<Status<ComicDto>?>
-        get() = _currentComic
+    val currentComic: LiveData<Status<ComicDto>?> = _currentComic
 
     private val _characters = MutableLiveData<Status<List<ProfileDto>?>>()
-    val characters: LiveData<Status<List<ProfileDto>?>>
-        get() = _characters
+    val characters: LiveData<Status<List<ProfileDto>?>>  = _characters
 
     private val _toastMessage = MutableLiveData<String>()
-    val toastMessage: LiveData<String>
-        get() = _toastMessage
+    val toastMessage: LiveData<String> = _toastMessage
 
+    init {
+        loadData()
+    }
 
     fun loadData() {
         getCurrentComic()
@@ -97,7 +98,8 @@ class ComicDetailsViewModel @Inject constructor(
     }
 
 
-    companion object {
-        private const val ERROR_OCCURRED = "error occurred"
+    private companion object {
+        const val ERROR_OCCURRED = "error occurred"
+        const val COMIC_ID = "comicId"
     }
 }
