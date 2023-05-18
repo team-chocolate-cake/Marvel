@@ -28,8 +28,8 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun addCallBacks() {
-        viewModel.toastMessage.observeNonNull(requireActivity()){
-            createToast(it)
+        viewModel.toastMessage.observeNonNull(requireActivity()) {
+            it.getContentIfNotHandled()?.let { message -> createToast(message) }
         }
     }
 

@@ -8,6 +8,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -25,8 +26,8 @@ class ComicDetailsViewModel @Inject constructor(
     private val _characters = MutableLiveData<Status<List<ProfileDto>?>>()
     val characters: LiveData<Status<List<ProfileDto>?>>  = _characters
 
-    private val _toastMessage = MutableLiveData<String>()
-    val toastMessage: LiveData<String> = _toastMessage
+    private val _toastMessage = MutableLiveData<Event<String>>()
+    val toastMessage: LiveData<Event<String>> = _toastMessage
 
     init {
         loadData()
@@ -55,7 +56,7 @@ class ComicDetailsViewModel @Inject constructor(
 
     private fun onGetCurrentComicFailure(throwable: Throwable) {
         _currentComic.postValue(Status.Failure(throwable.message.toString()))
-        _toastMessage.postValue(ERROR_OCCURRED)
+        _toastMessage.postValue(Event(ERROR_OCCURRED))
     }
     //endregion
 
@@ -76,7 +77,7 @@ class ComicDetailsViewModel @Inject constructor(
     }
 
     private fun onGetCharacterFailure(throwable: Throwable) {
-        _toastMessage.postValue(ERROR_OCCURRED)
+        _toastMessage.postValue(Event(ERROR_OCCURRED))
         _characters.postValue(Status.Failure(throwable.message.toString()))
     }
     //endregion

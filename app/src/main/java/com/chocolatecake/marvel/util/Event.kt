@@ -1,7 +1,5 @@
 package com.chocolatecake.marvel.util
 
-import androidx.lifecycle.Observer
-
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false
