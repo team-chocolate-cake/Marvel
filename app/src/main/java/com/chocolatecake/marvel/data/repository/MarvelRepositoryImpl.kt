@@ -56,6 +56,13 @@ class MarvelRepositoryImpl @Inject constructor(
         )
     }
 
+    override fun searchComics(title: String, limit: Int): Observable<Status<List<Comic>>> {
+        return wrapToState(
+            dbCall =  database.comicDao.getFilteredComics("%$title%", limit),
+            uiMapper = comicUIMapper
+        )
+    }
+
     override fun refreshComics(title: String?, limit: Int?, offset: Int?): Completable {
         return refreshData(
             response = apiService.getComics(title, limit, offset),
@@ -148,9 +155,16 @@ class MarvelRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun refreshSeries(limit: Int, offset: Int): Completable {
+    override fun searchSeries(title: String, limit: Int): Observable<Status<List<Series>>> {
+        return wrapToState(
+            dbCall = database.seriesDao.getFilteredSeries("%$title%", limit),
+            uiMapper = seriesUiMapper
+        )
+    }
+
+    override fun refreshSeries(title: String?, limit: Int, offset: Int): Completable {
         return refreshData(
-            apiService.getSeries(),
+            apiService.getSeries(title, offset, limit),
             seriesMapper
         ) {
             database.seriesDao.insertSeries(it)

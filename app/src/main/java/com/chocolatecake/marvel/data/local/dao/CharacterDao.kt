@@ -21,6 +21,6 @@ interface CharacterDao {
     @Query("SELECT * FROM CharacterEntity")
     fun getAllCharacters(): Observable<List<CharacterEntity>>
 
-    @Query("SELECT * FROM CharacterEntity WHERE name LIKE :characterName")
-    fun getFilteredCharacters(characterName: String): Observable<List<CharacterEntity>>
+    @Query("SELECT * FROM CharacterEntity WHERE name LIKE :characterName limit(:limit)")
+    fun getFilteredCharacters(characterName: String, limit: Int = 5): Observable<List<CharacterEntity>>
 }

@@ -23,6 +23,11 @@ interface MarvelRepository {
         offset: Int? = null,
     ): Observable<Status<List<Comic>>>
 
+    fun searchComics(
+        title: String = "",
+        limit: Int
+    ): Observable<Status<List<Comic>>>
+
     fun refreshComics(
         title: String? = null,
         limit: Int? = null,
@@ -79,9 +84,15 @@ interface MarvelRepository {
         orderBy: String? = null
     ): Observable<Status<List<Series>>>
 
-    fun refreshSeries(
+    fun searchSeries(
+        title: String = "",
         limit: Int,
-        offset: Int
+    ): Observable<Status<List<Series>>>
+
+    fun refreshSeries(
+        title: String? = null,
+        limit: Int,
+        offset: Int = 0,
     ): Completable
 
     fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>>

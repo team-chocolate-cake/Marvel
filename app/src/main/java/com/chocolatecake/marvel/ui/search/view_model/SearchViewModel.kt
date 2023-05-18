@@ -8,6 +8,8 @@ import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
@@ -70,14 +72,15 @@ class SearchViewModel @Inject constructor(
 
     //region Series
     private fun getAllSeries() {
-        disposeResponse(
-            response = repository.getSeries(searchText),
+        repository.refreshSeries(title = searchText, limit = 5).subscribe().add()
+        disposeObservableResponse(
+            response = repository.searchSeries(searchText ?: "", limit = 5),
             onSuccess = ::onSeriesSuccess,
             onFailure = ::onFailure,
         )
     }
 
-    private fun onSeriesSuccess(seriesDto: Status<List<SeriesDto>>) {
+    private fun onSeriesSuccess(seriesDto: Status<List<Series>>) {
         seriesDto.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(series = result))
             _state.postValue(newState)
@@ -87,14 +90,15 @@ class SearchViewModel @Inject constructor(
 
     //region Comics
     private fun getAllComics() {
-        disposeResponse(
-            response = repository.getComics(searchText),
+        repository.refreshComics(title = searchText, limit = 5).subscribe().add()
+        disposeObservableResponse(
+            response = repository.searchComics(searchText ?: "", limit = 5),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,
         )
     }
 
-    private fun onComicsSuccess(comicResult: Status<List<ComicDto>>) {
+    private fun onComicsSuccess(comicResult: Status<List<Comic>>) {
         comicResult.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(comics = result))
             _state.postValue(newState)
