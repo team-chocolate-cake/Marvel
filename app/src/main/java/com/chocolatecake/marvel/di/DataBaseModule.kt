@@ -3,6 +3,7 @@ package com.chocolatecake.marvel.di
 import android.content.Context
 import androidx.room.Room
 import com.chocolatecake.marvel.data.local.MarvelDataBase
+import com.chocolatecake.marvel.data.local.MarvelDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +26,12 @@ object DataBaseModule {
         ).build()
     }
 
+    @Provides
+    @Singleton
+    fun provideMarvelDao(
+        marvelDataBase: MarvelDataBase
+    ): MarvelDao {
+        return marvelDataBase.marvelDao
+    }
 }
+
