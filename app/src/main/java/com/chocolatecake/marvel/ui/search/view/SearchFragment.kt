@@ -1,7 +1,9 @@
 package com.chocolatecake.marvel.ui.search.view
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
@@ -31,6 +33,17 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         adapter = SearchListAdapter(viewModel)
         binding.recyclerView.adapter = adapter
         observeListItems()
+
+        // Set up adapter for MaterialAutoCompleteTextView
+        var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_dropdown_item_1line, emptyList<String>())
+        binding.editTextSearch.setAdapter(adapter)
+
+        // Observe suggestions and update the adapter
+        viewModel.searchHistory.observeNonNull(this) { searchHistory ->
+            adapter.clear()
+            adapter.addAll(searchHistory)
+            adapter.notifyDataSetChanged()
+        }
     }
 
     private fun observeListItems() {

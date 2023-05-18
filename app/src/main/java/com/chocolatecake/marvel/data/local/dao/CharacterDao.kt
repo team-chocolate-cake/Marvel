@@ -19,4 +19,5 @@ interface CharacterDao {
 
     @Query("SELECT * FROM CharacterEntity")
     fun getAllCharacters(): Single<List<CharacterEntity>>
+
 }

@@ -29,6 +29,9 @@ class SearchViewModel @Inject constructor(
     val state: LiveData<Status<SearchDataHolder>>
         get() = _state
 
+    private val _searchHistory = MutableLiveData<List<String>>()
+    val searchHistory: LiveData<List<String>> get() = _searchHistory
+
 
     var searchText: String?
         get() = searchQuery.value?.query
@@ -39,14 +42,22 @@ class SearchViewModel @Inject constructor(
                     type = searchType
                 )
             )
+            getSearchHistory(query= value?.takeIf { it.isNotBlank() },)
         }
 
     var searchType: SearchItemType
         get() = searchQuery.value?.type ?: SearchItemType.TYPE_SERIES
         set(value) {
-            searchQuery.onNext(SearchQuery(query = searchText, type = value))
+            searchQuery.onNext(
+                SearchQuery(query = searchText, type = value)
+            )
         }
 
+
+    private fun getSearchHistory(query: String?) {
+        val searchHistory = listOf("Apple", "Banana", "Orange", "Grapes")
+        _searchHistory.postValue(searchHistory.filter { it.contains(query!!, ignoreCase = true) })
+    }
 
     init {
         applySearch()
