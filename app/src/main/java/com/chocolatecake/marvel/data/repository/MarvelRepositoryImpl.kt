@@ -12,8 +12,14 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
+import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
+import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
+import com.chocolatecake.marvel.domain.mapper.event.EventMapper
+import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -30,7 +36,11 @@ class MarvelRepositoryImpl @Inject constructor(
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
     private val seriesMapper: SeriesMapper,
-    private val seriesUiMapper: SeriesUIMapper
+    private val seriesUiMapper: SeriesUIMapper,
+    private val eventMapper: EventMapper,
+    private val eventUIMapper: EventUIMapper,
+    private val comicMapper: ComicMapper,
+    private val comicUIMapper: ComicUIMapper
 ) : MarvelRepository {
 
     /// region comics
@@ -38,8 +48,20 @@ class MarvelRepositoryImpl @Inject constructor(
         title: String?,
         limit: Int?,
         offset: Int?
-    ): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComics(title, limit, offset))
+    ): Observable<Status<List<Comic>>> {
+        return wrapToState(
+            dbCall =  database.comicDao.getComicsWithLimit(),
+            uiMapper = comicUIMapper
+        )
+    }
+
+    override fun refreshComics(title: String?, limit: Int?, offset: Int?): Completable {
+        return refreshData(
+            response = apiService.getComics(title, limit, offset),
+            mapper = comicMapper
+        ) {
+            database.comicDao.insertComics(it)
+        }
     }
 
     override fun getEventByComicId(comicId: Int): Single<Status<List<EventDto>>> {
@@ -165,9 +187,22 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getEvents(
         limit: Int?,
         offset: Int?
-    ): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getEvents(limit, offset))
+    ): Observable<Status<List<Event>>> {
+        return wrapToState(
+            dbCall = database.eventDao.getEventsWithLimit(),
+            uiMapper = eventUIMapper
+        )
     }
+
+    override fun refreshEvent(limit: Int?, offset: Int?): Completable {
+        return refreshData(
+            response = apiService.getEvents(limit, offset),
+            mapper = eventMapper
+        ) {
+            database.eventDao.insertEvent(it)
+        }
+    }
+
 
     override fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>> {
         return wrapperToState(apiService.getCharactersByEventId(eventId))
