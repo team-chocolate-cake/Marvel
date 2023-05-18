@@ -1,6 +1,6 @@
 package com.chocolatecake.marvel.data.repository
 
-import com.chocolatecake.marvel.data.local.MarvelDataBase
+import com.chocolatecake.marvel.data.local.MarvelDao
 import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 class MarvelRepositoryImpl @Inject constructor(
     private val apiService: MarvelService,
-    private val database: MarvelDataBase,
+    private val dao: MarvelDao,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
     private val seriesMapper: SeriesMapper,
@@ -55,7 +55,7 @@ class MarvelRepositoryImpl @Inject constructor(
         offset: Int?
     ): Observable<Status<List<Comic>>> {
         return wrapToState(
-            dbCall =  database.comicDao.getComicsWithLimit(),
+            dbCall =  dao.getComicsWithLimit(),
             uiMapper = comicUIMapper
         )
     }
@@ -65,7 +65,7 @@ class MarvelRepositoryImpl @Inject constructor(
             response = apiService.getComics(title, limit, offset),
             mapper = comicMapper
         ) {
-            database.comicDao.insertComics(it)
+            dao.insertComics(it)
         }
     }
 
@@ -136,7 +136,7 @@ class MarvelRepositoryImpl @Inject constructor(
         orderBy: String?
     ): Observable<Status<List<Series>>> {
         return wrapToState(
-            dbCall = database.seriesDao.getSeriesWithLimit(),
+            dbCall = dao.getSeriesWithLimit(),
             uiMapper = seriesUiMapper
         )
     }
@@ -146,7 +146,7 @@ class MarvelRepositoryImpl @Inject constructor(
             apiService.getSeries(),
             seriesMapper
         ) {
-            database.seriesDao.insertSeries(it)
+            dao.insertSeries(it)
         }
     }
 
@@ -167,7 +167,7 @@ class MarvelRepositoryImpl @Inject constructor(
 
     /// region stories
     override fun getStories(limit: Int?, offset: Int?): Observable<Status<List<Story>>> {
-        return wrapToState(dbCall = database.storyDao.getAllStories(),
+        return wrapToState(dbCall = dao.getAllStories(),
         uiMapper = storiesUIMapper)
     }
 
@@ -176,7 +176,7 @@ class MarvelRepositoryImpl @Inject constructor(
             response = apiService.getStories(),
             mapper = storiesMapper,
             saveToDb = {
-                database.storyDao.insertStories(it)
+                dao.insertStories(it)
             }
         )
     }
@@ -205,7 +205,7 @@ class MarvelRepositoryImpl @Inject constructor(
         offset: Int?
     ): Observable<Status<List<Event>>> {
         return wrapToState(
-            dbCall = database.eventDao.getEventsWithLimit(),
+            dbCall = dao.getEventsWithLimit(),
             uiMapper = eventUIMapper
         )
     }
@@ -215,7 +215,7 @@ class MarvelRepositoryImpl @Inject constructor(
             response = apiService.getEvents(limit, offset),
             mapper = eventMapper
         ) {
-            database.eventDao.insertEvent(it)
+            dao.insertEvent(it)
         }
     }
 
