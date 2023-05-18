@@ -14,8 +14,8 @@ interface SeriesDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSeries(series : List<SeriesEntity>) : Completable
 
-    @Query("SELECT * FROM SeriesEntity")
-    fun getAllSeries(): Single<List<SeriesEntity>>
+    @Query("SELECT * FROM SeriesEntity LIMIT :limit")
+    fun getAllSeries(limit : Int): Single<List<SeriesEntity>>
 
     @Query("DELETE FROM SeriesEntity")
     fun deleteAllSeries() : Completable
