@@ -44,12 +44,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideMarvelInterceptor(): MarvelInterceptor {
-        return MarvelInterceptor()
-    }
-
-    @Provides
-    @Singleton
     fun provideLoggingInterceptor(): HttpLoggingInterceptor{
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY

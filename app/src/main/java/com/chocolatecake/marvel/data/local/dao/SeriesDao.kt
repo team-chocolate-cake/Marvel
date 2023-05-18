@@ -8,10 +8,13 @@ import com.chocolatecake.marvel.data.local.entities.SeriesEntity
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 
+
+
 @Dao
 interface SeriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSeries(series: List<SeriesEntity>): Completable
+
 
     @Query("select * from TABLE_SERIES order by random() limit(:limit)")
     fun getSeriesWithLimit(limit: Int = 10): Observable<List<SeriesEntity>>

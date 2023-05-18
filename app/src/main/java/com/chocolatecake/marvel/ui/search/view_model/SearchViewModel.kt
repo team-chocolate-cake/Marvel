@@ -54,27 +54,27 @@ class SearchViewModel @Inject constructor(
 
     private fun applySearch() {
         searchQuery.debounce(500, TimeUnit.MILLISECONDS).subscribe {
-            loadData()
+//            loadData()
         }.add()
     }
 
-    fun loadData() {
-        _state.postValue(Status.Loading)
-        when (searchType) {
-            SearchItemType.TYPE_SERIES -> getAllSeries()
-            SearchItemType.TYPE_COMICS -> getAllComics()
-            SearchItemType.TYPE_CHARACTER -> getAllCharacters()
-        }
-    }
+//    fun loadData() {
+//        _state.postValue(Status.Loading)
+//        when (searchType) {
+//            SearchItemType.TYPE_SERIES -> getAllSeries()
+//            SearchItemType.TYPE_COMICS -> getAllComics()
+//            SearchItemType.TYPE_CHARACTER -> getAllCharacters()
+//        }
+//    }
 
     //region Series
-    private fun getAllSeries() {
-        disposeResponse(
-            response = repository.getSeries(searchText),
-            onSuccess = ::onSeriesSuccess,
-            onFailure = ::onFailure,
-        )
-    }
+//    private fun getAllSeries() {
+//        disposeResponse(
+//            response = repository.getSeries(searchText),
+//            onSuccess = ::onSeriesSuccess,
+//            onFailure = ::onFailure,
+//        )
+//    }
 
     private fun onSeriesSuccess(seriesDto: Status<List<SeriesDto>>) {
         seriesDto.toData()?.let { result ->

@@ -119,7 +119,7 @@
             android:layout_height="180dp"
             android:clickable="true"
             android:focusable="true"
-            android:onClick="@{()-> viewModel.loadData()}"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -135,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:onClick="@{()-> viewModel.loadData()}"
+
             android:text="@string/try_again"
             android:textColor="@color/on_background_87"
             android:textSize="@dimen/text_medium"
