@@ -5,6 +5,7 @@ import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.model.Event
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
+
 @ViewModelScoped
 class EventUIMapper @Inject constructor() : Mapper<EventEntity, Event> {
     override fun map(input: EventEntity): Event {
