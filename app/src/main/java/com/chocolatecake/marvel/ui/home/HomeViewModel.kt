@@ -7,9 +7,12 @@ import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.home.adapter.HomeListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,8 +24,8 @@ class HomeViewModel @Inject constructor(
     val events: LiveData<Status<List<EventDto>>>
         get() = _events
 
-    private val _series = MutableLiveData<Status<List<SeriesDto>>>()
-    val series: LiveData<Status<List<SeriesDto>>>
+    private val _series = MutableLiveData<Status<List<Series>>>()
+    val series: LiveData<Status<List<Series>>>
         get() = _series
 
     private val _comics = MutableLiveData<Status<List<ComicDto>>>()
@@ -47,9 +50,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun loadData() {
-        getCurrentEvent()
+//        getCurrentEvent()
         getCurrentSeries()
-        getCurrentComic()
+//        getCurrentComic()
     }
 
     //region Event
@@ -72,14 +75,18 @@ class HomeViewModel @Inject constructor(
     //region Series
     private fun getCurrentSeries() {
         _series.postValue(Status.Loading)
-        disposeResponse(
-            response = marvelRepository.getSeries(limit = LIMIT, offset = (0..50).random()),
-            onSuccess = ::onSeriesSuccess,
-            onFailure = ::onFailure,
-        )
+        marvelRepository
+            .refreshSeries(limit = LIMIT, offset = (0..50).random())
+            .subscribe({},{}).add()
+
+        marvelRepository.getSeries()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(::onSeriesSuccess, ::onFailure)
+            .add()
     }
 
-    private fun onSeriesSuccess(status: Status<List<SeriesDto>>) {
+    private fun onSeriesSuccess(status: Status<List<Series>>) {
         status.toData()?.let {
             _series.postValue(Status.Success(it))
         }

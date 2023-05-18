@@ -22,7 +22,7 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:showWhenSuccess="@{viewModel.events}"/>
+            app:showWhenSuccess="@{viewModel.series}"/>
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:showWhenLoading="@{viewModel.events}" />
+            app:showWhenLoading="@{viewModel.series}" />
 
 
         <com.airbnb.lottie.LottieAnimationView
@@ -45,12 +45,13 @@
             android:onClick="@{()-> viewModel.loadData()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/error"
-            app:showWhenFailure="@{viewModel.events}" />
+            app:showWhenFailure="@{viewModel.series}" />
 
         <TextView
             android:id="@+id/text_view_try_again"
@@ -65,7 +66,7 @@
             app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView"
             app:layout_constraintStart_toStartOf="@+id/lottieAnimationView"
             app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
-            app:showWhenFailure="@{viewModel.events}" />
+            app:showWhenFailure="@{viewModel.series}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

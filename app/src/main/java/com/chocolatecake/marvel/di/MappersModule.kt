@@ -2,6 +2,8 @@ package com.chocolatecake.marvel.di
 
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +40,17 @@ object MappersModule {
 
 
     /// region series
+    @Provides
+    @ViewModelScoped
+    fun provideSeriesMapper(): SeriesMapper {
+        return SeriesMapper()
+    }
 
+    @Provides
+    @ViewModelScoped
+    fun provideSeriesUIMapper(): SeriesUIMapper {
+        return SeriesUIMapper()
+    }
     /// endregion
 
 
