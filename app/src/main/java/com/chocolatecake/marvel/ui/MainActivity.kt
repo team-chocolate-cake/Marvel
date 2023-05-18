@@ -1,10 +1,11 @@
-package com.chocolatecake.marvel
+package com.chocolatecake.marvel.ui
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
