@@ -12,7 +12,16 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
+import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
+import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
+import com.chocolatecake.marvel.domain.mapper.event.EventMapper
+import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.model.Character
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
@@ -27,6 +36,12 @@ class MarvelRepositoryImpl @Inject constructor(
     private val database: MarvelDataBase,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
+    private val seriesMapper: SeriesMapper,
+    private val seriesUiMapper: SeriesUIMapper,
+    private val eventMapper: EventMapper,
+    private val eventUIMapper: EventUIMapper,
+    private val comicMapper: ComicMapper,
+    private val comicUIMapper: ComicUIMapper
 ) : MarvelRepository {
 
     /// region comics
@@ -34,8 +49,20 @@ class MarvelRepositoryImpl @Inject constructor(
         title: String?,
         limit: Int?,
         offset: Int?
-    ): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComics(title, limit, offset))
+    ): Observable<Status<List<Comic>>> {
+        return wrapToState(
+            dbCall =  database.comicDao.getComicsWithLimit(),
+            uiMapper = comicUIMapper
+        )
+    }
+
+    override fun refreshComics(title: String?, limit: Int?, offset: Int?): Completable {
+        return refreshData(
+            response = apiService.getComics(title, limit, offset),
+            mapper = comicMapper
+        ) {
+            database.comicDao.insertComics(it)
+        }
     }
 
     override fun getEventByComicId(comicId: Int): Single<Status<List<EventDto>>> {
@@ -114,9 +141,22 @@ class MarvelRepositoryImpl @Inject constructor(
         offset: Int?,
         limit: Int?,
         orderBy: String?
-    ): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeries(title, offset, limit))
+    ): Observable<Status<List<Series>>> {
+        return wrapToState(
+            dbCall = database.seriesDao.getSeriesWithLimit(),
+            uiMapper = seriesUiMapper
+        )
     }
+
+    override fun refreshSeries(limit: Int, offset: Int): Completable {
+        return refreshData(
+            apiService.getSeries(),
+            seriesMapper
+        ) {
+            database.seriesDao.insertSeries(it)
+        }
+    }
+
 
     override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesById(seriesId))
@@ -159,9 +199,22 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getEvents(
         limit: Int?,
         offset: Int?
-    ): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getEvents(limit, offset))
+    ): Observable<Status<List<Event>>> {
+        return wrapToState(
+            dbCall = database.eventDao.getEventsWithLimit(),
+            uiMapper = eventUIMapper
+        )
     }
+
+    override fun refreshEvent(limit: Int?, offset: Int?): Completable {
+        return refreshData(
+            response = apiService.getEvents(limit, offset),
+            mapper = eventMapper
+        ) {
+            database.eventDao.insertEvent(it)
+        }
+    }
+
 
     override fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>> {
         return wrapperToState(apiService.getCharactersByEventId(eventId))
@@ -198,25 +251,26 @@ class MarvelRepositoryImpl @Inject constructor(
         }.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
     }
 
-    private fun <T : Any, O : Any> refreshData(
-        response: Single<Response<BaseResponse<T>>>,
-        mapper: Mapper<T, O>,
+    private fun <I : Any, O : Any> refreshData(
+        response: Single<Response<BaseResponse<I>>>,
+        mapper: Mapper<I, O>,
         saveToDb: (List<O>) -> Completable,
     ): Completable {
-        return response.flatMapCompletable { baseResponse ->
-            if (baseResponse.isSuccessful) {
-                val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
-                val mappedItems = filteredItems?.map { mapper.map(it) }
-
-                mappedItems?.let { items ->
-                    saveToDb(items)
-                } ?: Completable.error(Exception("Mapping error"))
-            } else {
-                Completable.error(Exception("API Error: ${baseResponse.code()}"))
+        return response.concatMapCompletable { baseResponse ->
+            Completable.create { emitter ->
+                if (baseResponse.isSuccessful) {
+                    val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
+                    val mappedItems = filteredItems?.map { mapper.map(it) }
+                    mappedItems?.let { items ->
+                        saveToDb(items).observeOn(Schedulers.io()).subscribe({
+                            emitter.onComplete()
+                        }, {
+                            emitter.onError(it)
+                        })
+                    }
+                }
             }
-        }.onErrorResumeNext { error ->
-            Completable.complete()
-        }
+        }.observeOn(Schedulers.io())
     }
 
     private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
@@ -228,9 +282,8 @@ class MarvelRepositoryImpl @Inject constructor(
                 )
             } else {
                 Status.Failure(baseResponse.message())
-
             }
         }.observeOnMainThread()
     }
-/// endregion
+    /// endregion
 }

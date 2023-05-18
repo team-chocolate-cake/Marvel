@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.remote.model.dto.EventDto" />
+            type="com.chocolatecake.marvel.domain.model.Event" />
 
         <variable
             name="listener"
@@ -25,7 +25,7 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:onClick="@{() -> listener.onClickEvent(item.id)}"
-            app:imageUrl="@{item.thumbnail}"
+            app:imageUrlWithUrl="@{item.imageURL}"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"

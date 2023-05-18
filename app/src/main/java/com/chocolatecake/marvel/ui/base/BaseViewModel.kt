@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavDirections
 import com.chocolatecake.marvel.data.util.Status
-import com.chocolatecake.marvel.util.Event
 import com.chocolatecake.marvel.ui.util.NavigationCommand
-import com.chocolatecake.marvel.util.observeOnMainThread
+import com.chocolatecake.marvel.util.Event
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
@@ -31,6 +31,14 @@ abstract class BaseViewModel : ViewModel() {
 
     fun <T : Any> disposeResponse(
         response: Single<Status<T>>,
+        onSuccess: (data: Status<T>) -> Unit,
+        onFailure: (e: Throwable) -> Unit,
+    ) {
+        response.subscribe(onSuccess, onFailure).add()
+    }
+
+    fun <T : Any> disposeObservableResponse(
+        response: Observable<Status<T>>,
         onSuccess: (data: Status<T>) -> Unit,
         onFailure: (e: Throwable) -> Unit,
     ) {
