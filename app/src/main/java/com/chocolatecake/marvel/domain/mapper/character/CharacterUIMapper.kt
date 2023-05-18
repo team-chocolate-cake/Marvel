@@ -3,8 +3,11 @@ package com.chocolatecake.marvel.domain.mapper.character
 import com.chocolatecake.marvel.data.local.entities.CharacterEntity
 import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.model.Character
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
-class CharacterUIMapper : Mapper<CharacterEntity, Character> {
+@ViewModelScoped
+class CharacterUIMapper @Inject constructor() : Mapper<CharacterEntity, Character> {
 
     override fun map(input: CharacterEntity): Character {
 

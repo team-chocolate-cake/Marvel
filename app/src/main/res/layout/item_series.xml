@@ -23,6 +23,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_view_thumbnail"
             android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_height="@dimen/height_card"
             android:layout_gravity="top"
             android:scaleType="centerCrop"
