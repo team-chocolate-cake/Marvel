@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.data.repository
 
-import android.annotation.SuppressLint
 import com.chocolatecake.marvel.data.local.MarvelDataBase
 import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
@@ -13,10 +12,10 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
-import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
@@ -27,6 +26,8 @@ class MarvelRepositoryImpl @Inject constructor(
     private val database: MarvelDataBase,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
+    private val seriesMapper : SeriesMapper,
+    private val seriesUiMapper: SeriesUIMapper
 
     ) : MarvelRepository {
 
@@ -110,8 +111,15 @@ class MarvelRepositoryImpl @Inject constructor(
         return wrapperToState(apiService.getSeries(title, offset, limit))
     }
 
-    @SuppressLint("CheckResult")
-    private fun <I : Any, O: Any> refreshSeries(
+    fun refreshSeriesData() : Completable {
+        return refreshData(
+            response = apiService.getSeries(),
+            mapper = seriesMapper,
+            saveToDb = {database.seriesDao.insertSeries(it)}
+        )
+    }
+
+    private fun <I : Any, O: Any> refreshData(
         response: Single<Response<BaseResponse<I>>>,
         mapper : Mapper<I, O>,
         saveToDb : (List<O>)-> Completable
@@ -121,9 +129,9 @@ class MarvelRepositoryImpl @Inject constructor(
                 response.doOnSuccess { baseResponse ->
                     if (baseResponse.isSuccessful) {
                         val filteredList = baseResponse.body()?.data?.results?.filterNotNull()
-                        val mappedItem = filteredList?.map { mapper.map(it) }
-                        mappedItem?.let{ item ->
-                            saveToDb(item)
+                        val mappedItem = filteredList?.map {mapper.map(it)}
+                        mappedItem?.let{ items ->
+                            saveToDb(items)
                                 .observeOn(Schedulers.io())
                                 .subscribe({
                                     emitter.onComplete()
@@ -131,13 +139,12 @@ class MarvelRepositoryImpl @Inject constructor(
                                     { throwable ->
                                         emitter.onError(throwable)
                                     })
-                        }
+                        } ?: Completable.error(Exception("elgohary and hasan here (this both is big error)"))
                     }
                 }.observeOnMainThread()
             }
         }
     }
-
 
             override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesById(seriesId))
