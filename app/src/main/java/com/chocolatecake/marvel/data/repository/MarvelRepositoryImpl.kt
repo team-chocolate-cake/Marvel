@@ -16,6 +16,7 @@ import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.util.observeOnMainThread
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -107,11 +108,10 @@ class MarvelRepositoryImpl @Inject constructor(
         limit: Int?,
         orderBy: String?
     ): Observable<Status<List<Series>>> {
-        return database.seriesDao.getSeriesWithLimit().map {
-            Status.Success(it.map { seriesEntity ->
-                seriesUiMapper.map(seriesEntity)
-            })
-        }
+        return wrapToState(
+            dbCall = database.seriesDao.getSeriesWithLimit(),
+            uiMapper = seriesUiMapper
+        )
     }
 
     override fun refreshSeries(limit: Int, offset: Int): Completable {
@@ -121,28 +121,6 @@ class MarvelRepositoryImpl @Inject constructor(
         ) {
             database.seriesDao.insertSeries(it)
         }
-    }
-
-    private fun <T : Any, O : Any> refreshData(
-        response: Single<Response<BaseResponse<T>>>,
-        mapper: Mapper<T, O>,
-        saveToDb: (List<O>) -> Completable,
-    ): Completable {
-        return response.concatMapCompletable { baseResponse ->
-            Completable.create { emitter ->
-                if (baseResponse.isSuccessful) {
-                    val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
-                    val mappedItems = filteredItems?.map { mapper.map(it) }
-                    mappedItems?.let { items ->
-                        saveToDb(items).observeOn(Schedulers.io()).subscribe({
-                            emitter.onComplete()
-                        }, {
-                            emitter.onError(it)
-                        })
-                    }
-                }
-            }
-        }.observeOn(Schedulers.io())
     }
 
 
@@ -213,6 +191,41 @@ class MarvelRepositoryImpl @Inject constructor(
     /// endregion
 
 
+    /// region helpers
+    private fun <I : Any, O : Any> wrapToState(
+        dbCall: Observable<List<I>>,
+        uiMapper: Mapper<I, O>
+    ): Observable<Status<List<O>>> {
+        return dbCall.map {
+            if (it.isEmpty()) {
+                return@map Status.Failure("No Result")
+            }
+            Status.Success(it.map { item -> uiMapper.map(item) })
+        }.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun <I : Any, O : Any> refreshData(
+        response: Single<Response<BaseResponse<I>>>,
+        mapper: Mapper<I, O>,
+        saveToDb: (List<O>) -> Completable,
+    ): Completable {
+        return response.concatMapCompletable { baseResponse ->
+            Completable.create { emitter ->
+                if (baseResponse.isSuccessful) {
+                    val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
+                    val mappedItems = filteredItems?.map { mapper.map(it) }
+                    mappedItems?.let { items ->
+                        saveToDb(items).observeOn(Schedulers.io()).subscribe({
+                            emitter.onComplete()
+                        }, {
+                            emitter.onError(it)
+                        })
+                    }
+                }
+            }
+        }.observeOn(Schedulers.io())
+    }
+
     private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
             Single<Status<List<T>>> {
         return response.map { baseResponse ->
@@ -225,4 +238,5 @@ class MarvelRepositoryImpl @Inject constructor(
             }
         }.observeOnMainThread()
     }
+    /// endregion
 }
