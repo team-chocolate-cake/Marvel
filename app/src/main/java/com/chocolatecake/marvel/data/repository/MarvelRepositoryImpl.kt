@@ -1,5 +1,6 @@
 package com.chocolatecake.marvel.data.repository
 
+import android.annotation.SuppressLint
 import com.chocolatecake.marvel.data.local.MarvelDataBase
 import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
@@ -9,10 +10,15 @@ import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.util.observeOnMainThread
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -21,7 +27,8 @@ class MarvelRepositoryImpl @Inject constructor(
     private val database: MarvelDataBase,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
-) : MarvelRepository {
+
+    ) : MarvelRepository {
 
     /// region comics
     override fun getComics(
@@ -92,6 +99,8 @@ class MarvelRepositoryImpl @Inject constructor(
 
 
     /// region series
+
+
     override fun getSeries(
         title: String?,
         offset: Int?,
@@ -101,7 +110,36 @@ class MarvelRepositoryImpl @Inject constructor(
         return wrapperToState(apiService.getSeries(title, offset, limit))
     }
 
-    override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
+    @SuppressLint("CheckResult")
+    private fun <I : Any, O: Any> refreshSeries(
+        response: Single<Response<BaseResponse<I>>>,
+        mapper : Mapper<I, O>,
+        saveToDb : (List<O>)-> Completable
+    ) : Completable{
+        return response.concatMapCompletable {
+            Completable.create { emitter ->
+                response.doOnSuccess { baseResponse ->
+                    if (baseResponse.isSuccessful) {
+                        val filteredList = baseResponse.body()?.data?.results?.filterNotNull()
+                        val mappedItem = filteredList?.map { mapper.map(it) }
+                        mappedItem?.let{ item ->
+                            saveToDb(item)
+                                .observeOn(Schedulers.io())
+                                .subscribe({
+                                    emitter.onComplete()
+                                },
+                                    { throwable ->
+                                        emitter.onError(throwable)
+                                    })
+                        }
+                    }
+                }.observeOnMainThread()
+            }
+        }
+    }
+
+
+            override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
         return wrapperToState(apiService.getSeriesById(seriesId))
     }
 
