@@ -3,7 +3,7 @@ package com.chocolatecake.marvel.data.local.entities
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "TABLE_COMIC")
 data class ComicsEntity(
     @PrimaryKey(autoGenerate = false)
     val id: Int,

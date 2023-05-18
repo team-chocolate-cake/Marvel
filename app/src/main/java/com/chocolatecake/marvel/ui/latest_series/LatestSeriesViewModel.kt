@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,8 +18,8 @@ class LatestSeriesViewModel @Inject constructor(
     private val repository: MarvelRepository
 ) : BaseViewModel(), SeriesListener {
 
-    private val _latestSeriesList = MutableLiveData<Status<List<SeriesDto>>>()
-    val latestSeriesList: LiveData<Status<List<SeriesDto>>>
+    private val _latestSeriesList = MutableLiveData<Status<List<Series>>>()
+    val latestSeriesList: LiveData<Status<List<Series>>>
         get() = _latestSeriesList
 
 
@@ -26,14 +29,17 @@ class LatestSeriesViewModel @Inject constructor(
 
     fun loadData() {
         _latestSeriesList.postValue(Status.Loading)
-        disposeResponse(
-            response = repository.getSeries(limit = LIMIT, orderBy = ORDER_BY),
+        repository.refreshSeries(limit = LIMIT).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({},{}).add()
+        disposeObservableResponse(
+            response = repository.getSeries(),
             onSuccess = ::onLatestSeriesSuccess,
             onFailure = ::onLatestSeriesFailure,
         )
     }
 
-    private fun onLatestSeriesSuccess(status: Status<List<SeriesDto>>) {
+    private fun onLatestSeriesSuccess(status: Status<List<Series>>) {
         status.toData()?.let { result ->
             _latestSeriesList.postValue(
                 Status.Success(

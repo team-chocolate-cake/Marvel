@@ -2,11 +2,11 @@ package com.chocolatecake.marvel.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.EventDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.home.adapter.HomeListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,89 +17,83 @@ class HomeViewModel @Inject constructor(
     private val marvelRepository: MarvelRepository
 ) : BaseViewModel(), HomeListener {
 
-    private val _events = MutableLiveData<Status<List<EventDto>>>()
-    val events: LiveData<Status<List<EventDto>>>
+    private val _events = MutableLiveData<Status<List<Event>>>()
+    val events: LiveData<Status<List<Event>>>
         get() = _events
 
-    private val _series = MutableLiveData<Status<List<SeriesDto>>>()
-    val series: LiveData<Status<List<SeriesDto>>>
+    private val _series = MutableLiveData<Status<List<Series>>>()
+    val series: LiveData<Status<List<Series>>>
         get() = _series
 
-    private val _comics = MutableLiveData<Status<List<ComicDto>>>()
-    val comics: LiveData<Status<List<ComicDto>>>
+    private val _comics = MutableLiveData<Status<List<Comic>>>()
+    val comics: LiveData<Status<List<Comic>>>
         get() = _comics
-
-    private val _eventId = MutableLiveData<Int?>()
-    val eventId: LiveData<Int?>
-        get() = _eventId
-
-    private val _seriesId = MutableLiveData<Int?>()
-    val seriesId: LiveData<Int?>
-        get() = _seriesId
-
-    private val _comicId = MutableLiveData<Int?>()
-    val comicId: LiveData<Int?>
-        get() = _comicId
-
 
     init {
         loadData()
     }
 
     fun loadData() {
-        getCurrentEvent()
         getCurrentSeries()
+        getCurrentEvent()
         getCurrentComic()
     }
 
     //region Event
     private fun getCurrentEvent() {
         _events.postValue(Status.Loading)
-        disposeResponse(
-            response = marvelRepository.getEvents(limit = LIMIT_EVENT, offset = (0..50).random()),
+        marvelRepository.refreshEvent(limit = LIMIT_EVENT, offset = (0..50).random())
+            .subscribe({}, {}).add()
+        disposeObservableResponse(
+            response = marvelRepository.getEvents(),
             onSuccess = ::onEventSuccess,
             onFailure = ::onFailure,
         )
     }
 
-    private fun onEventSuccess(result: Status<List<EventDto>>) {
+    private fun onEventSuccess(result: Status<List<Event>>) {
         result.toData()?.let {
             _events.postValue(Status.Success(it))
-        }
+        } ?: _events.postValue(Status.Failure("No Data"))
     }
     //endregion
 
     //region Series
     private fun getCurrentSeries() {
         _series.postValue(Status.Loading)
-        disposeResponse(
-            response = marvelRepository.getSeries(limit = LIMIT, offset = (0..50).random()),
+        marvelRepository
+            .refreshSeries(limit = LIMIT, offset = (0..50).random())
+            .subscribe({}, {}).add()
+        disposeObservableResponse(
+            response = marvelRepository.getSeries(),
             onSuccess = ::onSeriesSuccess,
-            onFailure = ::onFailure,
+            onFailure = ::onFailure
         )
     }
 
-    private fun onSeriesSuccess(status: Status<List<SeriesDto>>) {
+    private fun onSeriesSuccess(status: Status<List<Series>>) {
         status.toData()?.let {
             _series.postValue(Status.Success(it))
-        }
+        } ?: _series.postValue(Status.Failure("No Data"))
     }
     //endregion
 
     //region Comic
     private fun getCurrentComic() {
         _comics.postValue(Status.Loading)
-        disposeResponse(
-            response = marvelRepository.getComics(limit = LIMIT, offset = (0..50).random()),
+        marvelRepository.refreshComics(limit = LIMIT, offset = (0..50).random()).subscribe({}, {})
+            .add()
+        disposeObservableResponse(
+            response = marvelRepository.getComics(),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
+    private fun onComicsSuccess(status: Status<List<Comic>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
-        }
+        } ?: _comics.postValue(Status.Failure("No Data"))
     }
     //endregion
 
@@ -129,7 +123,6 @@ class HomeViewModel @Inject constructor(
     override fun onClickMoreSeries() {
         navigate(HomeFragmentDirections.actionHomeFragmentToLatestSeriesFragment())
     }
-
 
     private companion object {
         const val LIMIT = 4

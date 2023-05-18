@@ -6,6 +6,12 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.Story
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface MarvelRepository {
@@ -15,7 +21,13 @@ interface MarvelRepository {
         title: String? = null,
         limit: Int? = null,
         offset: Int? = null,
-    ): Single<Status<List<ComicDto>>>
+    ): Observable<Status<List<Comic>>>
+
+    fun refreshComics(
+        title: String? = null,
+        limit: Int? = null,
+        offset: Int? = null,
+    ): Completable
 
     fun getEventByComicId(comicId: Int): Single<Status<List<EventDto>>>
 
@@ -60,7 +72,12 @@ interface MarvelRepository {
         offset: Int? = null,
         limit: Int? = null,
         orderBy: String? = null
-    ): Single<Status<List<SeriesDto>>>
+    ): Observable<Status<List<Series>>>
+
+    fun refreshSeries(
+        limit: Int,
+        offset: Int
+    ): Completable
 
     fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>>
 
@@ -76,7 +93,9 @@ interface MarvelRepository {
     fun getStories(
         limit: Int? = null,
         offset: Int? = null
-    ): Single<Status<List<StoryDto>>>
+    ): Observable<Status<List<Story>>>
+
+    fun refreshStories(limit: Int?= null,offset: Int?= null) : Completable
 
     fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>>
 
@@ -92,7 +111,12 @@ interface MarvelRepository {
     fun getEvents(
         limit: Int? = null,
         offset: Int? = null
-    ): Single<Status<List<EventDto>>>
+    ): Observable<Status<List<Event>>>
+
+    fun refreshEvent(
+        limit: Int? = null,
+        offset: Int? = null
+    ): Completable
 
     fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>>
 
