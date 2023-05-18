@@ -6,9 +6,6 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
-import com.chocolatecake.marvel.domain.model.Series
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series

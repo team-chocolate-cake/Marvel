@@ -24,9 +24,6 @@ import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
-import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
-import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
-import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.util.observeOnMainThread
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
