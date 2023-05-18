@@ -23,5 +23,5 @@ import com.chocolatecake.marvel.data.local.entities.StoryEntity
 )
 abstract class MarvelDataBase : RoomDatabase() {
     abstract val characterDao: CharacterDao
-    abstract val storyDao:StoryDao
+    abstract val storyDao: StoryDao
 }
