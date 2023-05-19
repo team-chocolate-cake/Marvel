@@ -78,7 +78,7 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         binding.editTextSearch.setAdapter(adapter)
 
         viewModel.searchHistory.observeNonNull(this) { searchHistory ->
-            adapter.clear()
+            try{adapter.clear()}catch (_: Exception){}
             adapter.addAll(searchHistory.map { it.keyword })
             adapter.notifyDataSetChanged()
         }

@@ -436,11 +436,10 @@ class MarvelRepositoryImpl @Inject constructor(
 
     override fun insertSearchHistory(searchHistory: SearchHistory): Completable {
         return dao.insertSearchHistory(searchHistoryMapper.map(searchHistory))
-
     }
 
-    override fun deleteSearchHistory(searchResult: SearchHistory): Completable {
-        return dao.deleteSearchHistory(searchHistoryMapper.map(searchResult))
+    override fun deleteSearchHistory(searchHistory: SearchHistory): Completable {
+        return dao.deleteSearchHistory(searchHistoryMapper.map(searchHistory))
     }
     ///endregion
 }

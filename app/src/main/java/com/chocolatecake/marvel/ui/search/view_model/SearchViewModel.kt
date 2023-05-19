@@ -47,7 +47,6 @@ class SearchViewModel @Inject constructor(
                 keyword = value ?: "",
                 type = searchType.name
             )
-
         }
 
     var searchType: SearchItemType
@@ -57,28 +56,6 @@ class SearchViewModel @Inject constructor(
                 SearchQuery(query = searchText, type = value)
             )
         }
-
-
-    //region search history
-    private fun getSearchHistory(keyword: String, type: String) {
-        disposeObservableResponse(
-            response = repository.getFilteredSearchHistory(
-                keyword = keyword,
-                type = type
-            ),
-            onSuccess = { _searchHistory.postValue(it) },
-            onFailure = ::onFailure
-
-        )
-    }
-
-    private fun insertSearchHistory(keyword: String?, type: String) {
-        keyword?.let { SearchHistory(keyword = it, type = type) }?.let {
-            repository.insertSearchHistory(it).subscribe()
-        }
-    }
-    //endregion
-
 
     init {
         applySearch()
@@ -103,6 +80,28 @@ class SearchViewModel @Inject constructor(
             SearchItemType.TYPE_CHARACTER -> getAllCharacters()
         }
     }
+
+
+    //region search history
+    private fun getSearchHistory(keyword: String, type: String) {
+        disposeObservableResponse(
+            response = repository.getFilteredSearchHistory(
+                keyword = keyword,
+                type = type
+            ),
+            onSuccess = { _searchHistory.postValue(it) },
+            onFailure = ::onFailure
+
+        )
+    }
+
+    private fun insertSearchHistory(keyword: String?, type: String) {
+        keyword?.let { SearchHistory(keyword = it, type = type) }?.let {
+            repository.insertSearchHistory(it).subscribe()
+        }
+    }
+    //endregion
+
 
     //region Series
     private fun getAllSeries() {
