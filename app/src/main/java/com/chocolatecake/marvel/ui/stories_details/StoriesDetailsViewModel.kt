@@ -9,6 +9,9 @@ import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.ComicDetails
+import com.chocolatecake.marvel.domain.model.CreatorDetails
+import com.chocolatecake.marvel.domain.model.Story
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
@@ -24,27 +27,27 @@ class StoriesDetailsViewModel @Inject constructor(
 
     private val storyId: Int = savedStateHandle[STORY_ID] ?: 0
 
-    private val _story = MutableLiveData<Status<StoryDto?>>()
-    val story: LiveData<Status<StoryDto?>> = _story
+    private val _story = MutableLiveData<Status<Story?>>()
+    val story: LiveData<Status<Story?>> = _story
 
-    private val _creators = MutableLiveData<Status<List<ProfileDto>>>()
-    val creators: MutableLiveData<Status<List<ProfileDto>>> get() = _creators
+    private val _creators = MutableLiveData<Status<List<CreatorDetails>>>()
+    val creators: MutableLiveData<Status<List<CreatorDetails>>> get() = _creators
 
     private val _series = MutableLiveData<Status<List<SeriesDto>>>()
     val series: MutableLiveData<Status<List<SeriesDto>>> get() = _series
 
-    private val _comics = MutableLiveData<Status<List<ComicDto>>>()
-    val comics: MutableLiveData<Status<List<ComicDto>>> get() = _comics
+    private val _comics = MutableLiveData<Status<List<ComicDetails>>>()
+    val comics: MutableLiveData<Status<List<ComicDetails>>> get() = _comics
 
     init {
         loadData()
     }
 
     fun loadData() {
-        getComicsByStoryId()
-        getSeriesByStoryId()
+//        getComicsByStoryId()
+//        getSeriesByStoryId()
         getCreatorsByStoryId()
-        getStoryById()
+//        getStoryById()
     }
 
     //region Story
@@ -58,9 +61,9 @@ class StoriesDetailsViewModel @Inject constructor(
     }
 
     private fun onStorySuccess(status: Status<List<StoryDto>>) {
-        status.toData()?.first().let {
-            _story.postValue(Status.Success(it))
-        }
+//        status.toData()?.first().let {
+//            _story.postValue(Status.Success(it))
+//        }
     }
     //endregion
 
@@ -74,7 +77,7 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onCreatorsSuccess(status: Status<List<ProfileDto>>) {
+    private fun onCreatorsSuccess(status: Status<List<CreatorDetails>>) {
         status.toData()?.let {
             _creators.postValue(Status.Success(it))
         }
@@ -109,9 +112,9 @@ class StoriesDetailsViewModel @Inject constructor(
     }
 
     private fun onComicsSuccess(status: Status<List<ComicDto>>) {
-        status.toData()?.let {
-            _comics.postValue(Status.Success(it))
-        }
+//        status.toData()?.let {
+//            _comics.postValue(Status.Success(it))
+//        }
     }
     //endregion
 

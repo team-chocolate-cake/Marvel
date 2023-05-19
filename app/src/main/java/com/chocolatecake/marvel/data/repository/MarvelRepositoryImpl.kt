@@ -332,11 +332,18 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileDto>>> {
+    override fun getCreatorsByStoryId(storyId: Int): Single<Status<List<CreatorDetails>>> {
         return apiService.getCreatorsByStoryId(storyId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()?.let {
                 Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                    it.map { item ->
+                        CreatorDetails(
+                            item.id ?: 0,
+                            item.fullName ?: "",
+                            item.thumbnail?.toUrl() ?: "",
+                            item.description ?: ""
+                        )
+                    }
                 )
             } ?: Status.Failure(baseResponse.message())
         }

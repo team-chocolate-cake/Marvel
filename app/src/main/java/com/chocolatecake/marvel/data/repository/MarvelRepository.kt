@@ -114,7 +114,7 @@ interface MarvelRepository {
 
     fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>>
 
-    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileDto>>>
+    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<CreatorDetails>>>
 
     fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicDto>>>
 
