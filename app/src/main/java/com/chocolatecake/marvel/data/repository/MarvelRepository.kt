@@ -1,23 +1,21 @@
 package com.chocolatecake.marvel.data.repository
 
-import android.app.appsearch.AppSearchResult
-import android.provider.ContactsContract
-import com.chocolatecake.marvel.data.local.entities.SearchHistoryEntity
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
-import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
+import com.chocolatecake.marvel.domain.model.Creator
+import com.chocolatecake.marvel.domain.model.CreatorDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.EventDetails
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.domain.model.Story
+import com.chocolatecake.marvel.domain.model.StoryDetails
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -117,13 +115,13 @@ interface MarvelRepository {
 
     fun refreshStories(limit: Int? = null, offset: Int? = null): Completable
 
-    fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>>
+    fun getStoryById(storyId: Int): Single<Status<StoryDetails>>
 
-    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileDto>>>
+    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<Creator>>>
 
-    fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsByStoryId(storyId: Int): Single<Status<List<Comic>>>
 
-    fun getSeriesByStoryId(storyId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesByStoryId(storyId: Int): Single<Status<List<Series>>>
     /// endregion
 
 

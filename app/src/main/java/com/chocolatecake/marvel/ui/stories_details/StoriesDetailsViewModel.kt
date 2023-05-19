@@ -3,12 +3,12 @@ package com.chocolatecake.marvel.ui.stories_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
-import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Creator
+import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.StoryDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
@@ -25,17 +25,17 @@ class StoriesDetailsViewModel @Inject constructor(
     private val storyId =
         StoriesDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).storyId
 
-    private val _story = MutableLiveData<Status<StoryDto?>>()
-    val story: LiveData<Status<StoryDto?>> = _story
+    private val _story = MutableLiveData<Status<StoryDetails>>()
+    val story: LiveData<Status<StoryDetails>> = _story
 
-    private val _creators = MutableLiveData<Status<List<ProfileDto>>>()
-    val creators: MutableLiveData<Status<List<ProfileDto>>> get() = _creators
+    private val _creators = MutableLiveData<Status<List<Creator>>>()
+    val creators: MutableLiveData<Status<List<Creator>>> get() = _creators
 
-    private val _series = MutableLiveData<Status<List<SeriesDto>>>()
-    val series: MutableLiveData<Status<List<SeriesDto>>> get() = _series
+    private val _series = MutableLiveData<Status<List<Series>>>()
+    val series: MutableLiveData<Status<List<Series>>> get() = _series
 
-    private val _comics = MutableLiveData<Status<List<ComicDto>>>()
-    val comics: MutableLiveData<Status<List<ComicDto>>> get() = _comics
+    private val _comics = MutableLiveData<Status<List<Comic>>>()
+    val comics: MutableLiveData<Status<List<Comic>>> get() = _comics
 
     init {
         loadData()
@@ -58,8 +58,8 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onStorySuccess(status: Status<List<StoryDto>>) {
-        status.toData()?.first().let {
+    private fun onStorySuccess(status: Status<StoryDetails>) {
+        status.toData()?.let {
             _story.postValue(Status.Success(it))
         }
     }
@@ -75,7 +75,7 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onCreatorsSuccess(status: Status<List<ProfileDto>>) {
+    private fun onCreatorsSuccess(status: Status<List<Creator>>) {
         status.toData()?.let {
             _creators.postValue(Status.Success(it))
         }
@@ -92,7 +92,7 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onSeriesSuccess(status: Status<List<SeriesDto>>) {
+    private fun onSeriesSuccess(status: Status<List<Series>>) {
         status.toData()?.let {
             _series.postValue(Status.Success(it))
         }
@@ -109,7 +109,7 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
+    private fun onComicsSuccess(status: Status<List<Comic>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
         }

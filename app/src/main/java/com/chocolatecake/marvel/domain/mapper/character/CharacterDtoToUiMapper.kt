@@ -1,4 +1,4 @@
-package com.chocolatecake.marvel.domain.mapper.series
+package com.chocolatecake.marvel.domain.mapper.character
 
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.domain.mapper.Mapper
