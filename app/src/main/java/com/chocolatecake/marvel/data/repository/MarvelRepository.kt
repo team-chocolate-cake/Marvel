@@ -1,10 +1,9 @@
 package com.chocolatecake.marvel.data.repository
 
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
+import com.chocolatecake.marvel.domain.model.CharacterDetails
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Creator
@@ -43,7 +42,7 @@ interface MarvelRepository {
 
     fun getComicById(comicId: Int): Single<Status<ComicDetails>>
 
-    fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileDto>>>
+    fun getCharactersForComic(comicId: Int): Single<Status<List<Character>>>
     /// endregion
 
 
@@ -58,11 +57,11 @@ interface MarvelRepository {
         limit: Int? = null
     ): Observable<Status<List<Character>>>
 
-    fun getCharacterById(characterId: Int): Single<Status<List<ProfileDto>>>
+    fun getCharacterById(characterId: Int): Single<Status<CharacterDetails>>
 
-    fun getComicsForCharacter(characterId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsForCharacter(characterId: Int): Single<Status<List<Comic>>>
 
-    fun getCharacterSeries(characterId: Int): Single<Status<List<SeriesDto>>>
+    fun getCharacterSeries(characterId: Int): Single<Status<List<Series>>>
     /// endregion
 
 

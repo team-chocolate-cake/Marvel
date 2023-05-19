@@ -3,10 +3,10 @@ package com.chocolatecake.marvel.ui.character_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.CharacterDetails
+import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,11 +22,11 @@ class CharacterDetailsViewModel @Inject constructor(
     private val characterId =
         CharacterDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).characterId
 
-    private val _comics = MutableLiveData<Status<List<ComicDto>>>()
-    val comics: LiveData<Status<List<ComicDto>>> = _comics
+    private val _comics = MutableLiveData<Status<List<Comic>>>()
+    val comics: LiveData<Status<List<Comic>>> = _comics
 
-    private val _character = MutableLiveData<Status<ProfileDto>>()
-    val character: LiveData<Status<ProfileDto>> = _character
+    private val _character = MutableLiveData<Status<CharacterDetails>>()
+    val character: LiveData<Status<CharacterDetails>> = _character
 
     init {
         loadDetails()
@@ -47,9 +47,9 @@ class CharacterDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onCharacterSuccess(status: Status<List<ProfileDto>>) {
-        status.toData()?.first().let {
-            _character.postValue(Status.Success(it!!))
+    private fun onCharacterSuccess(status: Status<CharacterDetails>) {
+        status.toData()?.let {
+            _character.postValue(Status.Success(it))
         }
     }
     //endregion
@@ -64,10 +64,8 @@ class CharacterDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
-        status.toData()?.let {
-            _comics.postValue(Status.Success(it))
-        }
+    private fun onComicsSuccess(status: Status<List<Comic>>) {
+        status.toData()?.let { _comics.postValue(Status.Success(it)) }
     }
     //endregion
 
