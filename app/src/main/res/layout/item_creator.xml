@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.domain.model.CreatorDetails" />
+            type="com.chocolatecake.marvel.domain.model.Creator" />
 
         <variable
             name="listener"

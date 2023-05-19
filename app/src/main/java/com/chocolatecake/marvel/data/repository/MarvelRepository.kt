@@ -7,6 +7,7 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
+import com.chocolatecake.marvel.domain.model.Creator
 import com.chocolatecake.marvel.domain.model.CreatorDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.EventDetails
@@ -110,7 +111,7 @@ interface MarvelRepository {
 
     fun getStoryById(storyId: Int): Single<Status<StoryDetails>>
 
-    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<Character>>>
+    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<Creator>>>
 
     fun getComicsByStoryId(storyId: Int): Single<Status<List<Comic>>>
 

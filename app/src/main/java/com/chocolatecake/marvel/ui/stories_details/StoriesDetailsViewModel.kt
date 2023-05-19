@@ -3,15 +3,12 @@ package com.chocolatecake.marvel.ui.stories_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
-import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
-import com.chocolatecake.marvel.domain.model.ComicDetails
-import com.chocolatecake.marvel.domain.model.CreatorDetails
-import com.chocolatecake.marvel.domain.model.Story
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Creator
+import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.StoryDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import com.chocolatecake.marvel.ui.core.listener.CreatorsListener
@@ -27,27 +24,27 @@ class StoriesDetailsViewModel @Inject constructor(
 
     private val storyId: Int = savedStateHandle[STORY_ID] ?: 0
 
-    private val _story = MutableLiveData<Status<Story?>>()
-    val story: LiveData<Status<Story?>> = _story
+    private val _story = MutableLiveData<Status<StoryDetails>>()
+    val story: LiveData<Status<StoryDetails>> = _story
 
-    private val _creators = MutableLiveData<Status<List<CreatorDetails>>>()
-    val creators: MutableLiveData<Status<List<CreatorDetails>>> get() = _creators
+    private val _creators = MutableLiveData<Status<List<Creator>>>()
+    val creators: MutableLiveData<Status<List<Creator>>> get() = _creators
 
-    private val _series = MutableLiveData<Status<List<SeriesDto>>>()
-    val series: MutableLiveData<Status<List<SeriesDto>>> get() = _series
+    private val _series = MutableLiveData<Status<List<Series>>>()
+    val series: MutableLiveData<Status<List<Series>>> get() = _series
 
-    private val _comics = MutableLiveData<Status<List<ComicDetails>>>()
-    val comics: MutableLiveData<Status<List<ComicDetails>>> get() = _comics
+    private val _comics = MutableLiveData<Status<List<Comic>>>()
+    val comics: MutableLiveData<Status<List<Comic>>> get() = _comics
 
     init {
         loadData()
     }
 
     fun loadData() {
-//        getComicsByStoryId()
-//        getSeriesByStoryId()
+        getComicsByStoryId()
+        getSeriesByStoryId()
         getCreatorsByStoryId()
-//        getStoryById()
+        getStoryById()
     }
 
     //region Story
@@ -60,10 +57,10 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onStorySuccess(status: Status<List<StoryDto>>) {
-//        status.toData()?.first().let {
-//            _story.postValue(Status.Success(it))
-//        }
+    private fun onStorySuccess(status: Status<StoryDetails>) {
+        status.toData()?.let {
+            _story.postValue(Status.Success(it))
+        }
     }
     //endregion
 
@@ -77,7 +74,7 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onCreatorsSuccess(status: Status<List<CreatorDetails>>) {
+    private fun onCreatorsSuccess(status: Status<List<Creator>>) {
         status.toData()?.let {
             _creators.postValue(Status.Success(it))
         }
@@ -94,7 +91,7 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onSeriesSuccess(status: Status<List<SeriesDto>>) {
+    private fun onSeriesSuccess(status: Status<List<Series>>) {
         status.toData()?.let {
             _series.postValue(Status.Success(it))
         }
@@ -111,10 +108,10 @@ class StoriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
-//        status.toData()?.let {
-//            _comics.postValue(Status.Success(it))
-//        }
+    private fun onComicsSuccess(status: Status<List<Comic>>) {
+        status.toData()?.let {
+            _comics.postValue(Status.Success(it))
+        }
     }
     //endregion
 

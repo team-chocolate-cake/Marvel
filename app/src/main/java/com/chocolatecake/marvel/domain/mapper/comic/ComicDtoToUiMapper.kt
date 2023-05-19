@@ -7,7 +7,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 @ViewModelScoped
-class ComicDtoToUiMapper @Inject constructor(): Mapper<ComicDto, Comic> {
+class ComicDtoToUIMapper @Inject constructor() : Mapper<ComicDto, Comic> {
     override fun map(input: ComicDto): Comic {
         return Comic(
             id = input.id ?: 0,
