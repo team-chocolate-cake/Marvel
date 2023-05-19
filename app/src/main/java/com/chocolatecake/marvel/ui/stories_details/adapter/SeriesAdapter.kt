@@ -6,7 +6,7 @@ import com.chocolatecake.marvel.ui.base.BaseAdapter
 import com.chocolatecake.marvel.ui.core.listener.SeriesListener
 
 class SeriesAdapter (seriesList: List<SeriesDto>, listener: SeriesListener) :
-    BaseAdapter<SeriesDto?>(seriesList, listener) {
+    BaseAdapter<SeriesDto>(seriesList, listener) {
 
     override val layoutId = R.layout.series_item
 }

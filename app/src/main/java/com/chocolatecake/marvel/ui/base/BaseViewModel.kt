@@ -7,10 +7,12 @@ import androidx.navigation.NavDirections
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.util.NavigationCommand
 import com.chocolatecake.marvel.util.Event
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 
 abstract class BaseViewModel : ViewModel() {
 
@@ -34,7 +36,8 @@ abstract class BaseViewModel : ViewModel() {
         onSuccess: (data: Status<T>) -> Unit,
         onFailure: (e: Throwable) -> Unit,
     ) {
-        response.subscribe(onSuccess, onFailure).add()
+        response.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onSuccess, onFailure).add()
     }
 
     fun <T : Any> disposeObservableResponse(
@@ -42,7 +45,8 @@ abstract class BaseViewModel : ViewModel() {
         onSuccess: (data: T) -> Unit,
         onFailure: (e: Throwable) -> Unit,
     ) {
-        response.subscribe(onSuccess, onFailure).add()
+        response.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .subscribe(onSuccess, onFailure).add()
     }
 
     fun Disposable.add() {

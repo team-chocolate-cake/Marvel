@@ -1,19 +1,18 @@
 package com.chocolatecake.marvel.data.repository
 
-import android.app.appsearch.AppSearchResult
-import com.chocolatecake.marvel.data.local.entities.SearchHistoryEntity
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
-import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
+import com.chocolatecake.marvel.domain.model.CreatorDetails
 import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.EventDetails
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.domain.model.Story
 import com.chocolatecake.marvel.domain.model.StoryDetails
 import io.reactivex.rxjava3.core.Completable
@@ -67,17 +66,11 @@ interface MarvelRepository {
 
 
     /// region creators
-    fun getCreators(
-        firstName: String? = null,
-        middleName: String? = null,
-        lastName: String? = null
-    ): Single<Status<List<ProfileDto>>>
+    fun getCreatorById(creatorId: Int): Single<Status<List<CreatorDetails>>>
 
-    fun getCreatorById(creatorId: Int): Single<Status<List<ProfileDto>>>
+    fun getComicsForCreator(creatorId: Int): Single<Status<List<Comic>>>
 
-    fun getComicsForCreator(creatorId: Int): Single<Status<List<ComicDto>>>
-
-    fun getSeriesForCreator(creatorId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesForCreator(creatorId: Int): Single<Status<List<Series>>>
     /// endregion
 
 
@@ -97,13 +90,13 @@ interface MarvelRepository {
         offset: Int = 0,
     ): Completable
 
-    fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesById(seriesId: Int): Single<Status<SeriesDetails>>
 
-    fun getCharactersForSeries(seriesId: Int): Single<Status<List<ProfileDto>>>
+    fun getCharactersForSeries(seriesId: Int): Single<Status<List<Character>>>
 
-    fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsForSeries(seriesId: Int): Single<Status<List<Comic>>>
 
-    fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>>
+    fun getEventsForSeries(seriesId: Int): Single<Status<List<Event>>>
     /// endregion
 
 
@@ -136,13 +129,13 @@ interface MarvelRepository {
         offset: Int? = null
     ): Completable
 
-    fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>>
+    fun getCharactersByEventId(eventId: Int): Single<Status<List<Character>>>
 
-    fun getSeriesByEventId(eventId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesByEventId(eventId: Int): Single<Status<List<Series>>>
 
-    fun getComicsByEventId(eventId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsByEventId(eventId: Int): Single<Status<List<Comic>>>
 
-    fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>>
+    fun getSpecificEventByEventId(eventId: Int): Single<Status<EventDetails>>
     /// endregion
 
 

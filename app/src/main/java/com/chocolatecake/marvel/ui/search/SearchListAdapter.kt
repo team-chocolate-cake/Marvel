@@ -72,7 +72,7 @@ class SearchListAdapter(private val listener: SearchInteractionListener) :
 
     private fun bindSeries(holder: SeriesViewHolder, position: Int) {
         val series = getItem(position) as SearchItems.SeriesItem
-//        holder.binding.item = series.series
+        holder.binding.item = series.series
         holder.binding.listener = listener
     }
 

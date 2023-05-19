@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.remote.model.dto.EventDto" />
+            type="com.chocolatecake.marvel.domain.model.EventDetails" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +21,7 @@
             app:layout_constraintDimensionRatio="3:4"
             app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.Corner.Bottom"
             app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium"
-            app:imageUrl="@{item.thumbnail}"
+            app:imageUrlWithUrl="@{item.imageURL}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

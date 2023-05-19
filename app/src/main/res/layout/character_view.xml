@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.ui.event_details.EventDetailsItem.Character" />
+            type="com.chocolatecake.marvel.ui.event_details.EventDetailsItem.CharacterDetails" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:items="@{item.profileDto}"
+            app:items="@{item.profile}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:constraint_referenced_ids="recycler_view_characters,characters"
-            app:isVisible="@{item.profileDto.size() != 0}"/>
+            app:isVisible="@{item.profile.size() != 0}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
