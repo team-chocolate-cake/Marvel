@@ -8,6 +8,8 @@ import com.chocolatecake.marvel.domain.model.Story
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.StoryListener
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,10 +32,12 @@ class StoriesViewModel @Inject constructor(
 
     //region Stories
     private fun getStories() {
-        repository.refreshStories()
         _stories.postValue(Status.Loading)
+        repository.refreshStories(limit = LIMIT).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({},{}).add()
         disposeObservableResponse(
-            response = repository.getStories(limit = LIMIT),
+            response = repository.getStories(),
             onSuccess = ::onStoriesSuccess,
             onFailure = ::onFailure,
         )
