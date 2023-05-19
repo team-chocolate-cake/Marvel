@@ -6,6 +6,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
@@ -23,6 +24,11 @@ interface MarvelRepository {
         limit: Int = 10,
     ): Observable<Status<List<Comic>>>
 
+    fun searchComics(
+        title: String = "",
+        limit: Int
+    ): Observable<Status<List<Comic>>>
+
     fun refreshComics(
         title: String? = null,
         limit: Int? = null,
@@ -38,10 +44,15 @@ interface MarvelRepository {
 
 
     /// region characters
-    fun getCharacters(
+    fun refreshCharacters(
         name: String? = null,
         limit: Int? = null
-    ): Single<Status<List<ProfileDto>>>
+    ): Completable
+
+    fun getCharacters(
+        name: String = "",
+        limit: Int? = null
+    ): Observable<Status<List<Character>>>
 
     fun getCharacterById(characterId: Int): Single<Status<List<ProfileDto>>>
 
@@ -71,7 +82,13 @@ interface MarvelRepository {
         limit: Int = 10,
     ): Observable<Status<List<Series>>>
 
+    fun searchSeries(
+        title: String = "",
+        limit: Int,
+    ): Observable<Status<List<Series>>>
+
     fun refreshSeries(
+        title: String? = null,
         limit: Int,
         offset: Int = 0,
     ): Completable
