@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.ui.creator_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
@@ -11,27 +12,27 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.creator_details.adapter.CreatorDetailsListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class CreatorDetailsViewModel @Inject constructor(
-    private val repository: MarvelRepository
+    private val repository: MarvelRepository,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), CreatorDetailsListener {
 
-    var creatorId by Delegates.notNull<Int>()
+    private val creatorId: Int = savedStateHandle[CREATOR_ID] ?: 0
 
     private val _comicsList = MutableLiveData<Status<List<ComicDto>?>>()
-    val comicsList: LiveData<Status<List<ComicDto>?>>
-        get() = _comicsList
+    val comicsList: LiveData<Status<List<ComicDto>?>> = _comicsList
 
     private val _seriesList = MutableLiveData<Status<List<SeriesDto>?>>()
-    val seriesList: LiveData<Status<List<SeriesDto>?>>
-        get() = _seriesList
+    val seriesList: LiveData<Status<List<SeriesDto>?>> = _seriesList
 
     private val _creator = MutableLiveData<Status<List<ProfileDto>?>>()
-    val creator: LiveData<Status<List<ProfileDto>?>>
-        get() = _creator
+    val creator: LiveData<Status<List<ProfileDto>?>> = _creator
 
+    init {
+        loadData()
+    }
 
     fun loadData() {
         getCreator()
@@ -97,5 +98,9 @@ class CreatorDetailsViewModel @Inject constructor(
 
     override fun onClickComic(id: Int) {
         navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToComicsDetailsFragment(id))
+    }
+
+    private companion object{
+        const val CREATOR_ID = "creatorId"
     }
 }

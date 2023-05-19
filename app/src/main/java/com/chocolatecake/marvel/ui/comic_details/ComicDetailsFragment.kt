@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentComicDetailsBinding
 import com.chocolatecake.marvel.ui.base.BaseFragment
@@ -17,7 +16,6 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     override val viewModel: ComicDetailsViewModel by viewModels()
 
     override val layoutIdFragment = R.layout.fragment_comic_details
-    private val args: ComicDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,14 +24,12 @@ class ComicDetailsFragment : BaseFragment<FragmentComicDetailsBinding, ComicDeta
     }
 
     private fun setup() {
-        viewModel.currentComicId = args.comicId
-        viewModel.loadData()
         binding.recyclerviewCharacters.adapter = CharactersAdapter(mutableListOf(), viewModel)
     }
 
     private fun addCallBacks() {
-        viewModel.toastMessage.observeNonNull(requireActivity()){
-            createToast(it)
+        viewModel.toastMessage.observeNonNull(requireActivity()) {
+            it.getContentIfNotHandled()?.let { message -> createToast(message) }
         }
     }
 

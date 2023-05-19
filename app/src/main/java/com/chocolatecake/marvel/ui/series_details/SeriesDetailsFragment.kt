@@ -3,7 +3,6 @@ package com.chocolatecake.marvel.ui.series_details
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.databinding.FragmentSeriesDetailsBinding
@@ -15,7 +14,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesDetailsViewModel>() {
 
-    private val args: SeriesDetailsFragmentArgs by navArgs()
     override val viewModel: SeriesDetailsViewModel by viewModels()
 
     override val layoutIdFragment: Int
@@ -24,8 +22,6 @@ class SeriesDetailsFragment : BaseFragment<FragmentSeriesDetailsBinding, SeriesD
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.seriesId = args.seriesId
-        viewModel.loadData()
         setAdapter()
         updateItems()
     }

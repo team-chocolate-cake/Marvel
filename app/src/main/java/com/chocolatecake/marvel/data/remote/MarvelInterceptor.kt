@@ -1,9 +1,14 @@
 package com.chocolatecake.marvel.data.remote
 
 import com.chocolatecake.marvel.BuildConfig
+import dagger.hilt.android.scopes.ViewModelScoped
 import okhttp3.Interceptor
 import okhttp3.Response
-class MarvelInterceptor : Interceptor {
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class MarvelInterceptor  @Inject constructor(): Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val hashed = HashGenerator.generateHash(BuildConfig.PRIVATE_KEY, BuildConfig.PUBLIC_KEY)

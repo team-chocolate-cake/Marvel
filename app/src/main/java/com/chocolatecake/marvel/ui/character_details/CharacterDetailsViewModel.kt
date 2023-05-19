@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.ui.character_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
@@ -10,24 +11,25 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 
 @HiltViewModel
 class CharacterDetailsViewModel @Inject constructor(
-    private val repository: MarvelRepository
+    private val repository: MarvelRepository,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), ComicListener {
 
-   var characterId by Delegates.notNull<Int>()
+    private val characterId: Int = savedStateHandle[CHARACTER_ID] ?: 0
 
     private val _comics = MutableLiveData<Status<List<ComicDto>>>()
-    val comics: LiveData<Status<List<ComicDto>>>
-        get() = _comics
+    val comics: LiveData<Status<List<ComicDto>>> = _comics
 
     private val _character = MutableLiveData<Status<ProfileDto>>()
-    val character: LiveData<Status<ProfileDto>>
-        get() = _character
+    val character: LiveData<Status<ProfileDto>> = _character
 
+    init {
+        loadDetails()
+    }
 
     fun loadDetails() {
         loadCharacter()
@@ -80,5 +82,9 @@ class CharacterDetailsViewModel @Inject constructor(
                 id
             )
         )
+    }
+
+    private companion object{
+        const val CHARACTER_ID = "characterId"
     }
 }

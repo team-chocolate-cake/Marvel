@@ -70,13 +70,13 @@ interface MarvelRepository {
     fun getSeries(
         title: String? = null,
         offset: Int? = null,
-        limit: Int? = null,
+        limit: Int = 10,
         orderBy: String? = null
     ): Observable<Status<List<Series>>>
 
     fun refreshSeries(
         limit: Int,
-        offset: Int
+        offset: Int = 0,
     ): Completable
 
     fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>>
@@ -95,7 +95,7 @@ interface MarvelRepository {
         offset: Int? = null
     ): Observable<Status<List<Story>>>
 
-    fun refreshStories(limit: Int?= null,offset: Int?= null) : Completable
+    fun refreshStories(limit: Int? = null, offset: Int? = null): Completable
 
     fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>>
 

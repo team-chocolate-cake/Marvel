@@ -2,6 +2,7 @@ package com.chocolatecake.marvel.ui.series_details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
@@ -12,31 +13,30 @@ import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.properties.Delegates
 
 @HiltViewModel
 class SeriesDetailsViewModel @Inject constructor(
     private val repository: MarvelRepository,
+    savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), SeriesDetailsListener {
 
-    var seriesId by Delegates.notNull<Int>()
+    private val seriesId: Int = savedStateHandle[SERIES_ID] ?: 0
 
     private val _series = MutableLiveData<Status<SeriesDto?>>()
-    val series: LiveData<Status<SeriesDto?>>
-        get() = _series
+    val series: LiveData<Status<SeriesDto?>> = _series
 
     private val _characters = MutableLiveData<Status<List<ProfileDto?>>>()
-    val characters: LiveData<Status<List<ProfileDto?>>>
-        get() = _characters
+    val characters: LiveData<Status<List<ProfileDto?>>> = _characters
 
     private val _comics = MutableLiveData<Status<List<ComicDto?>>>()
-    val comics: LiveData<Status<List<ComicDto?>>>
-        get() = _comics
+    val comics: LiveData<Status<List<ComicDto?>>> = _comics
 
     private val _events = MutableLiveData<Status<List<EventDto?>>>()
-    val events: LiveData<Status<List<EventDto?>>>
-        get() = _events
+    val events: LiveData<Status<List<EventDto?>>> = _events
 
+    init {
+        loadData()
+    }
 
     fun loadData() {
         getSeriesById()
@@ -143,5 +143,9 @@ class SeriesDetailsViewModel @Inject constructor(
                 id
             )
         )
+    }
+
+    private companion object{
+        const val SERIES_ID = "seriesId"
     }
 }

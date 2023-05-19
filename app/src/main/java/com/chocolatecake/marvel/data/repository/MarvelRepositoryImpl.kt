@@ -132,18 +132,18 @@ class MarvelRepositoryImpl @Inject constructor(
     override fun getSeries(
         title: String?,
         offset: Int?,
-        limit: Int?,
+        limit: Int,
         orderBy: String?
     ): Observable<Status<List<Series>>> {
         return wrapToState(
-            dbCall = dao.getSeriesWithLimit(),
+            dbCall = dao.getSeriesWithLimit(limit = limit),
             uiMapper = seriesUiMapper
         )
     }
 
     override fun refreshSeries(limit: Int, offset: Int): Completable {
         return refreshData(
-            apiService.getSeries(),
+            apiService.getSeries(limit = limit, offset = offset),
             seriesMapper
         ) {
             dao.insertSeries(it)
