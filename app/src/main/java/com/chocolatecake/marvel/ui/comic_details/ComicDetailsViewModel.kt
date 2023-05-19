@@ -3,8 +3,6 @@ package com.chocolatecake.marvel.ui.comic_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
@@ -20,7 +18,8 @@ class ComicDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), ComicInteractionListener {
 
-    private val currentComicId: Int = savedStateHandle[COMIC_ID] ?: 0
+    private val comicId =
+        ComicDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).comicId
 
     private val _currentComic = MutableLiveData<Status<ComicDetails>>()
     val currentComic: LiveData<Status<ComicDetails>> = _currentComic
@@ -44,7 +43,7 @@ class ComicDetailsViewModel @Inject constructor(
     private fun getCurrentComic() {
         _currentComic.postValue(Status.Loading)
         disposeResponse(
-            response = repository.getComicById(currentComicId),
+            response = repository.getComicById(comicId),
             onSuccess = ::onGetCurrentComicSuccess,
             onFailure = ::onGetCurrentComicFailure,
         )
@@ -64,7 +63,7 @@ class ComicDetailsViewModel @Inject constructor(
     private fun getCharactersOfComic() {
         _characters.postValue(Status.Loading)
         disposeResponse(
-            response = repository.getCharactersForSeries(currentComicId),
+            response = repository.getCharactersForSeries(comicId),
             onSuccess = ::onGetCharacterSuccess,
             onFailure = ::onGetCharacterFailure,
         )
@@ -97,10 +96,7 @@ class ComicDetailsViewModel @Inject constructor(
             )
         )
     }
-
-
     private companion object {
         const val ERROR_OCCURRED = "error occurred"
-        const val COMIC_ID = "comicId"
     }
 }

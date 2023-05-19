@@ -19,7 +19,8 @@ class CharacterDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), ComicListener {
 
-    private val characterId: Int = savedStateHandle[CHARACTER_ID] ?: 0
+    private val characterId =
+        CharacterDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).characterId
 
     private val _comics = MutableLiveData<Status<List<ComicDto>>>()
     val comics: LiveData<Status<List<ComicDto>>> = _comics
@@ -82,9 +83,5 @@ class CharacterDetailsViewModel @Inject constructor(
                 id
             )
         )
-    }
-
-    private companion object{
-        const val CHARACTER_ID = "characterId"
     }
 }

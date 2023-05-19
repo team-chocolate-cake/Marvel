@@ -13,6 +13,7 @@ import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
+import com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragmentArgs
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -23,7 +24,8 @@ class SeriesDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), SeriesDetailsListener {
 
-    private val seriesId: Int = savedStateHandle[SERIES_ID] ?: 0
+    private val seriesId =
+        SeriesDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).seriesId
 
     private val _series = MutableLiveData<Status<SeriesDetails?>>()
     val series: LiveData<Status<SeriesDetails?>> = _series
@@ -146,9 +148,5 @@ class SeriesDetailsViewModel @Inject constructor(
                 id
             )
         )
-    }
-
-    private companion object {
-        const val SERIES_ID = "seriesId"
     }
 }

@@ -10,6 +10,7 @@ import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.creator_details.adapter.CreatorDetailsListener
+import com.chocolatecake.marvel.ui.stories_details.StoriesDetailsFragmentArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -19,7 +20,8 @@ class CreatorDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel(), CreatorDetailsListener {
 
-    private val creatorId: Int = savedStateHandle[CREATOR_ID] ?: 0
+    private val creatorId =
+        CreatorDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).creatorId
 
     private val _comicsList = MutableLiveData<Status<List<ComicDto>?>>()
     val comicsList: LiveData<Status<List<ComicDto>?>> = _comicsList
@@ -98,9 +100,5 @@ class CreatorDetailsViewModel @Inject constructor(
 
     override fun onClickComic(id: Int) {
         navigate(CreatorDetailsFragmentDirections.actionCreatorDetailsFragmentToComicsDetailsFragment(id))
-    }
-
-    private companion object{
-        const val CREATOR_ID = "creatorId"
     }
 }
