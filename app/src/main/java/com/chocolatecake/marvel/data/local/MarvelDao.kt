@@ -25,10 +25,13 @@ interface MarvelDao {
 
     @Query("SELECT * FROM CharacterEntity")
     fun getAllCharacters(): Single<List<CharacterEntity>>
+
+    @Query("SELECT * FROM CharacterEntity WHERE name LIKE :characterName limit(:limit)")
+    fun getFilteredCharacters(characterName: String, limit: Int = 5): Observable<List<CharacterEntity>>
     /// endregion
 
-    /// region comics
 
+    /// region comics
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertComics(comics: List<ComicsEntity>): Completable
 
@@ -37,10 +40,13 @@ interface MarvelDao {
 
     @Query("SELECT * FROM TABLE_COMIC ORDER BY random() limit(:limit)")
     fun getComicsWithLimit(limit: Int = 10): Observable<List<ComicsEntity>>
+
+    @Query("SELECT * FROM TABLE_COMIC WHERE title LIKE :comicTitle limit(:limit)")
+    fun getFilteredComics(comicTitle: String, limit: Int = 5): Observable<List<ComicsEntity>>
     /// endregion
 
-    /// region events
 
+    /// region events
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertEvent(events: List<EventEntity>): Completable
 
@@ -51,8 +57,8 @@ interface MarvelDao {
     fun getEventsWithLimit(limit: Int = 10): Observable<List<EventEntity>>
     /// endregion
 
-    /// region series
 
+    /// region series
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSeries(series: List<SeriesEntity>): Completable
 
@@ -61,10 +67,13 @@ interface MarvelDao {
 
     @Query("delete from TABLE_SERIES")
     fun deleteAllSeries(): Completable
+
+    @Query("SELECT * FROM TABLE_SERIES WHERE title LIKE :seriesTitle limit(:limit)")
+    fun getFilteredSeries(seriesTitle: String, limit: Int = 5): Observable<List<SeriesEntity>>
     /// endregion
 
-    /// region story
 
+    /// region story
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertStories(stories: List<StoryEntity>): Completable
 

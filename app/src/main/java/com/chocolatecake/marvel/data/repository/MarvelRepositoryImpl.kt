@@ -56,16 +56,16 @@ class MarvelRepositoryImpl @Inject constructor(
         return dao.getComicsWithLimit(limit).map {
             it.takeIf { it.isNotEmpty() }?.let {
                 Status.Success(it.map { item -> comicUIMapper.map(item) })
-            }
-                ?: Status.Failure("No Result")
+            } ?: Status.Failure("No Result")
         }
     }
 
     override fun searchComics(title: String, limit: Int): Observable<Status<List<Comic>>> {
-        return wrapToState(
-            dbCall =  database.comicDao.getFilteredComics("%$title%", limit),
-            uiMapper = comicUIMapper
-        )
+        return dao.getFilteredComics("%$title%", limit).map {
+            it.takeIf { it.isNotEmpty() }?.let {
+                Status.Success(it.map { item -> comicUIMapper.map(item) })
+            } ?: Status.Failure("No Result")
+        }
     }
 
     override fun refreshComics(title: String?, limit: Int?, offset: Int?): Completable {
@@ -74,7 +74,7 @@ class MarvelRepositoryImpl @Inject constructor(
                 Status.Success(
                     baseResponse.body()?.data?.results?.filterNotNull()
                         ?.map { item -> comicMapper.map(item) }
-                        ?.let { items -> dao.insertComics(items) }
+                        ?.let { items -> dao.insertComics(items).subscribe() }
                 )
                 Completable.complete()
             }
@@ -112,21 +112,27 @@ class MarvelRepositoryImpl @Inject constructor(
 
     /// region characters
     override fun refreshCharacters(name: String?, limit: Int?): Completable {
-        return refreshData(
-            response = apiService.getCharacters(name, limit),
-            mapper = characterMapper,
-            saveToDb = { database.characterDao.insertCharacters(it) }
-        )
+        return apiService.getCharacters(name, limit).flatMapCompletable { baseResponse ->
+            baseResponse.takeIf { it.isSuccessful }.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull()
+                        ?.map { item -> characterMapper.map(item) }
+                        ?.let { items -> dao.insertCharacters(items).subscribe() }
+                )
+                Completable.complete()
+            }
+        }
     }
 
     override fun getCharacters(
         name: String,
         limit: Int?
     ): Observable<Status<List<Character>>> {
-        return wrapToState(
-            dbCall = database.characterDao.getFilteredCharacters("%$name%"),
-            uiMapper = characterUIMapper
-        )
+        return dao.getFilteredCharacters("%$name%").map {
+            it.takeIf { it.isNotEmpty() }?.let {
+                Status.Success(it.map { item -> characterUIMapper.map(item) })
+            } ?: Status.Failure("No Result")
+        }
     }
 
     override fun getCharacterById(characterId: Int): Single<Status<List<ProfileDto>>> {
@@ -217,32 +223,26 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun refreshSeries(limit: Int, offset: Int): Completable {
-        return apiService.getSeries(limit = limit, offset = offset)
+    override fun searchSeries(title: String, limit: Int): Observable<Status<List<Series>>> {
+        return dao.getFilteredSeries("%$title%", limit).map {
+            it.takeIf { it.isNotEmpty() }?.let {
+                Status.Success(it.map { item -> seriesUiMapper.map(item) })
+            } ?: Status.Failure("No Result")
+        }
+    }
+
+    override fun refreshSeries(title: String?, limit: Int, offset: Int): Completable {
+        return apiService.getSeries(title = title,limit = limit, offset = offset)
             .flatMapCompletable { baseResponse ->
                 baseResponse.takeIf { it.isSuccessful }.let {
                     Status.Success(
                         baseResponse.body()?.data?.results?.filterNotNull()
                             ?.map { item -> seriesMapper.map(item) }
-                            ?.let { items -> dao.insertSeries(items) }
+                            ?.let { items -> dao.insertSeries(items).subscribe() }
                     )
                     Completable.complete()
                 }
             }
-    override fun searchSeries(title: String, limit: Int): Observable<Status<List<Series>>> {
-        return wrapToState(
-            dbCall = database.seriesDao.getFilteredSeries("%$title%", limit),
-            uiMapper = seriesUiMapper
-        )
-    }
-
-    override fun refreshSeries(title: String?, limit: Int, offset: Int): Completable {
-        return refreshData(
-            apiService.getSeries(title, offset, limit),
-            seriesMapper
-        ) {
-            database.seriesDao.insertSeries(it)
-        }
     }
 
     override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
@@ -295,7 +295,7 @@ class MarvelRepositoryImpl @Inject constructor(
                 Status.Success(
                     baseResponse.body()?.data?.results?.filterNotNull()
                         ?.map { item -> storiesMapper.map(item) }
-                        ?.let { items -> dao.insertStories(items) }
+                        ?.let { items -> dao.insertStories(items).subscribe() }
                 )
                 Completable.complete()
             }
@@ -362,7 +362,7 @@ class MarvelRepositoryImpl @Inject constructor(
                 Status.Success(
                     baseResponse.body()?.data?.results?.filterNotNull()
                         ?.map { item -> eventMapper.map(item) }
-                        ?.let { items -> dao.insertEvent(items) }
+                        ?.let { items -> dao.insertEvent(items).subscribe() }
                 )
                 Completable.complete()
             }
