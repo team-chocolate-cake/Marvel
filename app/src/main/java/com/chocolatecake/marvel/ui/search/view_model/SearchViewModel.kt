@@ -72,7 +72,7 @@ class SearchViewModel @Inject constructor(
 
     //region Series
     private fun getAllSeries() {
-        repository.refreshSeries(title = searchText, limit = 5).subscribe().add()
+        repository.refreshSeries(title = searchText, limit = 5).subscribe({},{}).add()
         disposeObservableResponse(
             response = repository.searchSeries(searchText ?: "", limit = 5),
             onSuccess = ::onSeriesSuccess,
@@ -90,7 +90,7 @@ class SearchViewModel @Inject constructor(
 
     //region Comics
     private fun getAllComics() {
-        repository.refreshComics(title = searchText, limit = 5).subscribe().add()
+        repository.refreshComics(title = searchText, limit = 5).subscribe({},{}).add()
         disposeObservableResponse(
             response = repository.searchComics(searchText ?: "", limit = 5),
             onSuccess = ::onComicsSuccess,
@@ -108,7 +108,7 @@ class SearchViewModel @Inject constructor(
 
     //region Characters
     private fun getAllCharacters() {
-        repository.refreshCharacters(name = searchText).subscribe().add()
+        repository.refreshCharacters(name = searchText).subscribe({},{}).add()
         disposeObservableResponse(
             response = repository.getCharacters(searchText ?: ""),
             onSuccess = ::onCharactersSuccess,
