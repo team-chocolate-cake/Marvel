@@ -28,7 +28,7 @@
             app:isVisible="@{viewModel.state.toData().isEmpty()}" />
 
 
-        <EditText
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/edit_text_search"
             style="@style/TextStyle.BodyMedium.SearchBoxStyle"
             android:layout_width="match_parent"

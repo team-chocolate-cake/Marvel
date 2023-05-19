@@ -2,13 +2,11 @@ package com.chocolatecake.marvel.ui.search.view_model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
@@ -29,8 +27,10 @@ class SearchViewModel @Inject constructor(
     private val searchQuery = BehaviorSubject.createDefault(SearchQuery())
 
     private val _state = MutableLiveData<Status<SearchDataHolder>>()
-    val state: LiveData<Status<SearchDataHolder>>
-        get() = _state
+    val state: LiveData<Status<SearchDataHolder>> = _state
+
+    private val _searchHistory = MutableLiveData<List<SearchHistory>>()
+    val searchHistory: LiveData<List<SearchHistory>> = _searchHistory
 
 
     var searchText: String?
@@ -42,13 +42,42 @@ class SearchViewModel @Inject constructor(
                     type = searchType
                 )
             )
+
+            getSearchHistory(
+                keyword = value ?: "",
+                type = searchType.name
+            )
+
         }
 
     var searchType: SearchItemType
         get() = searchQuery.value?.type ?: SearchItemType.TYPE_SERIES
         set(value) {
-            searchQuery.onNext(SearchQuery(query = searchText, type = value))
+            searchQuery.onNext(
+                SearchQuery(query = searchText, type = value)
+            )
         }
+
+
+    //region search history
+    private fun getSearchHistory(keyword: String, type: String) {
+        disposeObservableResponse(
+            response = repository.getFilteredSearchHistory(
+                keyword = keyword,
+                type = type
+            ),
+            onSuccess = { _searchHistory.postValue(it) },
+            onFailure = ::onFailure
+
+        )
+    }
+
+    private fun insertSearchHistory(keyword: String?, type: String) {
+        keyword?.let { SearchHistory(keyword = it, type = type) }?.let {
+            repository.insertSearchHistory(it).subscribe()
+        }
+    }
+    //endregion
 
 
     init {
@@ -58,6 +87,11 @@ class SearchViewModel @Inject constructor(
     private fun applySearch() {
         searchQuery.debounce(500, TimeUnit.MILLISECONDS).subscribe {
             loadData()
+
+            insertSearchHistory(
+                keyword = it.query,
+                type = searchType.name
+            )
         }.add()
     }
 

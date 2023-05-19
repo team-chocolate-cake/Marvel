@@ -1,7 +1,9 @@
 package com.chocolatecake.marvel.ui.search.view
 
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chocolatecake.marvel.R
@@ -16,6 +18,7 @@ import com.chocolatecake.marvel.ui.search.model.SearchItems
 import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
 import com.chocolatecake.marvel.util.observeNonNull
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Single
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
@@ -31,6 +34,7 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         adapter = SearchListAdapter(viewModel)
         binding.recyclerView.adapter = adapter
         observeListItems()
+        setupSearchHistoryAdapter()
     }
 
     private fun observeListItems() {
@@ -68,4 +72,16 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
             }
         }
     }
+
+    private fun setupSearchHistoryAdapter(){
+        val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_dropdown_item_1line, emptyList<String>())
+        binding.editTextSearch.setAdapter(adapter)
+
+        viewModel.searchHistory.observeNonNull(this) { searchHistory ->
+            adapter.clear()
+            adapter.addAll(searchHistory.map { it.keyword })
+            adapter.notifyDataSetChanged()
+        }
+    }
 }
+

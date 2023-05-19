@@ -1,12 +1,15 @@
 package com.chocolatecake.marvel.data.local
 
+import android.app.appsearch.AppSearchResult
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.marvel.data.local.entities.CharacterEntity
 import com.chocolatecake.marvel.data.local.entities.ComicsEntity
 import com.chocolatecake.marvel.data.local.entities.EventEntity
+import com.chocolatecake.marvel.data.local.entities.SearchHistoryEntity
 import com.chocolatecake.marvel.data.local.entities.SeriesEntity
 import com.chocolatecake.marvel.data.local.entities.StoryEntity
 import io.reactivex.rxjava3.core.Completable
@@ -83,5 +86,17 @@ interface MarvelDao {
     @Query("SELECT * FROM STORY_TABLE")
     fun getAllStories(): Observable<List<StoryEntity>>
     /// endregion
+
+
+    ///region search history
+    @Query("SELECT * FROM SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword AND type == :type ORDER BY keyword DESC")
+    fun getFilteredSearchHistory(keyword: String , type: String): Observable<List<SearchHistoryEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertSearchHistory(searchResult: SearchHistoryEntity): Completable
+
+    @Delete
+    fun deleteSearchHistory(search: SearchHistoryEntity): Completable
+    ///endregion
 
 }

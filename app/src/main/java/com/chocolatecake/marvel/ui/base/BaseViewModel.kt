@@ -38,8 +38,8 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     fun <T : Any> disposeObservableResponse(
-        response: Observable<Status<T>>,
-        onSuccess: (data: Status<T>) -> Unit,
+        response: Observable<T>,
+        onSuccess: (data: T) -> Unit,
         onFailure: (e: Throwable) -> Unit,
     ) {
         response.subscribe(onSuccess, onFailure).add()

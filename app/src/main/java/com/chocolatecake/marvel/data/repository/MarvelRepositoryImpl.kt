@@ -16,6 +16,8 @@ import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventDtoToUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
+import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryMapper
+import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryUIMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
@@ -24,6 +26,7 @@ import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
 import io.reactivex.rxjava3.core.Completable
@@ -46,7 +49,9 @@ class MarvelRepositoryImpl @Inject constructor(
     private val comicDetailsDtoToUiMapper: ComicDetailsDtoToUiMapper,
     private val storiesMapper: StoryMapper,
     private val storiesUIMapper: StoryUIMapper,
-) : MarvelRepository {
+    private val searchHistoryUIMapper: SearchHistoryUIMapper,
+    private val searchHistoryMapper: SearchHistoryMapper,
+    ) : MarvelRepository {
 
     /// region comics
     override fun getComics(
@@ -419,4 +424,23 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
     /// endregion
+
+
+    ///region search history
+    override fun getFilteredSearchHistory(keyword: String, type: String)
+    : Observable<List<SearchHistory>> {
+        return dao.getFilteredSearchHistory(keyword = "%${keyword}%", type = type).map { items ->
+            items.map { searchHistoryUIMapper.map(it) }
+        }
+    }
+
+    override fun insertSearchHistory(searchHistory: SearchHistory): Completable {
+        return dao.insertSearchHistory(searchHistoryMapper.map(searchHistory))
+
+    }
+
+    override fun deleteSearchHistory(searchResult: SearchHistory): Completable {
+        return dao.deleteSearchHistory(searchHistoryMapper.map(searchResult))
+    }
+    ///endregion
 }
