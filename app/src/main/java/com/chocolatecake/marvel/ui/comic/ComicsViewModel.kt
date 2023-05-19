@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.core.listener.ComicListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,8 +16,8 @@ class ComicsViewModel @Inject constructor(
     private val repository: MarvelRepository
 ) : BaseViewModel(), ComicListener {
 
-    private val _comics = MutableLiveData<Status<List<ComicDto>>>()
-    val comics: LiveData<Status<List<ComicDto>>>
+    private val _comics = MutableLiveData<Status<List<Comic>>>()
+    val comics: LiveData<Status<List<Comic>>>
         get() = _comics
 
 
@@ -27,14 +28,14 @@ class ComicsViewModel @Inject constructor(
     //regin Comics
     fun loadComics() {
         _comics.postValue(Status.Loading)
-        disposeResponse(
+        disposeObservableResponse(
             response = repository.getComics(limit = LIMIT, offset = (0..5000).random()),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onComicsFailure,
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
+    private fun onComicsSuccess(status: Status<List<Comic>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
         }

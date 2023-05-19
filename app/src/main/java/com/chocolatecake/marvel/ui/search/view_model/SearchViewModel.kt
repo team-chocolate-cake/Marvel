@@ -7,13 +7,16 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.search.model.SearchDataHolder
 import com.chocolatecake.marvel.ui.search.model.SearchItemType
 import com.chocolatecake.marvel.ui.search.model.SearchQuery
 import com.chocolatecake.marvel.ui.search.view.SearchFragmentDirections
 import com.chocolatecake.marvel.ui.search.view.SearchInteractionListener
+import com.chocolatecake.marvel.util.observeOnMainThread
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -26,11 +29,13 @@ class SearchViewModel @Inject constructor(
     private val searchQuery = BehaviorSubject.createDefault(SearchQuery())
 
     private val _state = MutableLiveData<Status<SearchDataHolder>>()
-    val state: LiveData<Status<SearchDataHolder>>
-        get() = _state
+    val state: LiveData<Status<SearchDataHolder>> = _state
 
-    private val _searchHistory = MutableLiveData<List<String>>()
-    val searchHistory: LiveData<List<String>> get() = _searchHistory
+    private val _searchHistory = MutableLiveData<List<SearchHistory>>()
+    val searchHistory: LiveData<List<SearchHistory>> = _searchHistory
+
+//    private val _searchHistory1 = MutableLiveData<List<String>>()
+//    val searchHistory1: LiveData<List<String>> = _searchHistory1
 
 
     var searchText: String?
@@ -42,7 +47,17 @@ class SearchViewModel @Inject constructor(
                     type = searchType
                 )
             )
-            getSearchHistory(query= value?.takeIf { it.isNotBlank() },)
+
+//            insertSearchHistory(
+//                keyword = value,
+//                type = searchType.name
+//            )
+
+            getSearchHistory(
+                keyword = value?.takeIf { it.isNotBlank() },
+                type = searchType.name
+            )
+
         }
 
     var searchType: SearchItemType
@@ -54,12 +69,42 @@ class SearchViewModel @Inject constructor(
         }
 
 
-    private fun getSearchHistory(query: String?) {
-        val searchHistory = listOf("Apple", "Banana", "Orange", "Grapes")
-        _searchHistory.postValue(searchHistory.filter { it.contains(query!!, ignoreCase = true) })
+    private fun getSearchHistory(keyword: String?, type: String) {
+       repository.getFilteredSearchHistory(
+            keyword = "%${keyword}%", type = type
+        ).subscribe(
+             { it->
+            println("data "+it)
+            _searchHistory.postValue(it)
+        },{e->
+            println("kkkkjjhjhghghghfgfgdf"+e)
+        }).add()
+       // val searchHistory1 :List<String> = listOf("aaa","bbbb","cca")
+       // _searchHistory.postValue(searchHistory)
+    }
+
+    private fun insertSearchHistory(keyword:String?, type: String) {
+        repository.insertSearchHistory(
+            SearchHistory(keyword = keyword!! , type = type, id = 0)
+        ).subscribe({
+                    println("tessttttt")
+        },{e->
+            println("testtttt"+e)
+        }).add()
+
+//        if (! checkKeywordIsInSearchHistory(keyword, type)) {
+//            repository.insertSearchHistory(SearchHistory(keyword = keyword!! , type = type, id = 0))
+//        }
+//        else null
+    }
+
+    private fun checkKeywordIsInSearchHistory(keyword:String?, type: String): Boolean{
+        return repository.getFilteredSearchHistory(keyword!!, type)
+            .contains(keyword!!) as Boolean
     }
 
     init {
+       // insertSearchHistory("test" ,"test")
         applySearch()
     }
 
@@ -96,20 +141,20 @@ class SearchViewModel @Inject constructor(
     //endregion
 
     //region Comics
-    private fun getAllComics() {
-        disposeResponse(
-            response = repository.getComics(searchText),
-            onSuccess = ::onComicsSuccess,
-            onFailure = ::onFailure,
-        )
-    }
+//    private fun getAllComics() {
+//        disposeResponse(
+//            response = repository.getComics(searchText),
+//            onSuccess = ::onComicsSuccess,
+//            onFailure = ::onFailure,
+//        )
+//    }
 
-    private fun onComicsSuccess(comicResult: Status<List<ComicDto>>) {
-        comicResult.toData()?.let { result ->
-            val newState = Status.Success(SearchDataHolder(comics = result))
-            _state.postValue(newState)
-        }
-    }
+//    private fun onComicsSuccess(comicResult: Status<List<ComicDto>>) {
+//        comicResult.toData()?.let { result ->
+//            val newState = Status.Success(SearchDataHolder(comics = result))
+//            _state.postValue(newState)
+//        }
+//    }
     //endregion
 
     //region Characters
@@ -119,7 +164,7 @@ class SearchViewModel @Inject constructor(
             onSuccess = ::onCharactersSuccess,
             onFailure = ::onFailure,
 
-        )
+            )
     }
 
     private fun onCharactersSuccess(characterResult: Status<List<ProfileDto>>) {

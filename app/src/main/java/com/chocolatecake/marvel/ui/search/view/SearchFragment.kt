@@ -18,6 +18,7 @@ import com.chocolatecake.marvel.ui.search.model.SearchItems
 import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
 import com.chocolatecake.marvel.util.observeNonNull
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.rxjava3.core.Single
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
@@ -41,7 +42,7 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         // Observe suggestions and update the adapter
         viewModel.searchHistory.observeNonNull(this) { searchHistory ->
             adapter.clear()
-            adapter.addAll(searchHistory)
+            adapter.addAll(searchHistory.map { it.keyword })
             adapter.notifyDataSetChanged()
         }
     }
@@ -82,3 +83,12 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         }
     }
 }
+
+//private fun <T> ArrayAdapter<T>.addAll(map: Single<List<T>>) {
+//    return this.addAll(map)
+//}
+
+//private fun <T> ArrayAdapter<T>.addAll(searchHistory: Single<List<SearchHistory>>) {
+//    this.addAll(searchHistory)
+//}
+

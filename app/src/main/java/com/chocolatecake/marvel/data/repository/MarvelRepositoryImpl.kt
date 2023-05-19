@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.local.MarvelDao
+import com.chocolatecake.marvel.data.local.entities.SearchHistoryEntity
 import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
@@ -10,18 +11,21 @@ import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.mapper.Mapper
+import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryUIMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
+import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryUIMapper
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
 import com.chocolatecake.marvel.util.observeOnMainThread
@@ -46,7 +50,10 @@ class MarvelRepositoryImpl @Inject constructor(
     private val comicUIMapper: ComicUIMapper,
     private val storiesMapper: StoryMapper,
     private val storiesUIMapper: StoryUIMapper,
-) : MarvelRepository {
+    private val searchHistoryUIMapper: SearchHistoryUIMapper,
+    private val searchHistoryMapper: SearchHistoryMapper,
+
+    ) : MarvelRepository {
 
     /// region comics
     override fun getComics(
@@ -55,7 +62,7 @@ class MarvelRepositoryImpl @Inject constructor(
         offset: Int?
     ): Observable<Status<List<Comic>>> {
         return wrapToState(
-            dbCall =  dao.getComicsWithLimit(),
+            dbCall = dao.getComicsWithLimit(),
             uiMapper = comicUIMapper
         )
     }
@@ -167,8 +174,10 @@ class MarvelRepositoryImpl @Inject constructor(
 
     /// region stories
     override fun getStories(limit: Int?, offset: Int?): Observable<Status<List<Story>>> {
-        return wrapToState(dbCall = dao.getAllStories(),
-        uiMapper = storiesUIMapper)
+        return wrapToState(
+            dbCall = dao.getAllStories(),
+            uiMapper = storiesUIMapper
+        )
     }
 
     override fun refreshStories(limit: Int?, offset: Int?): Completable {
@@ -240,6 +249,31 @@ class MarvelRepositoryImpl @Inject constructor(
         return wrapperToState(apiService.getEventsForSeries(seriesId))
     }
     /// endregion
+
+
+    ///region search history
+    override fun getFilteredSearchHistory(keyword: String, type: String)
+    : Single<List<SearchHistory>> {
+        return dao.getFilteredSearchHistory(keyword = keyword, type = type).map { items ->
+            items.map { searchHistoryUIMapper.map(it) }
+        }.observeOnMainThread()
+    }
+
+    override fun insertSearchHistory(searchHistory: SearchHistory): Completable {
+        return dao.insertSearchHistory(searchHistoryMapper.map(searchHistory))
+            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getAllSearchHistory(type: String): Single<List<SearchHistory>> {
+        return dao.getAllSearchHistory(type).map { items ->
+            items.map { searchHistoryUIMapper.map(it) }
+        }
+    }
+
+    override fun deleteSearchHistory(searchResult: SearchHistory): Completable {
+        return dao.deleteSearchHistory(searchHistoryMapper.map(searchResult))
+    }
+    ///endregion
 
 
     /// region helpers

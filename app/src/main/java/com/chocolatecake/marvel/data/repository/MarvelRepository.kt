@@ -1,5 +1,7 @@
 package com.chocolatecake.marvel.data.repository
 
+import android.app.appsearch.AppSearchResult
+import com.chocolatecake.marvel.data.local.entities.SearchHistoryEntity
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
@@ -8,6 +10,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
 import io.reactivex.rxjava3.core.Completable
@@ -126,4 +129,16 @@ interface MarvelRepository {
 
     fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>>
     /// endregion
+
+
+    /// region search history
+    fun getFilteredSearchHistory(keyword: String , type: String): Single<List<SearchHistory>>
+
+    fun insertSearchHistory(searchResult: SearchHistory,): Completable
+
+    fun getAllSearchHistory(type: String): Single<List<SearchHistory>>
+
+    fun deleteSearchHistory(search: SearchHistory): Completable
+
+    //endregion
 }
