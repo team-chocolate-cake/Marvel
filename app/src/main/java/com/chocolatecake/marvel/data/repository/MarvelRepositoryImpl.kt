@@ -253,21 +253,15 @@ class MarvelRepositoryImpl @Inject constructor(
 
     ///region search history
     override fun getFilteredSearchHistory(keyword: String, type: String)
-    : Single<List<SearchHistory>> {
-        return dao.getFilteredSearchHistory(keyword = keyword, type = type).map { items ->
+    : Observable<List<SearchHistory>> {
+        return dao.getFilteredSearchHistory(keyword = "%${keyword}%", type = type).map { items ->
             items.map { searchHistoryUIMapper.map(it) }
-        }.observeOnMainThread()
+        }
     }
 
     override fun insertSearchHistory(searchHistory: SearchHistory): Completable {
         return dao.insertSearchHistory(searchHistoryMapper.map(searchHistory))
-            .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-    }
 
-    override fun getAllSearchHistory(type: String): Single<List<SearchHistory>> {
-        return dao.getAllSearchHistory(type).map { items ->
-            items.map { searchHistoryUIMapper.map(it) }
-        }
     }
 
     override fun deleteSearchHistory(searchResult: SearchHistory): Completable {

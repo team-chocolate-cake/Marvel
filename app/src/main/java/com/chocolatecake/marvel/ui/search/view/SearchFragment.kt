@@ -34,17 +34,7 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
         adapter = SearchListAdapter(viewModel)
         binding.recyclerView.adapter = adapter
         observeListItems()
-
-        // Set up adapter for MaterialAutoCompleteTextView
-        var adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_dropdown_item_1line, emptyList<String>())
-        binding.editTextSearch.setAdapter(adapter)
-
-        // Observe suggestions and update the adapter
-        viewModel.searchHistory.observeNonNull(this) { searchHistory ->
-            adapter.clear()
-            adapter.addAll(searchHistory.map { it.keyword })
-            adapter.notifyDataSetChanged()
-        }
+        setupSearchHistoryAdapter()
     }
 
     private fun observeListItems() {
@@ -82,13 +72,16 @@ class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
             }
         }
     }
+
+    private fun setupSearchHistoryAdapter(){
+        val adapter = ArrayAdapter(requireActivity(), android.R.layout.simple_dropdown_item_1line, emptyList<String>())
+        binding.editTextSearch.setAdapter(adapter)
+
+        viewModel.searchHistory.observeNonNull(this) { searchHistory ->
+            adapter.clear()
+            adapter.addAll(searchHistory.map { it.keyword })
+            adapter.notifyDataSetChanged()
+        }
+    }
 }
-
-//private fun <T> ArrayAdapter<T>.addAll(map: Single<List<T>>) {
-//    return this.addAll(map)
-//}
-
-//private fun <T> ArrayAdapter<T>.addAll(searchHistory: Single<List<SearchHistory>>) {
-//    this.addAll(searchHistory)
-//}
 

@@ -80,17 +80,14 @@ interface MarvelDao {
 
 
     ///region search history
-    @Query("SELECT * FROM SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword AND type == :type ORDER BY ID DESC")
-    fun getFilteredSearchHistory(keyword: String , type: String): Single<List<SearchHistoryEntity>>
+    @Query("SELECT * FROM SEARCH_HISTORY_TABLE WHERE keyword LIKE :keyword AND type == :type ORDER BY keyword DESC")
+    fun getFilteredSearchHistory(keyword: String , type: String): Observable<List<SearchHistoryEntity>>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSearchHistory(searchResult: SearchHistoryEntity): Completable
 
     @Delete
     fun deleteSearchHistory(search: SearchHistoryEntity): Completable
-
-    @Query("SELECT * FROM SEARCH_HISTORY_TABLE WHERE type == :type ORDER BY ID DESC")
-    fun getAllSearchHistory(type: String): Single<List<SearchHistoryEntity>>
     ///endregion
 
 }

@@ -10,7 +10,6 @@ import javax.inject.Inject
 class SearchHistoryUIMapper @Inject constructor() : Mapper<SearchHistoryEntity, SearchHistory> {
     override fun map(input: SearchHistoryEntity): SearchHistory {
         return SearchHistory(
-            id = input.id,
             keyword = input.keyword,
             type = input.type,
         )

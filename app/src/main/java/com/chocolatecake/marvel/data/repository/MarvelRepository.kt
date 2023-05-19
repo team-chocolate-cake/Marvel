@@ -132,13 +132,10 @@ interface MarvelRepository {
 
 
     /// region search history
-    fun getFilteredSearchHistory(keyword: String , type: String): Single<List<SearchHistory>>
+    fun getFilteredSearchHistory(keyword: String , type: String): Observable<List<SearchHistory>>
 
     fun insertSearchHistory(searchResult: SearchHistory,): Completable
 
-    fun getAllSearchHistory(type: String): Single<List<SearchHistory>>
-
     fun deleteSearchHistory(search: SearchHistory): Completable
-
     //endregion
 }

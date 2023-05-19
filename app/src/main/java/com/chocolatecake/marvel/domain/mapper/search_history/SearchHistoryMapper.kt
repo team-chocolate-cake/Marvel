@@ -12,7 +12,6 @@ class SearchHistoryMapper @Inject constructor() : Mapper<SearchHistory,SearchHis
         return SearchHistoryEntity(
             keyword = input.keyword,
             type = input.type,
-            id = 0,
         )
     }
 }
