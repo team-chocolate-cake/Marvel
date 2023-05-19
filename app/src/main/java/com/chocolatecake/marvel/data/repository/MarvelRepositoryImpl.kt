@@ -11,6 +11,7 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicDetailsDtoToUiMapper
+import com.chocolatecake.marvel.domain.mapper.comic.ComicDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventDtoToUIMapper
@@ -18,8 +19,10 @@ import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
 import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryMapper
 import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryUIMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
+import com.chocolatecake.marvel.domain.mapper.story.StoryDetailsDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryUIMapper
 import com.chocolatecake.marvel.domain.model.Character
@@ -29,6 +32,7 @@ import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
+import com.chocolatecake.marvel.domain.model.StoryDetails
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -41,12 +45,15 @@ class MarvelRepositoryImpl @Inject constructor(
     private val characterUIMapper: CharacterUIMapper,
     private val seriesMapper: SeriesMapper,
     private val seriesUiMapper: SeriesUIMapper,
+    private val seriesDtoToUiMapper: SeriesDtoToUiMapper,
     private val eventMapper: EventMapper,
     private val eventUIMapper: EventUIMapper,
     private val eventDtoToUIMapper: EventDtoToUIMapper,
     private val comicMapper: ComicMapper,
     private val comicUIMapper: ComicUIMapper,
     private val comicDetailsDtoToUiMapper: ComicDetailsDtoToUiMapper,
+    private val comicDtoToUiMapper: ComicDtoToUiMapper,
+    private val storyDetailsDtoToUiMapper: StoryDetailsDtoToUiMapper,
     private val storiesMapper: StoryMapper,
     private val storiesUIMapper: StoryUIMapper,
     private val searchHistoryUIMapper: SearchHistoryUIMapper,
@@ -307,42 +314,35 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>> {
+    override fun getStoryById(storyId: Int): Single<Status<StoryDetails>> {
         return apiService.getStoryById(storyId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
-        }
+                baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                    ?.firstOrNull()?.let {
+                        Status.Success(storyDetailsDtoToUiMapper.map(it))
+                    } ?: Status.Failure(baseResponse.message())
+            }
     }
 
-    override fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileDto>>> {
+    override fun getCreatorsByStoryId(storyId: Int): Single<Status<List<Character>>> {
         return apiService.getCreatorsByStoryId(storyId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()?.let {
+                Status.Success(it.map { item -> creatorDtoToUIMapper.map(item) })
             } ?: Status.Failure(baseResponse.message())
         }
     }
 
-    override fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicDto>>> {
+    override fun getComicsByStoryId(storyId: Int): Single<Status<List<Comic>>> {
         return apiService.getComicsByStoryId(storyId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()?.let {
+                Status.Success(it.map { item -> comicDtoToUiMapper.map(item) })
             } ?: Status.Failure(baseResponse.message())
         }
     }
 
-    override fun getSeriesByStoryId(storyId: Int): Single<Status<List<SeriesDto>>> {
+    override fun getSeriesByStoryId(storyId: Int): Single<Status<List<Series>>> {
         return apiService.getSeriesByStoryId(storyId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()?.let {
+                Status.Success(it.map { item -> seriesDtoToUiMapper.map(item) })
             } ?: Status.Failure(baseResponse.message())
         }
     }

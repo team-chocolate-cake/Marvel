@@ -15,6 +15,7 @@ import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
+import com.chocolatecake.marvel.domain.model.StoryDetails
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -114,13 +115,13 @@ interface MarvelRepository {
 
     fun refreshStories(limit: Int? = null, offset: Int? = null): Completable
 
-    fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>>
+    fun getStoryById(storyId: Int): Single<Status<StoryDetails>>
 
-    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileDto>>>
+    fun getCreatorsByStoryId(storyId: Int): Single<Status<List<Character>>>
 
-    fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsByStoryId(storyId: Int): Single<Status<List<Comic>>>
 
-    fun getSeriesByStoryId(storyId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesByStoryId(storyId: Int): Single<Status<List<Series>>>
     /// endregion
 
 
