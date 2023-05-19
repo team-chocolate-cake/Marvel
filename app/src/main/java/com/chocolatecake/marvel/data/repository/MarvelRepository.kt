@@ -1,6 +1,7 @@
 package com.chocolatecake.marvel.data.repository
 
 import android.app.appsearch.AppSearchResult
+import android.provider.ContactsContract
 import com.chocolatecake.marvel.data.local.entities.SearchHistoryEntity
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
@@ -14,6 +15,7 @@ import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.domain.model.Story
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -96,13 +98,13 @@ interface MarvelRepository {
         offset: Int = 0,
     ): Completable
 
-    fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesById(seriesId: Int): Single<Status<SeriesDetails>>
 
-    fun getCharactersForSeries(seriesId: Int): Single<Status<List<ProfileDto>>>
+    fun getCharactersForSeries(seriesId: Int): Single<Status<List<Character>>>
 
-    fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsForSeries(seriesId: Int): Single<Status<List<Comic>>>
 
-    fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>>
+    fun getEventsForSeries(seriesId: Int): Single<Status<List<Event>>>
     /// endregion
 
 

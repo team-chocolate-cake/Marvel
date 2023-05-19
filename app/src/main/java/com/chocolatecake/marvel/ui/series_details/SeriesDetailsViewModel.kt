@@ -6,9 +6,12 @@ import androidx.lifecycle.SavedStateHandle
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Character
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsListener
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,17 +25,17 @@ class SeriesDetailsViewModel @Inject constructor(
 
     private val seriesId: Int = savedStateHandle[SERIES_ID] ?: 0
 
-    private val _series = MutableLiveData<Status<SeriesDto?>>()
-    val series: LiveData<Status<SeriesDto?>> = _series
+    private val _series = MutableLiveData<Status<SeriesDetails?>>()
+    val series: LiveData<Status<SeriesDetails?>> = _series
 
-    private val _characters = MutableLiveData<Status<List<ProfileDto?>>>()
-    val characters: LiveData<Status<List<ProfileDto?>>> = _characters
+    private val _characters = MutableLiveData<Status<List<Character?>>>()
+    val characters: LiveData<Status<List<Character?>>> = _characters
 
-    private val _comics = MutableLiveData<Status<List<ComicDto?>>>()
-    val comics: LiveData<Status<List<ComicDto?>>> = _comics
+    private val _comics = MutableLiveData<Status<List<Comic?>>>()
+    val comics: LiveData<Status<List<Comic?>>> = _comics
 
-    private val _events = MutableLiveData<Status<List<EventDto?>>>()
-    val events: LiveData<Status<List<EventDto?>>> = _events
+    private val _events = MutableLiveData<Status<List<Event?>>>()
+    val events: LiveData<Status<List<Event?>>> = _events
 
     init {
         loadData()
@@ -55,8 +58,8 @@ class SeriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onSeriesSuccess(status: Status<List<SeriesDto>>) {
-        status.toData()?.first()?.let {
+    private fun onSeriesSuccess(status: Status<SeriesDetails>) {
+        status.toData()?.let {
             _series.postValue(Status.Success(it))
         }
     }
@@ -72,7 +75,7 @@ class SeriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onCharactersSuccess(status: Status<List<ProfileDto>>) {
+    private fun onCharactersSuccess(status: Status<List<Character>>) {
         status.toData()?.let {
             _characters.postValue(Status.Success(it))
         }
@@ -89,7 +92,7 @@ class SeriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onComicsSuccess(status: Status<List<ComicDto>>) {
+    private fun onComicsSuccess(status: Status<List<Comic>>) {
         status.toData()?.let {
             _comics.postValue(Status.Success(it))
         }
@@ -106,7 +109,7 @@ class SeriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onEventsSuccess(status: Status<List<EventDto>>) {
+    private fun onEventsSuccess(status: Status<List<Event>>) {
         status.toData()?.let {
             _events.postValue(Status.Success(it))
         }
@@ -145,7 +148,7 @@ class SeriesDetailsViewModel @Inject constructor(
         )
     }
 
-    private companion object{
+    private companion object {
         const val SERIES_ID = "seriesId"
     }
 }
