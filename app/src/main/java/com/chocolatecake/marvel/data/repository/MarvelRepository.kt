@@ -1,5 +1,6 @@
 package com.chocolatecake.marvel.data.repository
 
+import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
@@ -13,13 +14,14 @@ import com.chocolatecake.marvel.domain.model.Story
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import retrofit2.Response
 
 interface MarvelRepository {
 
     /// region comics
     fun getComics(
         title: String? = null,
-        limit: Int? = null,
+        limit: Int = 10,
         offset: Int? = null,
     ): Observable<Status<List<Comic>>>
 
@@ -70,7 +72,7 @@ interface MarvelRepository {
     fun getSeries(
         title: String? = null,
         offset: Int? = null,
-        limit: Int? = null,
+        limit: Int = 10,
         orderBy: String? = null
     ): Observable<Status<List<Series>>>
 
@@ -109,7 +111,7 @@ interface MarvelRepository {
 
     /// region events
     fun getEvents(
-        limit: Int? = null,
+        limit: Int = 10,
         offset: Int? = null
     ): Observable<Status<List<Event>>>
 
