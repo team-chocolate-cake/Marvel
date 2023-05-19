@@ -18,6 +18,10 @@ import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
 import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryMapper
 import com.chocolatecake.marvel.domain.mapper.search_history.SearchHistoryUIMapper
+import com.chocolatecake.marvel.domain.mapper.series.CharacterDtoToUiMapper
+import com.chocolatecake.marvel.domain.mapper.series.ComicsDtoToUiMapper
+import com.chocolatecake.marvel.domain.mapper.series.EventsDtoToUiMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesDetailsDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
@@ -28,6 +32,7 @@ import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
+import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.domain.model.Story
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -47,11 +52,15 @@ class MarvelRepositoryImpl @Inject constructor(
     private val comicMapper: ComicMapper,
     private val comicUIMapper: ComicUIMapper,
     private val comicDetailsDtoToUiMapper: ComicDetailsDtoToUiMapper,
+    private val seriesDetailsDtoToUiMapper: SeriesDetailsDtoToUiMapper,
+    private val characterDtoToUiMapper: CharacterDtoToUiMapper,
+    private val comicsDtoToUiMapper: ComicsDtoToUiMapper,
+    private val eventsDtoToUiMapper: EventsDtoToUiMapper,
     private val storiesMapper: StoryMapper,
     private val storiesUIMapper: StoryUIMapper,
     private val searchHistoryUIMapper: SearchHistoryUIMapper,
     private val searchHistoryMapper: SearchHistoryMapper,
-    ) : MarvelRepository {
+) : MarvelRepository {
 
     /// region comics
     override fun getComics(
@@ -221,7 +230,7 @@ class MarvelRepositoryImpl @Inject constructor(
 
     /// region series
     override fun getSeries(limit: Int): Observable<Status<List<Series>>> {
-        return dao.getSeriesWithLimit(limit).map {
+        return dao.getSeriesWithLimit(limit).map { it ->
             it.takeIf { it.isNotEmpty() }?.let {
                 Status.Success(it.map { item -> seriesUiMapper.map(item) })
             } ?: Status.Failure("No Result")
@@ -237,7 +246,7 @@ class MarvelRepositoryImpl @Inject constructor(
     }
 
     override fun refreshSeries(title: String?, limit: Int, offset: Int): Completable {
-        return apiService.getSeries(title = title,limit = limit, offset = offset)
+        return apiService.getSeries(title = title, limit = limit, offset = offset)
             .flatMapCompletable { baseResponse ->
                 baseResponse.takeIf { it.isSuccessful }.let {
                     Status.Success(
@@ -250,35 +259,48 @@ class MarvelRepositoryImpl @Inject constructor(
             }
     }
 
-    override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
+    override fun getSeriesById(seriesId: Int): Single<Status<SeriesDetails>> {
         return apiService.getSeriesById(seriesId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                ?.firstOrNull()?.let {
+                    Status.Success(seriesDetailsDtoToUiMapper.map(it))
+                } ?: Status.Failure(baseResponse.message())
         }
     }
 
-    override fun getCharactersForSeries(seriesId: Int): Single<Status<List<ProfileDto>>> {
+    override fun getCharactersForSeries(seriesId: Int): Single<Status<List<Character>>> {
         return apiService.getCharactersForSeries(seriesId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                ?.let { it ->
+                    Status.Success(it.map {
+                        characterDtoToUiMapper.map(it)
+                    })
+                } ?: Status.Failure(baseResponse.message())
         }
     }
 
-    override fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicDto>>> {
+    override fun getComicsForSeries(seriesId: Int): Single<Status<List<Comic>>> {
         return apiService.getComicsForSeries(seriesId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                ?.let { it ->
+                    Status.Success(it.map {
+                        comicsDtoToUiMapper.map(it)
+                    })
+                } ?: Status.Failure(baseResponse.message())
         }
     }
+
+    override fun getEventsForSeries(seriesId: Int): Single<Status<List<Event>>> {
+        return apiService.getEventsForSeries(seriesId).map { baseResponse ->
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                ?.let { it ->
+                    Status.Success(it.map {
+                        eventDtoToUIMapper.map(it)
+                    })
+                } ?: Status.Failure(baseResponse.message())
+        }
+    }
+
     /// endregion
 
 
@@ -414,21 +436,12 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>> {
-        return apiService.getEventsForSeries(seriesId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
-        }
-    }
     /// endregion
 
 
     ///region search history
     override fun getFilteredSearchHistory(keyword: String, type: String)
-    : Observable<List<SearchHistory>> {
+            : Observable<List<SearchHistory>> {
         return dao.getFilteredSearchHistory(keyword = "%${keyword}%", type = type).map { items ->
             items.map { searchHistoryUIMapper.map(it) }
         }

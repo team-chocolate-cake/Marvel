@@ -1,22 +1,22 @@
 package com.chocolatecake.marvel.ui.series_details
 
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.EventDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
-import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
+import com.chocolatecake.marvel.domain.model.Character
+import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.SeriesDetails
 
 sealed class SeriesDetailsItem(val type: SeriesDetailsItemType) {
 
-    data class SeriesItem(val seriesDto: SeriesDto?) :
+    data class SeriesItem(val series: SeriesDetails?) :
         SeriesDetailsItem(SeriesDetailsItemType.HEADER)
 
-    data class CharactersItem(val charactersResult: List<ProfileDto?>) :
+    data class CharactersItem(val charactersResult: List<Character?>) :
         SeriesDetailsItem(SeriesDetailsItemType.CHARACTERS)
 
-    data class EventsItem(val eventDto: List<EventDto?>) :
+    data class EventsItem(val event: List<Event?>) :
         SeriesDetailsItem(SeriesDetailsItemType.EVENTS)
 
-    data class ComicsItem(val comicDto: List<ComicDto?>) :
+    data class ComicsItem(val comic: List<Comic?>) :
         SeriesDetailsItem(SeriesDetailsItemType.COMICS)
 
 }
