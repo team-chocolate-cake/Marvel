@@ -9,10 +9,18 @@ import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
+import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
+import com.chocolatecake.marvel.domain.mapper.story.StoryUIMapper
+import com.chocolatecake.marvel.domain.model.Story
 import com.chocolatecake.marvel.util.observeOnMainThread
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.schedulers.Schedulers
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -21,6 +29,8 @@ class MarvelRepositoryImpl @Inject constructor(
     private val database: MarvelDataBase,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
+    private val storiesMapper: StoryMapper,
+    private val storiesUIMapper: StoryUIMapper,
 ) : MarvelRepository {
 
     /// region comics
@@ -116,8 +126,19 @@ class MarvelRepositoryImpl @Inject constructor(
 
 
     /// region stories
-    override fun getStories(limit: Int?, offset: Int?): Single<Status<List<StoryDto>>> {
-        return wrapperToState(apiService.getStories(limit, offset))
+    override fun getStories(limit: Int?, offset: Int?): Observable<Status<List<Story>>> {
+        return wrapToState(dbCall = database.storyDao.getAllStories(),
+        uiMapper = storiesUIMapper)
+    }
+
+    override fun refreshStories(limit: Int?, offset: Int?): Completable {
+        return refreshData(
+            response = apiService.getStories(),
+            mapper = storiesMapper,
+            saveToDb = {
+                database.storyDao.insertStories(it)
+            }
+        )
     }
 
     override fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>> {
@@ -179,5 +200,41 @@ class MarvelRepositoryImpl @Inject constructor(
                 Status.Failure(baseResponse.message())
             }
         }.observeOnMainThread()
+    }
+
+    private fun <I : Any, O : Any> wrapToState(
+        dbCall: Observable<List<I>>,
+        uiMapper: Mapper<I, O>
+    ): Observable<Status<List<O>>> {
+        return dbCall.map {
+            if (it.isEmpty()) {
+                return@map Status.Failure("No Result")
+            }
+            Status.Success(it.map { item -> uiMapper.map(item) })
+        }.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
+    }
+
+    private fun <T : Any, O : Any> refreshData(
+        response: Single<Response<BaseResponse<T>>>,
+        mapper: Mapper<T, O>,
+        saveToDb: (List<O>) -> Completable,
+    ): Completable {
+        return response.concatMapCompletable { baseResponse ->
+            Completable.create { emitter ->
+                if (baseResponse.isSuccessful) {
+                    val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
+                    val mappedItems = filteredItems?.map { mapper.map(it) }
+
+                    mappedItems?.let { items ->
+                        saveToDb(items).observeOn(Schedulers.io()).subscribe({
+                            emitter.onComplete()
+                        }, { throwable ->
+                            emitter.onError(throwable)
+                        })
+                    }
+                }
+
+            }.observeOn(Schedulers.io())
+        }
     }
 }

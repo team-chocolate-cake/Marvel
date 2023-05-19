@@ -6,17 +6,17 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.chocolatecake.marvel.data.local.entities.StoryEntity
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.Observable
 
 @Dao
 interface StoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertSories(stories: List<StoryEntity>): Completable
+    fun insertStories(stories: List<StoryEntity>): Completable
 
-    @Query("DELETE FROM StoryEntity")
+    @Query("DELETE FROM STORY_TABLE")
     fun deleteAllStories(): Completable
 
-    @Query("SELECT * FROM StoryEntity")
-    fun getAllStories(): Single<List<StoryEntity>>
+    @Query("SELECT * FROM STORY_TABLE")
+    fun getAllStories(): Observable<List<StoryEntity>>
 
 }

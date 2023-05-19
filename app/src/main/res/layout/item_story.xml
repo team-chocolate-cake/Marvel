@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.remote.model.dto.StoryDto" />
+            type="com.chocolatecake.marvel.domain.model.Story" />
 
         <variable
             name="listener"
@@ -43,7 +43,7 @@
                 style="@style/TextAppearance.MaterialComponents.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{item.getFormattedDate()}"
+                android:text="@{item.date}"
                 android:textColor="@color/on_background_38"
                 android:layout_marginHorizontal="@dimen/spacing_medium"
                 app:layout_constraintBaseline_toTopOf="parent"
