@@ -7,6 +7,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.util.Event
@@ -24,8 +25,8 @@ class ComicDetailsViewModel @Inject constructor(
     private val _currentComic = MutableLiveData<Status<ComicDetails>>()
     val currentComic: LiveData<Status<ComicDetails>> = _currentComic
 
-    private val _characters = MutableLiveData<Status<List<ProfileDto>?>>()
-    val characters: LiveData<Status<List<ProfileDto>?>>  = _characters
+    private val _characters = MutableLiveData<Status<List<Character>?>>()
+    val characters: LiveData<Status<List<Character>?>>  = _characters
 
     private val _toastMessage = MutableLiveData<Event<String>>()
     val toastMessage: LiveData<Event<String>> = _toastMessage
@@ -69,7 +70,7 @@ class ComicDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetCharacterSuccess(status: Status<List<ProfileDto>>) {
+    private fun onGetCharacterSuccess(status: Status<List<Character>>) {
         status.toData()?.let {
             _characters.postValue(Status.Success(it))
         }

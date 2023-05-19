@@ -7,6 +7,8 @@ import androidx.navigation.fragment.navArgs
 import com.chocolatecake.marvel.R
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.databinding.FragmentEventDetailsBinding
+import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.EventDetails
 import com.chocolatecake.marvel.ui.base.BaseFragment
 import com.chocolatecake.marvel.ui.event_details.adapters.EventAdapter
 import com.chocolatecake.marvel.util.observeNonNull
@@ -27,10 +29,15 @@ class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDeta
 
         adapter = EventAdapter(
             mutableListOf(
-                EventDetailsItem.Header(EventDto()),
-                EventDetailsItem.Character(emptyList()),
-                EventDetailsItem.Series(emptyList()),
-                EventDetailsItem.Comics(emptyList())
+                EventDetailsItem.HeaderDetails(EventDetails(
+                    id = 0,
+                    imageURL = "",
+                    title = "",
+                    description = "",
+                )),
+                EventDetailsItem.CharacterDetails(emptyList()),
+                EventDetailsItem.SeriesDetails(emptyList()),
+                EventDetailsItem.ComicsDetails(emptyList())
             ), viewModel
         )
         binding.recyclerViewEventDetails.adapter = adapter
@@ -39,16 +46,16 @@ class EventDetailsFragment : BaseFragment<FragmentEventDetailsBinding, EventDeta
 
     private fun updateItems() {
         viewModel.event.observeNonNull(viewLifecycleOwner) { eventResult ->
-            eventResult.toData()?.let { adapter.setItem(EventDetailsItem.Header(it)) }
+            eventResult.toData()?.let { adapter.setItem(EventDetailsItem.HeaderDetails(it)) }
         }
         viewModel.characters.observeNonNull(viewLifecycleOwner) { charactersResult ->
-            charactersResult.toData()?.let { adapter.setItem(EventDetailsItem.Character(it)) }
+            charactersResult.toData()?.let { adapter.setItem(EventDetailsItem.CharacterDetails(it)) }
         }
         viewModel.series.observeNonNull(viewLifecycleOwner) { seriesResult ->
-            seriesResult.toData()?.let { adapter.setItem(EventDetailsItem.Series(it)) }
+            seriesResult.toData()?.let { adapter.setItem(EventDetailsItem.SeriesDetails(it)) }
         }
         viewModel.comics.observeNonNull(viewLifecycleOwner) { comicsResult ->
-            comicsResult.toData()?.let { adapter.setItem(EventDetailsItem.Comics(it)) }
+            comicsResult.toData()?.let { adapter.setItem(EventDetailsItem.ComicsDetails(it)) }
         }
     }
 }

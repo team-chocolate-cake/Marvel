@@ -13,6 +13,7 @@ import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.EventDetails
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.SeriesDetails
@@ -137,13 +138,13 @@ interface MarvelRepository {
         offset: Int? = null
     ): Completable
 
-    fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>>
+    fun getCharactersByEventId(eventId: Int): Single<Status<List<Character>>>
 
-    fun getSeriesByEventId(eventId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesByEventId(eventId: Int): Single<Status<List<Series>>>
 
-    fun getComicsByEventId(eventId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsByEventId(eventId: Int): Single<Status<List<Comic>>>
 
-    fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>>
+    fun getSpecificEventByEventId(eventId: Int): Single<Status<EventDetails>>
     /// endregion
 
 

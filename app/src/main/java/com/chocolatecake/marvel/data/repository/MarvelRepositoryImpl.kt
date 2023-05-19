@@ -13,6 +13,7 @@ import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicDetailsDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
+import com.chocolatecake.marvel.domain.mapper.event.EventDtoToEventDetailsMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventDtoToUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
@@ -22,6 +23,7 @@ import com.chocolatecake.marvel.domain.mapper.series.CharacterDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.series.ComicsDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.series.EventsDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesDetailsDtoToUiMapper
+import com.chocolatecake.marvel.domain.mapper.series.SeriesDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
@@ -30,6 +32,7 @@ import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
+import com.chocolatecake.marvel.domain.model.EventDetails
 import com.chocolatecake.marvel.domain.model.SearchHistory
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.SeriesDetails
@@ -44,15 +47,20 @@ class MarvelRepositoryImpl @Inject constructor(
     private val dao: MarvelDao,
     private val characterMapper: CharacterMapper,
     private val characterUIMapper: CharacterUIMapper,
+
     private val seriesMapper: SeriesMapper,
     private val seriesUiMapper: SeriesUIMapper,
+    private val seriesDtoToUiMapper: SeriesDtoToUiMapper,
+    private val seriesDetailsDtoToUiMapper: SeriesDetailsDtoToUiMapper,
+
     private val eventMapper: EventMapper,
     private val eventUIMapper: EventUIMapper,
     private val eventDtoToUIMapper: EventDtoToUIMapper,
+    private val eventDtoToEventDetailsMapper: EventDtoToEventDetailsMapper,
+
     private val comicMapper: ComicMapper,
     private val comicUIMapper: ComicUIMapper,
     private val comicDetailsDtoToUiMapper: ComicDetailsDtoToUiMapper,
-    private val seriesDetailsDtoToUiMapper: SeriesDetailsDtoToUiMapper,
     private val characterDtoToUiMapper: CharacterDtoToUiMapper,
     private val comicsDtoToUiMapper: ComicsDtoToUiMapper,
     private val eventsDtoToUiMapper: EventsDtoToUiMapper,
@@ -396,44 +404,66 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>> {
-        return apiService.getCharactersByEventId(eventId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
+    fun getCharactersForSeries4(seriesId: Int): Single<Status<List<Character>>> {
+        return apiService.getCharactersForSeries(seriesId).map { baseResponse ->
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                ?.let { it ->
+                    Status.Success(it.map {
+                        characterDtoToUiMapper.map(it)
+                    })
+                } ?: Status.Failure(baseResponse.message())
         }
     }
 
-    override fun getSeriesByEventId(eventId: Int): Single<Status<List<SeriesDto>>> {
-        return apiService.getSeriesByEventId(eventId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
-        }
+    override fun getCharactersByEventId(eventId: Int): Single<Status<List<Character>>> {
+        return apiService.getCharactersByEventId(eventId)
+            .map { baseResponse ->
+                baseResponse.takeIf { it.isSuccessful }
+                    ?.body()?.data?.results?.filterNotNull()
+                    ?.let { it ->
+                        Status.Success(it.map {
+                            characterDtoToUiMapper.map(it)
+                        })
+                    } ?: Status.Failure(baseResponse.message())
+            }
     }
 
-    override fun getComicsByEventId(eventId: Int): Single<Status<List<ComicDto>>> {
-        return apiService.getComicsByEventId(eventId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
-        }
+    override fun getSeriesByEventId(eventId: Int): Single<Status<List<Series>>> {
+        return apiService.getSeriesByEventId(eventId)
+            .map { baseResponse ->
+                baseResponse
+                    .takeIf { it.isSuccessful }
+                    ?.body()?.data?.results
+                    ?.filterNotNull()
+                    ?.let { items ->
+                        Status.Success(
+                            items.map { seriesDtoToUiMapper.map(it) }
+                        )
+                    } ?: Status.Failure(baseResponse.message())
+            }
     }
 
-    override fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>> {
-        return apiService.getSpecificEventByEventId(eventId).map { baseResponse ->
-            baseResponse.takeIf { it.isSuccessful }?.let {
-                Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
-                )
-            } ?: Status.Failure(baseResponse.message())
-        }
+    override fun getComicsByEventId(eventId: Int): Single<Status<List<Comic>>> {
+        return apiService.getComicsByEventId(eventId)
+            .map { baseResponse ->
+                baseResponse.takeIf { it.isSuccessful }
+                    ?.body()?.data?.results?.filterNotNull()
+                    ?.let { items ->
+                        Status.Success(items.map {
+                            comicsDtoToUiMapper.map(it)
+                        })
+                    } ?: Status.Failure(baseResponse.message())
+            }
+    }
+
+    override fun getSpecificEventByEventId(eventId: Int): Single<Status<EventDetails>> {
+        return apiService.getSpecificEventByEventId(eventId)
+            .map { baseResponse ->
+                baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()
+                    ?.firstOrNull()?.let {
+                        Status.Success(eventDtoToEventDetailsMapper.map(it))
+                    } ?: Status.Failure(baseResponse.message())
+            }
     }
 
     /// endregion
