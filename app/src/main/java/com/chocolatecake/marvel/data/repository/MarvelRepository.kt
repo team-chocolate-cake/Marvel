@@ -73,11 +73,11 @@ interface MarvelRepository {
         lastName: String? = null
     ): Single<Status<List<ProfileDto>>>
 
-    fun getCreatorById(creatorId: Int): Single<Status<List<ProfileDto>>>
+    fun getCreatorById(creatorId: Int): Single<Status<CreatorDetails>>
 
-    fun getComicsForCreator(creatorId: Int): Single<Status<List<ComicDto>>>
+    fun getComicsForCreator(creatorId: Int): Single<Status<List<Comic>>>
 
-    fun getSeriesForCreator(creatorId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesForCreator(creatorId: Int): Single<Status<List<Series>>>
     /// endregion
 
 

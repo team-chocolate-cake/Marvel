@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.chocolatecake.marvel.data.remote.model.dto.SeriesDto" />
+            type="com.chocolatecake.marvel.domain.model.Series" />
 
         <variable
             name="listener"
@@ -25,7 +25,7 @@
             android:layout_height="150dp"
             android:layout_gravity="top"
             android:scaleType="centerCrop"
-            app:imageUrl="@{item.thumbnail}"
+            app:imageUrlWithUrl="@{item.imageURL}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintEnd_toEndOf="parent"

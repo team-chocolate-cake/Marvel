@@ -11,7 +11,7 @@ class CreatorDtoToUiMapper @Inject constructor(): Mapper<ProfileDto, Creator> {
     override fun map(input: ProfileDto): Creator {
         return Creator(
             id= input.id ?: 0,
-            name = input.name ?: "",
+            name = input.fullName ?: "",
             imageURL = input.thumbnail?.toUrl() ?: ""
         )
     }
