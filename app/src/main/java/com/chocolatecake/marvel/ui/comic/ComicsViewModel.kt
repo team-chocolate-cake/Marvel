@@ -26,12 +26,12 @@ class ComicsViewModel @Inject constructor(
 
     //regin Comics
     fun loadComics() {
-        _comics.postValue(Status.Loading)
-        disposeResponse(
-            response = repository.getComics(limit = LIMIT, offset = (0..5000).random()),
-            onSuccess = ::onComicsSuccess,
-            onFailure = ::onComicsFailure,
-        )
+//        _comics.postValue(Status.Loading)
+//        disposeResponse(
+//            response = repository.getComics(limit = LIMIT, offset = (0..5000).random()),
+//            onSuccess = ::onComicsSuccess,
+//            onFailure = ::onComicsFailure,
+//        )
     }
 
     private fun onComicsSuccess(status: Status<List<ComicDto>>) {

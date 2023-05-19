@@ -7,6 +7,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
+import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +21,8 @@ class ComicDetailsViewModel @Inject constructor(
 
     private val currentComicId: Int = savedStateHandle[COMIC_ID] ?: 0
 
-    private val _currentComic = MutableLiveData<Status<ComicDto>?>()
-    val currentComic: LiveData<Status<ComicDto>?> = _currentComic
+    private val _currentComic = MutableLiveData<Status<ComicDetails>>()
+    val currentComic: LiveData<Status<ComicDetails>> = _currentComic
 
     private val _characters = MutableLiveData<Status<List<ProfileDto>?>>()
     val characters: LiveData<Status<List<ProfileDto>?>>  = _characters
@@ -48,10 +49,8 @@ class ComicDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetCurrentComicSuccess(status: Status<List<ComicDto>>) {
-        status.toData()?.first()?.let {
-            _currentComic.postValue(Status.Success(it))
-        }
+    private fun onGetCurrentComicSuccess(comic: Status<ComicDetails>) {
+        _currentComic.postValue(comic)
     }
 
     private fun onGetCurrentComicFailure(throwable: Throwable) {

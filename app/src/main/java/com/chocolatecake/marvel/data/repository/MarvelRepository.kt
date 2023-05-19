@@ -7,6 +7,7 @@ import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
@@ -19,8 +20,7 @@ interface MarvelRepository {
     /// region comics
     fun getComics(
         title: String? = null,
-        limit: Int? = null,
-        offset: Int? = null,
+        limit: Int = 10,
     ): Observable<Status<List<Comic>>>
 
     fun refreshComics(
@@ -29,9 +29,9 @@ interface MarvelRepository {
         offset: Int? = null,
     ): Completable
 
-    fun getEventByComicId(comicId: Int): Single<Status<List<EventDto>>>
+    fun getEventByComicId(comicId: Int): Single<Status<List<Event>>>
 
-    fun getComicById(comicId: Int): Single<Status<List<ComicDto>>>
+    fun getComicById(comicId: Int): Single<Status<ComicDetails>>
 
     fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileDto>>>
     /// endregion
@@ -68,10 +68,7 @@ interface MarvelRepository {
 
     /// region series
     fun getSeries(
-        title: String? = null,
-        offset: Int? = null,
         limit: Int = 10,
-        orderBy: String? = null
     ): Observable<Status<List<Series>>>
 
     fun refreshSeries(

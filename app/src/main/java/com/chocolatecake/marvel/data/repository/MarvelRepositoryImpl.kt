@@ -12,8 +12,10 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
+import com.chocolatecake.marvel.domain.mapper.comic.ComicDetailsDtoToUiMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicUIMapper
+import com.chocolatecake.marvel.domain.mapper.event.EventDtoToUIMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventMapper
 import com.chocolatecake.marvel.domain.mapper.event.EventUIMapper
 import com.chocolatecake.marvel.domain.mapper.series.SeriesMapper
@@ -21,6 +23,7 @@ import com.chocolatecake.marvel.domain.mapper.series.SeriesUIMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryMapper
 import com.chocolatecake.marvel.domain.mapper.story.StoryUIMapper
 import com.chocolatecake.marvel.domain.model.Comic
+import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
@@ -42,8 +45,10 @@ class MarvelRepositoryImpl @Inject constructor(
     private val seriesUiMapper: SeriesUIMapper,
     private val eventMapper: EventMapper,
     private val eventUIMapper: EventUIMapper,
+    private val eventDtoToUIMapper: EventDtoToUIMapper,
     private val comicMapper: ComicMapper,
     private val comicUIMapper: ComicUIMapper,
+    private val comicDetailsDtoToUiMapper: ComicDetailsDtoToUiMapper,
     private val storiesMapper: StoryMapper,
     private val storiesUIMapper: StoryUIMapper,
 ) : MarvelRepository {
@@ -51,11 +56,10 @@ class MarvelRepositoryImpl @Inject constructor(
     /// region comics
     override fun getComics(
         title: String?,
-        limit: Int?,
-        offset: Int?
+        limit: Int,
     ): Observable<Status<List<Comic>>> {
         return wrapToState(
-            dbCall =  dao.getComicsWithLimit(),
+            dbCall = dao.getComicsWithLimit(limit),
             uiMapper = comicUIMapper
         )
     }
@@ -69,12 +73,20 @@ class MarvelRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getEventByComicId(comicId: Int): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getEventByComicId(comicId))
+    override fun getEventByComicId(comicId: Int): Single<Status<List<Event>>> {
+        return apiService.getEventByComicId(comicId).map { baseResponse ->
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()?.let {
+                Status.Success(it.map { item-> eventDtoToUIMapper.map(item) })
+            } ?: Status.Failure(baseResponse.message())
+        }
     }
 
-    override fun getComicById(comicId: Int): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComicById(comicId))
+    override fun getComicById(comicId: Int): Single<Status<ComicDetails>> {
+        return apiService.getComicById(comicId).map { baseResponse ->
+            baseResponse.takeIf { it.isSuccessful }?.body()?.data?.results?.filterNotNull()?.firstOrNull()?.let {
+                Status.Success(comicDetailsDtoToUiMapper.map(it))
+            } ?: Status.Failure(baseResponse.message())
+        }
     }
 
     override fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileDto>>> {
@@ -129,12 +141,7 @@ class MarvelRepositoryImpl @Inject constructor(
 
 
     /// region series
-    override fun getSeries(
-        title: String?,
-        offset: Int?,
-        limit: Int,
-        orderBy: String?
-    ): Observable<Status<List<Series>>> {
+    override fun getSeries(limit: Int): Observable<Status<List<Series>>> {
         return wrapToState(
             dbCall = dao.getSeriesWithLimit(limit = limit),
             uiMapper = seriesUiMapper
@@ -167,8 +174,10 @@ class MarvelRepositoryImpl @Inject constructor(
 
     /// region stories
     override fun getStories(limit: Int?, offset: Int?): Observable<Status<List<Story>>> {
-        return wrapToState(dbCall = dao.getAllStories(),
-        uiMapper = storiesUIMapper)
+        return wrapToState(
+            dbCall = dao.getAllStories(),
+            uiMapper = storiesUIMapper
+        )
     }
 
     override fun refreshStories(limit: Int?, offset: Int?): Completable {
