@@ -11,7 +11,7 @@ class ComicDtoToUIMapper @Inject constructor(): Mapper<ComicDto,Comic> {
     override fun map(input: ComicDto): Comic {
         return Comic(
             id = input.id ?: 0,
-            title = input.title ?: "",
+                title = input.title ?: "",
             imageURL = input.thumbnail?.toUrl() ?: ""
         )
     }
