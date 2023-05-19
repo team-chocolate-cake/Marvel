@@ -8,9 +8,6 @@ import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
-import com.chocolatecake.marvel.domain.model.Comic
-import com.chocolatecake.marvel.domain.model.CreatorDetails
-import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.ui.base.BaseViewModel
 import com.chocolatecake.marvel.ui.creator_details.adapter.CreatorDetailsListener
 import com.chocolatecake.marvel.ui.stories_details.StoriesDetailsFragmentArgs
@@ -26,14 +23,14 @@ class CreatorDetailsViewModel @Inject constructor(
     private val creatorId =
         CreatorDetailsFragmentArgs.fromSavedStateHandle(savedStateHandle).creatorId
 
-    private val _comicsList = MutableLiveData<Status<List<Comic>?>>()
-    val comicsList: LiveData<Status<List<Comic>?>> = _comicsList
+    private val _comicsList = MutableLiveData<Status<List<ComicDto>?>>()
+    val comicsList: LiveData<Status<List<ComicDto>?>> = _comicsList
 
-    private val _seriesList = MutableLiveData<Status<List<Series>?>>()
-    val seriesList: LiveData<Status<List<Series>?>> = _seriesList
+    private val _seriesList = MutableLiveData<Status<List<SeriesDto>?>>()
+    val seriesList: LiveData<Status<List<SeriesDto>?>> = _seriesList
 
-    private val _creator = MutableLiveData<Status<List<CreatorDetails>?>>()
-    val creator: LiveData<Status<List<CreatorDetails>?>> = _creator
+    private val _creator = MutableLiveData<Status<List<ProfileDto>?>>()
+    val creator: LiveData<Status<List<ProfileDto>?>> = _creator
 
     init {
         loadData()
@@ -55,7 +52,7 @@ class CreatorDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetCreatorSuccess(status: Status<List<CreatorDetails>>) {
+    private fun onGetCreatorSuccess(status: Status<List<ProfileDto>>) {
         status.toData()?.let { _creator.postValue(Status.Success(it)) }
     }
     //endregion
@@ -70,7 +67,7 @@ class CreatorDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetSeriesSuccess(status: Status<List<Series>>) {
+    private fun onGetSeriesSuccess(status: Status<List<SeriesDto>>) {
         status.toData()?.let { _seriesList.postValue(Status.Success(it)) }
     }
     //endregion
@@ -85,7 +82,7 @@ class CreatorDetailsViewModel @Inject constructor(
         )
     }
 
-    private fun onGetComicsSuccess(status: Status<List<Comic>>) {
+    private fun onGetComicsSuccess(status: Status<List<ComicDto>>) {
         status.toData()?.let { _comicsList.postValue(Status.Success(it)) }
     }
     //endregion
