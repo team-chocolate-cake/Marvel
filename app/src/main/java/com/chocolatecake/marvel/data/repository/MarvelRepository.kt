@@ -106,7 +106,7 @@ interface MarvelRepository {
 
     /// region events
     fun getEvents(
-        limit: Int? = null,
+        limit: Int = 10,
         offset: Int? = null
     ): Observable<Status<List<Event>>>
 

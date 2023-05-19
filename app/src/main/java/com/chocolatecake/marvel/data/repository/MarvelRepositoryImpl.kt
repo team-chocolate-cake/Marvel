@@ -1,7 +1,6 @@
 package com.chocolatecake.marvel.data.repository
 
 import com.chocolatecake.marvel.data.local.MarvelDao
-import com.chocolatecake.marvel.data.remote.model.BaseResponse
 import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
 import com.chocolatecake.marvel.data.remote.model.dto.EventDto
 import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
@@ -9,7 +8,6 @@ import com.chocolatecake.marvel.data.remote.model.dto.SeriesDto
 import com.chocolatecake.marvel.data.remote.model.dto.StoryDto
 import com.chocolatecake.marvel.data.remote.service.MarvelService
 import com.chocolatecake.marvel.data.util.Status
-import com.chocolatecake.marvel.domain.mapper.Mapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterMapper
 import com.chocolatecake.marvel.domain.mapper.character.CharacterUIMapper
 import com.chocolatecake.marvel.domain.mapper.comic.ComicDetailsDtoToUiMapper
@@ -27,13 +25,9 @@ import com.chocolatecake.marvel.domain.model.ComicDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.Series
 import com.chocolatecake.marvel.domain.model.Story
-import com.chocolatecake.marvel.util.observeOnMainThread
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
-import retrofit2.Response
 import javax.inject.Inject
 
 class MarvelRepositoryImpl @Inject constructor(
@@ -58,19 +52,23 @@ class MarvelRepositoryImpl @Inject constructor(
         title: String?,
         limit: Int,
     ): Observable<Status<List<Comic>>> {
-        return wrapToState(
-            dbCall = dao.getComicsWithLimit(limit),
-            uiMapper = comicUIMapper
-        )
+        return dao.getComicsWithLimit(limit).map {
+            it.takeIf { it.isNotEmpty() }?.let {
+                Status.Success(it.map { item -> comicUIMapper.map(item) }) }
+                ?: Status.Failure("No Result")
+        }
     }
 
     override fun refreshComics(title: String?, limit: Int?, offset: Int?): Completable {
-        return refreshData(
-            response = apiService.getComics(title, limit, offset),
-            mapper = comicMapper
-        ) {
-            dao.insertComics(it)
-        }
+        return apiService.getComics(title, limit, offset).flatMapCompletable { baseResponse ->
+                baseResponse.takeIf {it.isSuccessful}.let {
+                    Status.Success(
+                        baseResponse.body()?.data?.results?.filterNotNull()
+                            ?.map { item -> comicMapper.map(item) }?.let { items -> dao.insertComics(items)}
+                    )
+                    Completable.complete()
+                }
+            }
     }
 
     override fun getEventByComicId(comicId: Int): Single<Status<List<Event>>> {
@@ -79,7 +77,6 @@ class MarvelRepositoryImpl @Inject constructor(
                 Status.Success(it.map { item-> eventDtoToUIMapper.map(item) })
             } ?: Status.Failure(baseResponse.message())
         }
-    }
 
     override fun getComicById(comicId: Int): Single<Status<ComicDetails>> {
         return apiService.getComicById(comicId).map { baseResponse ->
@@ -90,7 +87,13 @@ class MarvelRepositoryImpl @Inject constructor(
     }
 
     override fun getCharactersForComic(comicId: Int): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCharactersForComic(comicId))
+        return apiService.getCharactersForComic(comicId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
     /// endregion
 
@@ -100,19 +103,43 @@ class MarvelRepositoryImpl @Inject constructor(
         name: String?,
         limit: Int?
     ): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCharacters(name, limit))
+        return apiService.getCharacters(name, limit).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getCharacterById(characterId: Int): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCharacterById(characterId))
+        return apiService.getCharacterById(characterId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getComicsForCharacter(characterId: Int): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComicsForCharacter(characterId))
+        return apiService.getComicsForCharacter(characterId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getCharacterSeries(characterId: Int): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeriesForCharacter(characterId))
+        return apiService.getSeriesForCharacter(characterId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
     /// endregion
 
@@ -123,179 +150,236 @@ class MarvelRepositoryImpl @Inject constructor(
         middleName: String?,
         lastName: String?
     ): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCreators(firstName, middleName, lastName))
+        return apiService.getCreators(firstName, middleName, lastName).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getCreatorById(creatorId: Int): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCreatorById(creatorId))
+        return apiService.getCreatorById(creatorId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getComicsForCreator(creatorId: Int): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComicsForCreator(creatorId))
+        return apiService.getComicsForCreator(creatorId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getSeriesForCreator(creatorId: Int): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeriesForCreator(creatorId))
+        return apiService.getSeriesForCreator(creatorId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
     /// endregion
 
 
     /// region series
     override fun getSeries(limit: Int): Observable<Status<List<Series>>> {
-        return wrapToState(
-            dbCall = dao.getSeriesWithLimit(limit = limit),
-            uiMapper = seriesUiMapper
-        )
-    }
-
-    override fun refreshSeries(limit: Int, offset: Int): Completable {
-        return refreshData(
-            apiService.getSeries(limit = limit, offset = offset),
-            seriesMapper
-        ) {
-            dao.insertSeries(it)
+        return dao.getSeriesWithLimit(limit).map {
+            it.takeIf { it.isNotEmpty() }?.let {
+                Status.Success( it.map { item -> seriesUiMapper.map(item) }) }
+                ?: Status.Failure("No Result")
         }
     }
 
+    override fun refreshSeries(limit: Int, offset: Int): Completable {
+        return apiService.getSeries(limit = limit, offset = offset).flatMapCompletable { baseResponse ->
+                baseResponse.takeIf {it.isSuccessful}.let {
+                    Status.Success(
+                        baseResponse.body()?.data?.results?.filterNotNull()
+                            ?.map { item -> seriesMapper.map(item) }?.let { items -> dao.insertSeries(items)}
+                    )
+                    Completable.complete()
+                }
+            }
+    }
 
     override fun getSeriesById(seriesId: Int): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeriesById(seriesId))
+        return apiService.getSeriesById(seriesId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getCharactersForSeries(seriesId: Int): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCharactersForSeries(seriesId))
+        return apiService.getCharactersForSeries(seriesId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getComicsForSeries(seriesId: Int): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComicsForSeries(seriesId))
+        return apiService.getComicsForSeries(seriesId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
     /// endregion
 
 
     /// region stories
     override fun getStories(limit: Int?, offset: Int?): Observable<Status<List<Story>>> {
-        return wrapToState(
-            dbCall = dao.getAllStories(),
-            uiMapper = storiesUIMapper
-        )
+        return dao.getAllStories().map {
+            it.takeIf { it.isNotEmpty() }?.let {
+            Status.Success(it.map { item -> storiesUIMapper
+        .map(item) }) }
+                ?: Status.Failure("No Result")
+        }
     }
 
     override fun refreshStories(limit: Int?, offset: Int?): Completable {
-        return refreshData(
-            response = apiService.getStories(),
-            mapper = storiesMapper,
-            saveToDb = {
-                dao.insertStories(it)
+        return apiService.getStories().flatMapCompletable { baseResponse ->
+                baseResponse.takeIf {it.isSuccessful}.let {
+                    Status.Success(
+                        baseResponse.body()?.data?.results?.filterNotNull()
+                            ?.map { item -> storiesMapper.map(item) }?.let { items -> dao.insertStories(items)}
+                    )
+                    Completable.complete()
+                }
             }
-        )
     }
 
     override fun getStoryById(storyId: Int): Single<Status<List<StoryDto>>> {
-        return wrapperToState(apiService.getStoryById(storyId))
+        return apiService.getStoryById(storyId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getCreatorsByStoryId(storyId: Int): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCreatorsByStoryId(storyId))
+        return apiService.getCreatorsByStoryId(storyId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getComicsByStoryId(storyId: Int): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComicsByStoryId(storyId))
+        return apiService.getComicsByStoryId(storyId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getSeriesByStoryId(storyId: Int): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeriesByStoryId(storyId))
+        return apiService.getSeriesByStoryId(storyId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
     /// endregion
 
 
     /// region events
     override fun getEvents(
-        limit: Int?,
+        limit: Int,
         offset: Int?
     ): Observable<Status<List<Event>>> {
-        return wrapToState(
-            dbCall = dao.getEventsWithLimit(),
-            uiMapper = eventUIMapper
-        )
+        return dao.getEventsWithLimit(limit).map {
+            it.takeIf { it.isNotEmpty() }?.let {
+                Status.Success(it.map { item -> eventUIMapper.map(item) })  }
+                ?: Status.Failure("No Result")
+        }
     }
 
     override fun refreshEvent(limit: Int?, offset: Int?): Completable {
-        return refreshData(
-            response = apiService.getEvents(limit, offset),
-            mapper = eventMapper
-        ) {
-            dao.insertEvent(it)
-        }
+           return apiService.getEvents(limit, offset).flatMapCompletable { baseResponse ->
+               baseResponse.takeIf {it.isSuccessful}.let {
+                   Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull()
+                        ?.map { item -> eventMapper.map(item) }?.let { items -> dao.insertEvent(items)}
+                   )
+                   Completable.complete()
+               }
+           }
     }
 
-
     override fun getCharactersByEventId(eventId: Int): Single<Status<List<ProfileDto>>> {
-        return wrapperToState(apiService.getCharactersByEventId(eventId))
+        return apiService.getCharactersByEventId(eventId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
 
     override fun getSeriesByEventId(eventId: Int): Single<Status<List<SeriesDto>>> {
-        return wrapperToState(apiService.getSeriesByEventId(eventId))
-    }
-
-    override fun getComicsByEventId(eventId: Int): Single<Status<List<ComicDto>>> {
-        return wrapperToState(apiService.getComicsByEventId(eventId))
-    }
-
-    override fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getSpecificEventByEventId(eventId))
-    }
-
-    override fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>> {
-        return wrapperToState(apiService.getEventsForSeries(seriesId))
-    }
-    /// endregion
-
-
-    /// region helpers
-    private fun <I : Any, O : Any> wrapToState(
-        dbCall: Observable<List<I>>,
-        uiMapper: Mapper<I, O>
-    ): Observable<Status<List<O>>> {
-        return dbCall.map {
-            if (it.isEmpty()) {
-                return@map Status.Failure("No Result")
-            }
-            Status.Success(it.map { item -> uiMapper.map(item) })
-        }.observeOn(Schedulers.io()).subscribeOn(AndroidSchedulers.mainThread())
-    }
-
-    private fun <T : Any, O : Any> refreshData(
-        response: Single<Response<BaseResponse<T>>>,
-        mapper: Mapper<T, O>,
-        saveToDb: (List<O>) -> Completable,
-    ): Completable {
-        return response.flatMapCompletable { baseResponse ->
-            if (baseResponse.isSuccessful) {
-                val filteredItems = baseResponse.body()?.data?.results?.filterNotNull()
-                val mappedItems = filteredItems?.map { mapper.map(it) }
-
-                mappedItems?.let { items ->
-                    saveToDb(items)
-                } ?: Completable.error(Exception("Mapping error"))
-            } else {
-                Completable.error(Exception("API Error: ${baseResponse.code()}"))
-            }
-        }.onErrorResumeNext { error ->
-            Completable.complete()
+        return apiService.getSeriesByEventId(eventId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
         }
     }
 
-    private fun <T : Any> wrapperToState(response: Single<Response<BaseResponse<T>>>):
-            Single<Status<List<T>>> {
-        return response.map { baseResponse ->
-            if (baseResponse.isSuccessful) {
+    override fun getComicsByEventId(eventId: Int): Single<Status<List<ComicDto>>> {
+        return apiService.getComicsByEventId(eventId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
                 Status.Success(
-                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList<T>()
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
                 )
-            } else {
-                Status.Failure(baseResponse.message())
-            }
-        }.observeOnMainThread()
+            } ?: Status.Failure("no network error")
+        }
+    }
+
+    override fun getSpecificEventByEventId(eventId: Int): Single<Status<List<EventDto>>> {
+        return apiService.getSpecificEventByEventId(eventId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
+    }
+
+    override fun getEventsForSeries(seriesId: Int): Single<Status<List<EventDto>>> {
+        return apiService.getEventsForSeries(seriesId).map { baseResponse ->
+            baseResponse.takeIf {it.isSuccessful}?.let {
+                Status.Success(
+                    baseResponse.body()?.data?.results?.filterNotNull() ?: emptyList()
+                )
+            } ?: Status.Failure("no network error")
+        }
     }
     /// endregion
 }
