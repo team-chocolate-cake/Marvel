@@ -9,9 +9,6 @@
             name="viewModel"
             type="com.chocolatecake.marvel.ui.stories_details.StoriesDetailsViewModel" />
 
-        <variable
-            name="item"
-            type="com.chocolatecake.marvel.data.remote.model.dto.StoryDto" />
     </data>
 
     <ScrollView
@@ -30,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_medium"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:text="@{viewModel.story.toData().formattedDate}"
+                android:text="@{viewModel.story.toData().date}"
                 android:textSize="@dimen/text_semi_small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button_back"

@@ -12,6 +12,7 @@ import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
 import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.ComicDetails
+import com.chocolatecake.marvel.domain.model.CreatorDetails
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.EventDetails
 import com.chocolatecake.marvel.domain.model.SearchHistory
@@ -69,17 +70,11 @@ interface MarvelRepository {
 
 
     /// region creators
-    fun getCreators(
-        firstName: String? = null,
-        middleName: String? = null,
-        lastName: String? = null
-    ): Single<Status<List<ProfileDto>>>
+    fun getCreatorById(creatorId: Int): Single<Status<List<CreatorDetails>>>
 
-    fun getCreatorById(creatorId: Int): Single<Status<List<ProfileDto>>>
+    fun getComicsForCreator(creatorId: Int): Single<Status<List<Comic>>>
 
-    fun getComicsForCreator(creatorId: Int): Single<Status<List<ComicDto>>>
-
-    fun getSeriesForCreator(creatorId: Int): Single<Status<List<SeriesDto>>>
+    fun getSeriesForCreator(creatorId: Int): Single<Status<List<Series>>>
     /// endregion
 
 
