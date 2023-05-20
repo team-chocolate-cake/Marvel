@@ -3,9 +3,6 @@ package com.chocolatecake.marvel.ui.series_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
-import com.chocolatecake.marvel.data.remote.model.dto.ComicDto
-import com.chocolatecake.marvel.data.remote.model.dto.EventDto
-import com.chocolatecake.marvel.data.remote.model.dto.ProfileDto
 import com.chocolatecake.marvel.data.repository.MarvelRepository
 import com.chocolatecake.marvel.data.util.Status
 import com.chocolatecake.marvel.domain.model.Character
@@ -13,7 +10,6 @@ import com.chocolatecake.marvel.domain.model.Comic
 import com.chocolatecake.marvel.domain.model.Event
 import com.chocolatecake.marvel.domain.model.SeriesDetails
 import com.chocolatecake.marvel.ui.base.BaseViewModel
-import com.chocolatecake.marvel.ui.character_details.CharacterDetailsFragmentArgs
 import com.chocolatecake.marvel.ui.series_details.adapters.SeriesDetailsListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -53,7 +49,7 @@ class SeriesDetailsViewModel @Inject constructor(
     //region Series
     private fun getSeriesById() {
         _series.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getSeriesById(seriesId),
             onSuccess = ::onSeriesSuccess,
             onFailure = ::onFailure,
@@ -70,7 +66,7 @@ class SeriesDetailsViewModel @Inject constructor(
     //region Characters
     private fun getCharactersForSeries() {
         _characters.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getCharactersForSeries(seriesId),
             onSuccess = ::onCharactersSuccess,
             onFailure = ::onFailure,
@@ -87,7 +83,7 @@ class SeriesDetailsViewModel @Inject constructor(
     //region Comics
     private fun getComicsForSeries() {
         _comics.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getComicsForSeries(seriesId),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,
@@ -104,7 +100,7 @@ class SeriesDetailsViewModel @Inject constructor(
     //region Event
     private fun getEventsForSeries() {
         _events.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getEventsForSeries(seriesId),
             onSuccess = ::onEventsSuccess,
             onFailure = ::onFailure,

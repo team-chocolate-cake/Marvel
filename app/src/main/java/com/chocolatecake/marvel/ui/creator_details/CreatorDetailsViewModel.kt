@@ -44,7 +44,7 @@ class CreatorDetailsViewModel @Inject constructor(
     //region Creator
     private fun getCreator() {
         _creator.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getCreatorById(creatorId),
             onSuccess = ::onGetCreatorSuccess,
             onFailure = ::onFailure,
@@ -59,7 +59,7 @@ class CreatorDetailsViewModel @Inject constructor(
     //region Series
     private fun getSeries() {
         _seriesList.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getSeriesForCreator(creatorId),
             onSuccess = ::onGetSeriesSuccess,
             onFailure = ::onFailure,
@@ -74,7 +74,7 @@ class CreatorDetailsViewModel @Inject constructor(
     //region Comics
     private fun getComics() {
         _comicsList.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getComicsForCreator(creatorId),
             onSuccess = ::onGetComicsSuccess,
             onFailure = ::onFailure,

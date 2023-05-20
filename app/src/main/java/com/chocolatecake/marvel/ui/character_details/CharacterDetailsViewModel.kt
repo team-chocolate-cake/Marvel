@@ -40,7 +40,7 @@ class CharacterDetailsViewModel @Inject constructor(
     //region Character
     private fun loadCharacter() {
         _character.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response= repository.getCharacterById(characterId),
             onSuccess = ::onCharacterSuccess,
             onFailure = ::onFailure,
@@ -57,7 +57,7 @@ class CharacterDetailsViewModel @Inject constructor(
     //region Comics
     private fun loadComics() {
         _comics.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response= repository.getComicsForCharacter(characterId),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,

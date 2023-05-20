@@ -42,7 +42,7 @@ class ComicDetailsViewModel @Inject constructor(
     //region Current Comic
     private fun getCurrentComic() {
         _currentComic.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getComicById(comicId),
             onSuccess = ::onGetCurrentComicSuccess,
             onFailure = ::onGetCurrentComicFailure,
@@ -62,7 +62,7 @@ class ComicDetailsViewModel @Inject constructor(
     //region Characters of Comic
     private fun getCharactersOfComic() {
         _characters.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getCharactersForSeries(comicId),
             onSuccess = ::onGetCharacterSuccess,
             onFailure = ::onGetCharacterFailure,

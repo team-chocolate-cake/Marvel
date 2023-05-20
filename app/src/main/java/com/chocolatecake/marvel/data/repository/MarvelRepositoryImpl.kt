@@ -79,17 +79,13 @@ class MarvelRepositoryImpl @Inject constructor(
         limit: Int,
     ): Observable<Status<List<Comic>>> {
         return dao.getComicsWithLimit(limit).map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item -> comicUIMapper.map(item) })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> comicUIMapper.map(item) })
         }
     }
 
     override fun searchComics(title: String, limit: Int): Observable<Status<List<Comic>>> {
         return dao.getFilteredComics("%$title%", limit).map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item -> comicUIMapper.map(item) })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> comicUIMapper.map(item) })
         }
     }
 
@@ -152,9 +148,7 @@ class MarvelRepositoryImpl @Inject constructor(
         limit: Int?
     ): Observable<Status<List<Character>>> {
         return dao.getFilteredCharacters("%$name%").map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item -> characterUIMapper.map(item) })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> characterUIMapper.map(item) })
         }
     }
 
@@ -233,17 +227,13 @@ class MarvelRepositoryImpl @Inject constructor(
     /// region series
     override fun getSeries(limit: Int): Observable<Status<List<Series>>> {
         return dao.getSeriesWithLimit(limit).map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item -> seriesUiMapper.map(item) })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> seriesUiMapper.map(item) })
         }
     }
 
     override fun searchSeries(title: String, limit: Int): Observable<Status<List<Series>>> {
         return dao.getFilteredSeries("%$title%", limit).map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item -> seriesUiMapper.map(item) })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> seriesUiMapper.map(item) })
         }
     }
 
@@ -308,12 +298,7 @@ class MarvelRepositoryImpl @Inject constructor(
     /// region stories
     override fun getStories(limit: Int?, offset: Int?): Observable<Status<List<Story>>> {
         return dao.getAllStories().map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item ->
-                    storiesUIMapper
-                        .map(item)
-                })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> storiesUIMapper.map(item) })
         }
     }
 
@@ -371,9 +356,7 @@ class MarvelRepositoryImpl @Inject constructor(
         offset: Int?
     ): Observable<Status<List<Event>>> {
         return dao.getEventsWithLimit(limit).map {
-            it.takeIf { it.isNotEmpty() }?.let {
-                Status.Success(it.map { item -> eventUIMapper.map(item) })
-            } ?: Status.Failure("No Result")
+            Status.Success(it.map { item -> eventUIMapper.map(item) })
         }
     }
 

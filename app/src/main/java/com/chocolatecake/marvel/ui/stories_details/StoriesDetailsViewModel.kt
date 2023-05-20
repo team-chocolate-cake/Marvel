@@ -51,7 +51,7 @@ class StoriesDetailsViewModel @Inject constructor(
     //region Story
     private fun getStoryById() {
         _story.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getStoryById(storyId),
             onSuccess = ::onStorySuccess,
             onFailure = ::onFailure,
@@ -68,7 +68,7 @@ class StoriesDetailsViewModel @Inject constructor(
     //region Creators
     private fun getCreatorsByStoryId() {
         _creators.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getCreatorsByStoryId(storyId),
             onSuccess = ::onCreatorsSuccess,
             onFailure = ::onFailure,
@@ -85,7 +85,7 @@ class StoriesDetailsViewModel @Inject constructor(
     //region Series
     private fun getSeriesByStoryId() {
         _series.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getSeriesByStoryId(storyId),
             onSuccess = ::onSeriesSuccess,
             onFailure = ::onFailure,
@@ -102,7 +102,7 @@ class StoriesDetailsViewModel @Inject constructor(
     //region Comics
     private fun getComicsByStoryId() {
         _comics.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getComicsByStoryId(storyId),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,

@@ -45,7 +45,7 @@ class EventDetailsViewModel @Inject constructor(
     //region Event
     private fun getEventDetails() {
         _event.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getSpecificEventByEventId(eventId),
             onSuccess = ::onEventSuccess,
             onFailure = ::onFailure,
@@ -63,7 +63,7 @@ class EventDetailsViewModel @Inject constructor(
     //region Characters
     private fun getCharactersByEventId() {
         _characters.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getCharactersByEventId(eventId),
             onSuccess = ::onCharactersSuccess,
             onFailure = ::onFailure,
@@ -80,7 +80,7 @@ class EventDetailsViewModel @Inject constructor(
     //region Series
     private fun getSeriesByEventId() {
         _series.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getSeriesByEventId(eventId),
             onSuccess = ::onSeriesSuccess,
             onFailure = ::onFailure,
@@ -98,7 +98,7 @@ class EventDetailsViewModel @Inject constructor(
     //region Comics
     private fun getComicsByEventId() {
         _comics.postValue(Status.Loading)
-        disposeResponse(
+        disposeSingleResponse(
             response = repository.getComicsByEventId(eventId),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,

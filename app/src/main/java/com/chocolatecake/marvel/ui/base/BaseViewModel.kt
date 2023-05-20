@@ -31,7 +31,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
 
-    fun <T : Any> disposeResponse(
+    fun <T : Any> disposeSingleResponse(
         response: Single<Status<T>>,
         onSuccess: (data: Status<T>) -> Unit,
         onFailure: (e: Throwable) -> Unit,

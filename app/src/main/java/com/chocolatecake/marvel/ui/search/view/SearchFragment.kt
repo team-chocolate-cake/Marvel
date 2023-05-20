@@ -1,6 +1,5 @@
 package com.chocolatecake.marvel.ui.search.view
 
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -15,17 +14,15 @@ import com.chocolatecake.marvel.ui.search.model.SearchItemType.TYPE_CHARACTER
 import com.chocolatecake.marvel.ui.search.model.SearchItemType.TYPE_COMICS
 import com.chocolatecake.marvel.ui.search.model.SearchItemType.TYPE_SERIES
 import com.chocolatecake.marvel.ui.search.model.SearchItems
-import com.chocolatecake.marvel.ui.search.view_model.SearchViewModel
+import com.chocolatecake.marvel.ui.search.SearchViewModel
 import com.chocolatecake.marvel.util.observeNonNull
 import dagger.hilt.android.AndroidEntryPoint
-import io.reactivex.rxjava3.core.Single
 
 @AndroidEntryPoint
 class SearchFragment : BaseFragment<FragmentSeacrhBinding, SearchViewModel>() {
 
     override val viewModel: SearchViewModel by viewModels()
-    override val layoutIdFragment: Int
-        get() = R.layout.fragment_seacrh
+    override val layoutIdFragment: Int = R.layout.fragment_seacrh
 
     private lateinit var adapter: SearchListAdapter
 

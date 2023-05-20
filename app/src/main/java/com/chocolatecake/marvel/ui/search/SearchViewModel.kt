@@ -1,5 +1,6 @@
-package com.chocolatecake.marvel.ui.search.view_model
+package com.chocolatecake.marvel.ui.search
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.chocolatecake.marvel.data.repository.MarvelRepository
@@ -62,9 +63,8 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun applySearch() {
-        searchQuery.debounce(500, TimeUnit.MILLISECONDS).subscribe {
+        searchQuery.debounce(800, TimeUnit.MILLISECONDS).subscribe {
             loadData()
-
             insertSearchHistory(
                 keyword = it.query,
                 type = searchType.name
@@ -102,12 +102,11 @@ class SearchViewModel @Inject constructor(
     }
     //endregion
 
-
     //region Series
     private fun getAllSeries() {
-        repository.refreshSeries(title = searchText, limit = 5).subscribe({},{}).add()
+        repository.refreshSeries(title = searchText, limit = LIMIT).subscribe({},{}).add()
         disposeObservableResponse(
-            response = repository.searchSeries(searchText ?: "", limit = 5),
+            response = repository.searchSeries(searchText ?: "", limit = LIMIT),
             onSuccess = ::onSeriesSuccess,
             onFailure = ::onFailure,
         )
@@ -117,15 +116,16 @@ class SearchViewModel @Inject constructor(
         seriesDto.toData()?.let { result ->
             val newState = Status.Success(SearchDataHolder(series = result))
             _state.postValue(newState)
+            Log.e("Mooody", "getAllSeries: $newState", )
         }
     }
     //endregion
 
     //region Comics
     private fun getAllComics() {
-        repository.refreshComics(title = searchText, limit = 5).subscribe({},{}).add()
+        repository.refreshComics(title = searchText, limit = LIMIT).subscribe({},{}).add()
         disposeObservableResponse(
-            response = repository.searchComics(searchText ?: "", limit = 5),
+            response = repository.searchComics(searchText ?: "", limit = LIMIT),
             onSuccess = ::onComicsSuccess,
             onFailure = ::onFailure,
         )
@@ -172,5 +172,9 @@ class SearchViewModel @Inject constructor(
 
     override fun onClickCharacter(id: Int) {
         navigate(SearchFragmentDirections.actionSearchFragmentToCharacterDetailsFragment(id))
+    }
+    
+    private companion object{
+        const val LIMIT = 10
     }
 }
